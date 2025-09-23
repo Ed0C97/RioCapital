@@ -1,15 +1,17 @@
+// finblog-frontend/src/components/Header.jsx
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { 
-  Search, 
-  Menu, 
-  X, 
-  User, 
-  LogOut, 
-  Settings, 
+import {
+  Search,
+  Menu,
+  X,
+  User,
+  LogOut,
+  Settings,
   Heart,
   PenTool,
   DollarSign,
@@ -54,7 +56,7 @@ const Header = () => {
     <header className="bg-white border-b border-border sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {}
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 finblog-gradient rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">F</span>
@@ -62,7 +64,7 @@ const Header = () => {
             <span className="text-xl font-bold finblog-text-gradient">FinBlog</span>
           </Link>
 
-          {/* Navigation Desktop */}
+          {}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-foreground hover:text-primary transition-colors">
               Home
@@ -78,7 +80,7 @@ const Header = () => {
             </Link>
           </nav>
 
-          {/* Search Bar */}
+          {}
           <form onSubmit={handleSearch} className="hidden md:flex items-center space-x-2">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -92,9 +94,9 @@ const Header = () => {
             </div>
           </form>
 
-          {/* User Actions */}
+          {}
           <div className="flex items-center space-x-4">
-            {/* Donation Button */}
+            {}
             <Link to="/dona">
               <Button variant="outline" size="sm" className="hidden md:flex items-center space-x-2">
                 <Heart className="w-4 h-4" />
@@ -123,7 +125,7 @@ const Header = () => {
                       <span>Preferiti</span>
                     </Link>
                   </DropdownMenuItem>
-                  
+
                   {canWriteArticles() && (
                     <>
                       <DropdownMenuSeparator />
@@ -141,7 +143,7 @@ const Header = () => {
                       </DropdownMenuItem>
                     </>
                   )}
-                  
+
                   {isAdmin() && (
                     <>
                       <DropdownMenuSeparator />
@@ -171,7 +173,7 @@ const Header = () => {
                       </DropdownMenuItem>
                     </>
                   )}
-                  
+
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="flex items-center space-x-2">
                     <LogOut className="w-4 h-4" />
@@ -190,7 +192,7 @@ const Header = () => {
               </div>
             )}
 
-            {/* Mobile Menu Button */}
+            {}
             <Button
               variant="ghost"
               size="sm"
@@ -202,7 +204,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {}
         {isMenuOpen && (
           <div className="md:hidden border-t border-border py-4">
             <nav className="flex flex-col space-y-4">
@@ -218,37 +220,37 @@ const Header = () => {
                   />
                 </div>
               </form>
-              
-              <Link 
-                to="/" 
+
+              <Link
+                to="/"
                 className="text-foreground hover:text-primary transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
-              <Link 
-                to="/categorie" 
+              <Link
+                to="/categorie"
                 className="text-foreground hover:text-primary transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Categorie
               </Link>
-              <Link 
-                to="/chi-siamo" 
+              <Link
+                to="/chi-siamo"
                 className="text-foreground hover:text-primary transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Chi Siamo
               </Link>
-              <Link 
-                to="/contatti" 
+              <Link
+                to="/contatti"
                 className="text-foreground hover:text-primary transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Contatti
               </Link>
-              <Link 
-                to="/dona" 
+              <Link
+                to="/dona"
                 className="text-foreground hover:text-primary transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >

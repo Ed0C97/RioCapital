@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/FavoriteButton.jsx
+
 import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Heart } from 'lucide-react';
@@ -5,12 +7,12 @@ import { cn } from '../lib/utils';
 import { useFavorites } from '../hooks/useFavorites';
 import { useAuth } from '../hooks/useAuth';
 
-const FavoriteButton = ({ 
-  articleId, 
-  variant = "ghost", 
-  size = "sm", 
+const FavoriteButton = ({
+  articleId,
+  variant = "ghost",
+  size = "sm",
   showText = false,
-  className = "" 
+  className = ""
 }) => {
   const { user } = useAuth();
   const { toggleFavorite, isFavorite } = useFavorites(user);
@@ -19,7 +21,7 @@ const FavoriteButton = ({
   const handleToggle = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     setIsLoading(true);
     await toggleFavorite(articleId);
     setIsLoading(false);
@@ -39,19 +41,19 @@ const FavoriteButton = ({
         className
       )}
     >
-      <Heart 
+      <Heart
         className={cn(
           "w-4 h-4",
           showText && "mr-2",
           isFav && "fill-current"
-        )} 
+        )}
       />
       {showText && (
         <span>
-          {isLoading 
-            ? 'Caricamento...' 
-            : isFav 
-              ? 'Rimuovi dai preferiti' 
+          {isLoading
+            ? 'Caricamento...'
+            : isFav
+              ? 'Rimuovi dai preferiti'
               : 'Aggiungi ai preferiti'
           }
         </span>

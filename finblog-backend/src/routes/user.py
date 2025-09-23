@@ -1,3 +1,5 @@
+# finblog-backend/src/routes/user.py
+
 from flask import Blueprint, jsonify, request
 from src.models.user import User
 from src.extensions import db
@@ -11,7 +13,7 @@ def get_users():
 
 @user_bp.route('/users', methods=['POST'])
 def create_user():
-    
+
     data = request.json
     user = User(username=data['username'], email=data['email'])
     db.session.add(user)

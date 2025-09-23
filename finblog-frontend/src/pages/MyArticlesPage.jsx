@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/MyArticlesPage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -6,7 +8,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { 
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -14,14 +16,14 @@ import {
   DropdownMenuTrigger,
 } from '../components/ui/dropdown-menu';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  MoreVertical, 
-  Edit, 
-  Trash2, 
-  Eye, 
+import {
+  Plus,
+  Search,
+  Filter,
+  MoreVertical,
+  Edit,
+  Trash2,
+  Eye,
   Calendar,
   User,
   FileText,
@@ -86,7 +88,6 @@ const MyArticlesPage = () => {
   const filterArticles = () => {
     let filtered = [...articles];
 
-    // Filtro per ricerca
     if (searchTerm) {
       filtered = filtered.filter(article =>
         article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -94,7 +95,6 @@ const MyArticlesPage = () => {
       );
     }
 
-    // Filtro per stato
     if (statusFilter !== 'all') {
       filtered = filtered.filter(article => {
         switch (statusFilter) {
@@ -110,14 +110,12 @@ const MyArticlesPage = () => {
       });
     }
 
-    // Filtro per categoria
     if (categoryFilter !== 'all') {
-      filtered = filtered.filter(article => 
+      filtered = filtered.filter(article =>
         article.category?.slug === categoryFilter
       );
     }
 
-    // Ordina per data di creazione (più recenti prima)
     filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
     setFilteredArticles(filtered);
@@ -154,14 +152,14 @@ const MyArticlesPage = () => {
       });
 
       if (response.ok) {
-        setArticles(prev => prev.map(article => 
-          article.id === articleId 
+        setArticles(prev => prev.map(article =>
+          article.id === articleId
             ? { ...article, published: !currentStatus }
             : article
         ));
         toast.success(
-          currentStatus 
-            ? 'Articolo rimosso dalla pubblicazione' 
+          currentStatus
+            ? 'Articolo rimosso dalla pubblicazione'
             : 'Articolo pubblicato'
         );
       } else {
@@ -219,7 +217,7 @@ const MyArticlesPage = () => {
   return (
     <RoleGuard user={user} requiredRoles={['collaborator', 'admin']}>
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
+        {}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2">I Miei Articoli</h1>
@@ -235,7 +233,7 @@ const MyArticlesPage = () => {
           </Link>
         </div>
 
-        {/* Statistiche */}
+        {}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           <Card>
             <CardContent className="pt-6">
@@ -248,7 +246,7 @@ const MyArticlesPage = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -260,7 +258,7 @@ const MyArticlesPage = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -272,7 +270,7 @@ const MyArticlesPage = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -286,7 +284,7 @@ const MyArticlesPage = () => {
           </Card>
         </div>
 
-        {/* Filtri */}
+        {}
         <Card className="mb-6">
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row gap-4">
@@ -302,7 +300,7 @@ const MyArticlesPage = () => {
                   />
                 </div>
               </div>
-              
+
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-40">
                   <SelectValue placeholder="Stato" />
@@ -332,20 +330,20 @@ const MyArticlesPage = () => {
           </CardContent>
         </Card>
 
-        {/* Lista articoli */}
+        {}
         {filteredArticles.length === 0 ? (
           <Card>
             <CardContent className="pt-6">
               <div className="text-center py-8">
                 <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
                 <h3 className="text-xl font-semibold mb-2">
-                  {articles.length === 0 
-                    ? 'Nessun articolo ancora' 
+                  {articles.length === 0
+                    ? 'Nessun articolo ancora'
                     : 'Nessun articolo trovato'
                   }
                 </h3>
                 <p className="text-muted-foreground mb-4">
-                  {articles.length === 0 
+                  {articles.length === 0
                     ? 'Inizia creando il tuo primo articolo'
                     : 'Prova a modificare i filtri di ricerca'
                   }
@@ -367,7 +365,7 @@ const MyArticlesPage = () => {
               <Card key={article.id} className="hover:shadow-md transition-shadow">
                 <CardContent className="pt-6">
                   <div className="flex gap-4">
-                    {/* Immagine copertina */}
+                    {}
                     {article.cover_image && (
                       <div className="w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg">
                         <img
@@ -377,25 +375,25 @@ const MyArticlesPage = () => {
                         />
                       </div>
                     )}
-                    
-                    {/* Contenuto */}
+
+                    {}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center space-x-2">
                           {getStatusBadge(article)}
                           {article.category && (
-                            <Badge 
+                            <Badge
                               variant="outline"
-                              style={{ 
+                              style={{
                                 borderColor: article.category.color,
-                                color: article.category.color 
+                                color: article.category.color
                               }}
                             >
                               {article.category.name}
                             </Badge>
                           )}
                         </div>
-                        
+
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="sm">
@@ -443,22 +441,22 @@ const MyArticlesPage = () => {
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </div>
-                      
+
                       <h3 className="text-lg font-semibold mb-2 line-clamp-2">
-                        <Link 
+                        <Link
                           to={`/admin/articles/edit/${article.id}`}
                           className="hover:text-primary transition-colors"
                         >
                           {article.title}
                         </Link>
                       </h3>
-                      
+
                       {article.excerpt && (
                         <p className="text-muted-foreground text-sm line-clamp-2 mb-3">
                           {article.excerpt}
                         </p>
                       )}
-                      
+
                       <div className="flex items-center justify-between text-sm text-muted-foreground">
                         <div className="flex items-center space-x-4">
                           <div className="flex items-center space-x-1">
@@ -472,7 +470,7 @@ const MyArticlesPage = () => {
                             </div>
                           )}
                         </div>
-                        
+
                         <div className="flex items-center space-x-4">
                           <div className="flex items-center space-x-1">
                             <Heart className="w-4 h-4" />

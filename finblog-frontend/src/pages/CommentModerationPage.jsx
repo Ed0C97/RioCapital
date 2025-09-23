@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/CommentModerationPage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -10,13 +12,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
 import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { 
-  MessageSquare, 
-  Search, 
-  Filter, 
-  Check, 
-  X, 
-  Flag, 
+import {
+  MessageSquare,
+  Search,
+  Filter,
+  Check,
+  X,
+  Flag,
   Eye,
   Calendar,
   User,
@@ -59,7 +61,7 @@ const CommentModerationPage = () => {
       const response = await fetch('/api/comments/moderate', {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setComments(data.comments || []);
@@ -75,12 +77,10 @@ const CommentModerationPage = () => {
   const filterComments = () => {
     let filtered = [...comments];
 
-    // Filtro per stato
     if (statusFilter !== 'all') {
       filtered = filtered.filter(comment => comment.status === statusFilter);
     }
 
-    // Filtro per ricerca
     if (searchTerm) {
       filtered = filtered.filter(comment =>
         comment.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -89,7 +89,6 @@ const CommentModerationPage = () => {
       );
     }
 
-    // Ordina per data (più recenti prima)
     filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
     setFilteredComments(filtered);
@@ -108,18 +107,18 @@ const CommentModerationPage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setComments(prev => prev.map(comment => 
-          comment.id === commentId 
+        setComments(prev => prev.map(comment =>
+          comment.id === commentId
             ? { ...comment, status: data.status, moderation_reason: reason }
             : comment
         ));
-        
+
         const actionText = {
           approve: 'approvato',
           reject: 'rifiutato',
           delete: 'eliminato'
         };
-        
+
         toast.success(`Commento ${actionText[action]}`);
       } else {
         toast.error('Errore durante la moderazione');
@@ -142,31 +141,31 @@ const CommentModerationPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          comment_ids: selectedComments, 
-          action, 
-          reason: moderationReason 
+        body: JSON.stringify({
+          comment_ids: selectedComments,
+          action,
+          reason: moderationReason
         }),
         credentials: 'include'
       });
 
       if (response.ok) {
         const data = await response.json();
-        setComments(prev => prev.map(comment => 
+        setComments(prev => prev.map(comment =>
           selectedComments.includes(comment.id)
             ? { ...comment, status: data.status, moderation_reason: moderationReason }
             : comment
         ));
-        
+
         setSelectedComments([]);
         setModerationReason('');
-        
+
         const actionText = {
           approve: 'approvati',
           reject: 'rifiutati',
           delete: 'eliminati'
         };
-        
+
         toast.success(`${selectedComments.length} commenti ${actionText[action]}`);
       } else {
         toast.error('Errore durante la moderazione multipla');
@@ -178,7 +177,7 @@ const CommentModerationPage = () => {
   };
 
   const toggleCommentSelection = (commentId) => {
-    setSelectedComments(prev => 
+    setSelectedComments(prev =>
       prev.includes(commentId)
         ? prev.filter(id => id !== commentId)
         : [...prev, commentId]
@@ -246,7 +245,7 @@ const CommentModerationPage = () => {
   return (
     <RoleGuard user={user} requiredRole="admin">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
+        {}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2 flex items-center space-x-2">
             <MessageSquare className="w-8 h-8" />
@@ -257,7 +256,7 @@ const CommentModerationPage = () => {
           </p>
         </div>
 
-        {/* Statistiche */}
+        {}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
           <Card>
             <CardContent className="pt-6 text-center">
@@ -291,7 +290,7 @@ const CommentModerationPage = () => {
           </Card>
         </div>
 
-        {/* Filtri e azioni */}
+        {}
         <Card className="mb-6">
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row gap-4 mb-4">
@@ -307,7 +306,7 @@ const CommentModerationPage = () => {
                   />
                 </div>
               </div>
-              
+
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-48">
                   <Filter className="w-4 h-4 mr-2" />
@@ -323,7 +322,7 @@ const CommentModerationPage = () => {
               </Select>
             </div>
 
-            {/* Azioni multiple */}
+            {}
             {selectedComments.length > 0 && (
               <div className="border-t pt-4">
                 <div className="flex items-center justify-between mb-4">
@@ -354,7 +353,7 @@ const CommentModerationPage = () => {
                     </Button>
                   </div>
                 </div>
-                
+
                 <Textarea
                   placeholder="Motivo della moderazione (opzionale)"
                   value={moderationReason}
@@ -366,20 +365,20 @@ const CommentModerationPage = () => {
           </CardContent>
         </Card>
 
-        {/* Lista commenti */}
+        {}
         {filteredComments.length === 0 ? (
           <Card>
             <CardContent className="pt-6">
               <div className="text-center py-8">
                 <MessageSquare className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
                 <h3 className="text-xl font-semibold mb-2">
-                  {comments.length === 0 
-                    ? 'Nessun commento da moderare' 
+                  {comments.length === 0
+                    ? 'Nessun commento da moderare'
                     : 'Nessun commento trovato'
                   }
                 </h3>
                 <p className="text-muted-foreground">
-                  {comments.length === 0 
+                  {comments.length === 0
                     ? 'Tutti i commenti sono stati moderati'
                     : 'Prova a modificare i filtri di ricerca'
                   }
@@ -418,7 +417,7 @@ const CommentModerationPage = () => {
                         </AvatarFallback>
                       </Avatar>
                     </div>
-                    
+
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center space-x-2 flex-wrap">
@@ -430,7 +429,7 @@ const CommentModerationPage = () => {
                             </Badge>
                           )}
                         </div>
-                        
+
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="sm">
@@ -466,7 +465,7 @@ const CommentModerationPage = () => {
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </div>
-                      
+
                       <div className="mb-3">
                         <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-2">
                           <User className="w-4 h-4" />
@@ -475,10 +474,10 @@ const CommentModerationPage = () => {
                           <Calendar className="w-4 h-4" />
                           <span>{formatDate(comment.created_at)}</span>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-3">
                           <FileText className="w-4 h-4" />
-                          <Link 
+                          <Link
                             to={`/articolo/${comment.article?.slug}`}
                             className="hover:text-primary transition-colors line-clamp-1"
                             target="_blank"
@@ -487,13 +486,13 @@ const CommentModerationPage = () => {
                           </Link>
                         </div>
                       </div>
-                      
+
                       <div className="bg-muted/50 rounded-lg p-3 mb-3">
                         <p className="text-foreground whitespace-pre-wrap">
                           {comment.content}
                         </p>
                       </div>
-                      
+
                       {comment.moderation_reason && (
                         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
                           <div className="flex items-center space-x-2 mb-1">
@@ -507,7 +506,7 @@ const CommentModerationPage = () => {
                           </p>
                         </div>
                       )}
-                      
+
                       {comment.status === 'pending' && (
                         <div className="flex items-center space-x-2 mt-3">
                           <Button

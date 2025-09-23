@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/ui/pagination.jsx
+
 import * as React from "react"
 import {
   ChevronLeftIcon,

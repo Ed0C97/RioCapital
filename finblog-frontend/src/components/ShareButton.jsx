@@ -1,29 +1,31 @@
+// finblog-frontend/src/components/ShareButton.jsx
+
 import React, { useState } from 'react';
 import { Button } from './ui/button';
-import { 
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
-import { 
-  Share2, 
-  Facebook, 
-  Twitter, 
-  Linkedin, 
-  Link, 
+import {
+  Share2,
+  Facebook,
+  Twitter,
+  Linkedin,
+  Link,
   Mail,
   MessageCircle
 } from 'lucide-react';
 import { toast } from 'sonner';
 
-const ShareButton = ({ 
-  articleId, 
-  title, 
-  url, 
-  variant = "ghost", 
+const ShareButton = ({
+  articleId,
+  title,
+  url,
+  variant = "ghost",
   size = "sm",
-  showText = false 
+  showText = false
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,9 +39,9 @@ const ShareButton = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          article_id: articleId, 
-          platform 
+        body: JSON.stringify({
+          article_id: articleId,
+          platform
         }),
         credentials: 'include'
       });
@@ -110,7 +112,7 @@ const ShareButton = ({
           toast.success('Link copiato negli appunti!');
           trackShare('copy');
         } catch (error) {
-          // Fallback per browser che non supportano clipboard API
+
           const textArea = document.createElement('textarea');
           textArea.value = shareUrl;
           document.body.appendChild(textArea);

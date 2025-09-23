@@ -1,25 +1,27 @@
+// finblog-frontend/src/pages/AdminAnalyticsPage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useAnalytics } from '../hooks/useAnalytics';
 import RoleGuard from '../components/RoleGuard';
-import { 
-  ArticlesOverTimeChart, 
-  UsersGrowthChart, 
-  RevenueChart, 
-  CategoriesChart, 
+import {
+  ArticlesOverTimeChart,
+  UsersGrowthChart,
+  RevenueChart,
+  CategoriesChart,
   AuthorsChart,
-  EngagementChart 
+  EngagementChart
 } from '../components/AnalyticsChart';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { 
-  BarChart3, 
-  Users, 
-  FileText, 
-  MessageSquare, 
-  Heart, 
+import {
+  BarChart3,
+  Users,
+  FileText,
+  MessageSquare,
+  Heart,
   DollarSign,
   TrendingUp,
   TrendingDown,
@@ -145,7 +147,7 @@ const AdminAnalyticsPage = () => {
   return (
     <RoleGuard user={user} requiredRole="admin">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
+        {}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2 flex items-center space-x-2">
@@ -156,7 +158,7 @@ const AdminAnalyticsPage = () => {
               Panoramica completa delle performance del blog
             </p>
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <Select value={timeRange} onValueChange={(value) => {
               setTimeRange(value);
@@ -174,7 +176,7 @@ const AdminAnalyticsPage = () => {
                 ))}
               </SelectContent>
             </Select>
-            
+
             <Button
               variant="outline"
               onClick={handleRefresh}
@@ -186,7 +188,7 @@ const AdminAnalyticsPage = () => {
           </div>
         </div>
 
-        {/* Overview Stats */}
+        {}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {overviewStats.map((stat, index) => (
             <Card key={index}>
@@ -219,7 +221,7 @@ const AdminAnalyticsPage = () => {
           ))}
         </div>
 
-        {/* Charts */}
+        {}
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="overview">Panoramica</TabsTrigger>
@@ -242,8 +244,8 @@ const AdminAnalyticsPage = () => {
               <AuthorsChart data={analytics.charts.topAuthors} />
               <CategoriesChart data={analytics.charts.topCategories} />
             </div>
-            
-            {/* Top Articles */}
+
+            {}
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <div>
@@ -370,7 +372,7 @@ const AdminAnalyticsPage = () => {
           </TabsContent>
         </Tabs>
 
-        {/* Export Section */}
+        {}
         <Card className="mt-8">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">

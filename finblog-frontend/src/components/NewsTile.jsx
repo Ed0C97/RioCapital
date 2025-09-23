@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/NewsTile.jsx
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Clock } from 'lucide-react';
@@ -24,7 +26,6 @@ const NewsTile = ({ article, variant = 'standard' }) => {
 
   const placeholderImage = 'https://images.unsplash.com/photo-1518186225043-963158e70a41?q=80&w=1974&auto=format&fit=crop';
 
-  // Card "Hero" a due blocchi (usata nella HomePage)
   if (variant === 'hero') {
     return (
       <Link to={`/articolo/${article.slug}`} className="news-card-link">
@@ -47,7 +48,6 @@ const NewsTile = ({ article, variant = 'standard' }) => {
     );
   }
 
-  // Card "Standard" con immagine sopra e testo sotto (usata nell'Archivio)
   return (
     <Link to={`/articolo/${article.slug}`} className="news-card-link">
       <div className="news-card news-card--standard">

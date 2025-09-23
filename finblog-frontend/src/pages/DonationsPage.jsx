@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/DonationsPage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import RoleGuard from '../components/RoleGuard';
@@ -6,11 +8,11 @@ import { Input } from '../components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { 
-  DollarSign, 
-  Search, 
-  Filter, 
-  Download, 
+import {
+  DollarSign,
+  Search,
+  Filter,
+  Download,
   Calendar,
   User,
   CreditCard,
@@ -53,7 +55,7 @@ const DonationsPage = () => {
       const response = await fetch('/api/donations/list', {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setDonations(data.donations || []);
@@ -69,7 +71,6 @@ const DonationsPage = () => {
   const filterDonations = () => {
     let filtered = [...donations];
 
-    // Filtro per ricerca
     if (searchTerm) {
       filtered = filtered.filter(donation =>
         donation.donor_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -78,16 +79,14 @@ const DonationsPage = () => {
       );
     }
 
-    // Filtro per stato
     if (statusFilter !== 'all') {
       filtered = filtered.filter(donation => donation.status === statusFilter);
     }
 
-    // Filtro per tempo
     if (timeFilter !== 'all') {
       const now = new Date();
       const filterDate = new Date();
-      
+
       switch (timeFilter) {
         case 'today':
           filterDate.setHours(0, 0, 0, 0);
@@ -102,15 +101,14 @@ const DonationsPage = () => {
           filterDate.setFullYear(now.getFullYear() - 1);
           break;
       }
-      
+
       if (timeFilter !== 'all') {
-        filtered = filtered.filter(donation => 
+        filtered = filtered.filter(donation =>
           new Date(donation.created_at) >= filterDate
         );
       }
     }
 
-    // Ordina per data (più recenti prima)
     filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
     setFilteredDonations(filtered);
@@ -121,29 +119,27 @@ const DonationsPage = () => {
     const totalAmount = donations.reduce((sum, d) => sum + (d.amount || 0), 0);
     const averageAmount = total > 0 ? totalAmount / total : 0;
 
-    // Donazioni di questo mese
     const thisMonth = new Date();
     thisMonth.setDate(1);
     thisMonth.setHours(0, 0, 0, 0);
-    
-    const thisMonthDonations = donations.filter(d => 
+
+    const thisMonthDonations = donations.filter(d =>
       new Date(d.created_at) >= thisMonth
     );
     const thisMonthCount = thisMonthDonations.length;
     const thisMonthAmount = thisMonthDonations.reduce((sum, d) => sum + (d.amount || 0), 0);
 
-    // Top donatore
     const donorAmounts = {};
     donations.forEach(d => {
       if (d.donor_email && !d.anonymous) {
         donorAmounts[d.donor_email] = (donorAmounts[d.donor_email] || 0) + d.amount;
       }
     });
-    
-    const topDonorEmail = Object.keys(donorAmounts).reduce((a, b) => 
+
+    const topDonorEmail = Object.keys(donorAmounts).reduce((a, b) =>
       donorAmounts[a] > donorAmounts[b] ? a : b, null
     );
-    
+
     const topDonor = topDonorEmail ? {
       email: topDonorEmail,
       amount: donorAmounts[topDonorEmail],
@@ -165,7 +161,7 @@ const DonationsPage = () => {
       const response = await fetch(`/api/donations/export?format=${format}`, {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
@@ -244,7 +240,7 @@ const DonationsPage = () => {
   return (
     <RoleGuard user={user} requiredRole="admin">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
+        {}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2 flex items-center space-x-2">
@@ -255,7 +251,7 @@ const DonationsPage = () => {
               Visualizza e gestisci tutte le donazioni ricevute
             </p>
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <Button
               variant="outline"
@@ -274,7 +270,7 @@ const DonationsPage = () => {
           </div>
         </div>
 
-        {/* Statistiche */}
+        {}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardContent className="pt-6">
@@ -287,7 +283,7 @@ const DonationsPage = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -301,7 +297,7 @@ const DonationsPage = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -315,7 +311,7 @@ const DonationsPage = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -334,7 +330,7 @@ const DonationsPage = () => {
           </Card>
         </div>
 
-        {/* Top Donatore */}
+        {}
         {stats.topDonor && (
           <Card className="mb-8">
             <CardHeader>
@@ -366,7 +362,7 @@ const DonationsPage = () => {
           </Card>
         )}
 
-        {/* Filtri */}
+        {}
         <Card className="mb-6">
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row gap-4">
@@ -382,7 +378,7 @@ const DonationsPage = () => {
                   />
                 </div>
               </div>
-              
+
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-40">
                   <SelectValue placeholder="Stato" />
@@ -412,20 +408,20 @@ const DonationsPage = () => {
           </CardContent>
         </Card>
 
-        {/* Lista donazioni */}
+        {}
         {filteredDonations.length === 0 ? (
           <Card>
             <CardContent className="pt-6">
               <div className="text-center py-8">
                 <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
                 <h3 className="text-xl font-semibold mb-2">
-                  {donations.length === 0 
-                    ? 'Nessuna donazione ancora' 
+                  {donations.length === 0
+                    ? 'Nessuna donazione ancora'
                     : 'Nessuna donazione trovata'
                   }
                 </h3>
                 <p className="text-muted-foreground">
-                  {donations.length === 0 
+                  {donations.length === 0
                     ? 'Le donazioni appariranno qui quando ricevute'
                     : 'Prova a modificare i filtri di ricerca'
                   }
@@ -451,8 +447,8 @@ const DonationsPage = () => {
                       </div>
                       <div>
                         <h3 className="font-medium">
-                          {donation.anonymous 
-                            ? 'Donatore Anonimo' 
+                          {donation.anonymous
+                            ? 'Donatore Anonimo'
                             : donation.donor_name || 'Nome non fornito'
                           }
                         </h3>
@@ -463,7 +459,7 @@ const DonationsPage = () => {
                         )}
                       </div>
                     </div>
-                    
+
                     <div className="text-right">
                       <div className="text-2xl font-bold text-green-600 mb-1">
                         {formatCurrency(donation.amount)}
@@ -471,7 +467,7 @@ const DonationsPage = () => {
                       {getStatusBadge(donation.status)}
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
                     <div className="flex items-center space-x-4">
                       <div className="flex items-center space-x-1">
@@ -483,14 +479,14 @@ const DonationsPage = () => {
                         <span className="capitalize">{donation.payment_method}</span>
                       </div>
                     </div>
-                    
+
                     {donation.transaction_id && (
                       <div className="text-xs font-mono">
                         ID: {donation.transaction_id}
                       </div>
                     )}
                   </div>
-                  
+
                   {donation.message && (
                     <div className="bg-muted/50 rounded-lg p-3">
                       <p className="text-sm italic">

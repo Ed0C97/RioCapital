@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/CategoriesPage.jsx
+
 import React, { useState, useEffect, useCallback} from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -6,12 +8,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { 
-  Search, 
-  TrendingUp, 
-  DollarSign, 
-  PieChart, 
-  Coins, 
+import {
+  Search,
+  TrendingUp,
+  DollarSign,
+  PieChart,
+  Coins,
   CreditCard,
   ArrowRight,
   BookOpen,
@@ -26,7 +28,7 @@ const CategoriesPage = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
-    loop: true, // Opzionale: rende il carosello infinito
+    loop: true,
   });
 
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
@@ -107,9 +109,9 @@ const CategoriesPage = () => {
   }
 
   return (
-    // Il contenitore principale ora non ha limiti di larghezza
+
     <div>
-      {/* 1. Parte Superiore (Header e Statistiche) - DENTRO un container */}
+      {}
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4 finblog-text-gradient">Categorie</h1>
@@ -130,11 +132,11 @@ const CategoriesPage = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {/* ... le tue card delle statistiche ... */}
+          {}
         </div>
       </div>
 
-      {/* 2. Carosello - FUORI dal container per occupare tutta la larghezza */}
+      {}
       <div className="embla mb-16">
         <div className="embla__viewport" ref={emblaRef}>
           <div className="embla__container">
@@ -170,7 +172,7 @@ const CategoriesPage = () => {
           </div>
         </div>
 
-        {/* Pulsanti di navigazione del carosello con SVG personalizzati */}
+        {}
         <button className="embla__button embla__button--prev" onClick={scrollPrev} disabled={prevBtnDisabled}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
             <path d="M21.559,12.062 L15.618,17.984 L21.5221,23.944 C22.105,24.533 22.1021,25.482 21.5131,26.065 C21.2211,26.355 20.8391,26.4999987 20.4571,26.4999987 C20.0711,26.4999987 19.6851,26.352 19.3921,26.056 L12.4351,19.034 C11.8531,18.446 11.8551,17.4999987 12.4411,16.916 L19.4411,9.938 C20.0261,9.353 20.9781,9.354 21.5621,9.941 C22.1471,10.528 22.1451,11.478 21.5591,12.062 L21.559,12.062 Z"></path>
@@ -183,7 +185,7 @@ const CategoriesPage = () => {
         </button>
       </div>
 
-      {/* 3. Parte Finale (Suggerimenti) - DI NUOVO DENTRO un container */}
+      {}
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
           <Card className="max-w-2xl mx-auto">

@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/ui/carousel.jsx
+
 "use client";
 import * as React from "react"
 import useEmblaCarousel from "embla-carousel-react";

@@ -1,12 +1,14 @@
+// finblog-frontend/src/components/Footer.jsx
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { 
-  Facebook, 
-  Twitter, 
-  Instagram, 
-  Linkedin, 
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
   Mail,
   Heart
 } from 'lucide-react';
@@ -43,7 +45,7 @@ const Footer = () => {
     <footer className="bg-muted/30 border-t border-border">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo e Descrizione */}
+          {}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 finblog-gradient rounded-lg flex items-center justify-center">
@@ -52,7 +54,7 @@ const Footer = () => {
               <span className="text-xl font-bold finblog-text-gradient">FinBlog</span>
             </div>
             <p className="text-muted-foreground text-sm">
-              Il tuo blog finanziario di fiducia. Notizie, analisi e consigli per navigare 
+              Il tuo blog finanziario di fiducia. Notizie, analisi e consigli per navigare
               nel mondo degli investimenti e della finanza personale.
             </p>
             <div className="flex space-x-4">
@@ -71,7 +73,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Link Rapidi */}
+          {}
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Link Rapidi</h3>
             <div className="space-y-2">
@@ -93,7 +95,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Categorie */}
+          {}
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Categorie</h3>
             <div className="space-y-2">
@@ -115,7 +117,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Newsletter */}
+          {}
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Newsletter</h3>
             <p className="text-muted-foreground text-sm">
@@ -137,7 +139,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Divider */}
+        {}
         <div className="border-t border-border mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-muted-foreground text-sm">
@@ -157,4 +159,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

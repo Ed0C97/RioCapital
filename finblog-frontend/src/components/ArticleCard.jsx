@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/ArticleCard.jsx
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
@@ -23,7 +25,7 @@ const ArticleCard = ({
   isFavorited = false,
   showActions = true
 }) => {
-  // Le tue funzioni handleLike, handleFavorite, etc. sono corrette e rimangono qui
+
   const handleLike = (e) => { e.preventDefault(); e.stopPropagation(); onLike?.(article.id); };
   const handleFavorite = (e) => { e.preventDefault(); e.stopPropagation(); onFavorite?.(article.id); };
   const handleShare = (e) => { e.preventDefault(); e.stopPropagation(); onShare?.(article); };
@@ -37,10 +39,7 @@ const ArticleCard = ({
   return (
     <Link to={`/articolo/${article.slug}`} className="block h-full group">
 
-      {/*
-        Questo DIV sostituisce <Card>.
-        Applichiamo lo stile Apple direttamente qui con le classi Tailwind.
-      */}
+      {}
       <div className="
         h-full
         flex flex-col
@@ -53,7 +52,7 @@ const ArticleCard = ({
         overflow-hidden
       ">
 
-        {/* Immagine di Copertina */}
+        {}
         {article.image_url && (
           <div className="relative h-48 flex-shrink-0">
             <img
@@ -71,7 +70,7 @@ const ArticleCard = ({
           </div>
         )}
 
-        {/* Contenuto Testuale (Padding applicato qui) */}
+        {}
         <div className="p-5 flex flex-col flex-grow">
           <h3 className="font-semibold text-lg line-clamp-2 mb-2 group-hover:text-primary transition-colors">
             {article.title}
@@ -83,7 +82,7 @@ const ArticleCard = ({
             </p>
           )}
 
-          {/* Autore e Data (spinti in fondo) */}
+          {}
           <div className="flex items-center space-x-4 text-xs text-muted-foreground mt-auto pt-4">
             <div className="flex items-center space-x-1">
               <User className="w-4 h-4" />
@@ -96,7 +95,7 @@ const ArticleCard = ({
           </div>
         </div>
 
-        {/* Footer con Azioni (se mostrato) */}
+        {}
         {showActions && (
           <div className="px-4 py-3 border-t">
             <div className="flex items-center justify-between w-full">

@@ -1,3 +1,5 @@
+// finblog-frontend/src/hooks/useAnalytics.js
+
 import { useState, useEffect } from 'react';
 
 export const useAnalytics = (user) => {
@@ -26,15 +28,15 @@ export const useAnalytics = (user) => {
 
   const fetchAnalytics = async (timeRange = '30d') => {
     if (!user || user.role !== 'admin') return;
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await fetch(`/api/analytics/dashboard?range=${timeRange}`, {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setAnalytics(data);
@@ -51,48 +53,48 @@ export const useAnalytics = (user) => {
 
   const fetchArticleAnalytics = async (articleId) => {
     if (!user || user.role !== 'admin') return null;
-    
+
     try {
       const response = await fetch(`/api/analytics/article/${articleId}`, {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         return await response.json();
       }
     } catch (error) {
       console.error('Errore analytics articolo:', error);
     }
-    
+
     return null;
   };
 
   const fetchUserAnalytics = async (userId) => {
     if (!user || user.role !== 'admin') return null;
-    
+
     try {
       const response = await fetch(`/api/analytics/user/${userId}`, {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         return await response.json();
       }
     } catch (error) {
       console.error('Errore analytics utente:', error);
     }
-    
+
     return null;
   };
 
   const exportAnalytics = async (type, format = 'csv', timeRange = '30d') => {
     if (!user || user.role !== 'admin') return;
-    
+
     try {
       const response = await fetch(`/api/analytics/export?type=${type}&format=${format}&range=${timeRange}`, {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);

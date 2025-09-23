@@ -1,3 +1,5 @@
+# finblog-backend/src/routes/donations.py
+
 from flask import Blueprint, request, jsonify, make_response
 from flask_login import login_required, current_user
 from sqlalchemy import desc, func, extract
@@ -16,14 +18,14 @@ def create_donation():
     """Crea una nuova donazione"""
     try:
         data = request.get_json()
-        
+
         required_fields = ['amount', 'payment_method']
         if not all(field in data for field in required_fields):
             return jsonify({'success': False, 'message': 'Dati mancanti'}), 400
-        
+
         if data['amount'] <= 0:
             return jsonify({'success': False, 'message': 'Importo non valido'}), 400
-        
+
         donation = Donation(
             donor_name=data.get('donor_name', '').strip() if not data.get('anonymous', False) else None,
             donor_email=data.get('donor_email', '').strip() if not data.get('anonymous', False) else None,
@@ -34,22 +36,20 @@ def create_donation():
             payment_method=data['payment_method'],
             status='pending'
         )
-        
+
         db.session.add(donation)
         db.session.commit()
-        
-        # Qui dovresti integrare con il sistema di pagamento (Stripe, PayPal, etc.)
-        # Per ora simuliamo il successo
+
         donation.status = 'completed'
         donation.transaction_id = f"TXN_{donation.id}_{int(datetime.utcnow().timestamp())}"
         db.session.commit()
-        
+
         return jsonify({
             'success': True,
             'message': 'Donazione completata con successo!',
             'donation': donation.to_dict()
         }), 201
-        
+
     except Exception as e:
         db.session.rollback()
         logging.error(f"Errore nella creazione donazione: {e}")
@@ -63,16 +63,16 @@ def get_donations():
         page = request.args.get('page', 1, type=int)
         per_page = min(request.args.get('per_page', 50, type=int), 100)
         status = request.args.get('status', 'all')
-        
+
         query = Donation.query
-        
+
         if status != 'all':
             query = query.filter_by(status=status)
-        
+
         donations = query.order_by(desc(Donation.created_at)).paginate(
             page=page, per_page=per_page, error_out=False
         )
-        
+
         return jsonify({
             'success': True,
             'donations': [donation.to_dict() for donation in donations.items],
@@ -83,7 +83,7 @@ def get_donations():
                 'total': donations.total
             }
         })
-        
+
     except Exception as e:
         logging.error(f"Errore nel caricamento donazioni: {e}")
         return jsonify({'success': False, 'message': 'Errore interno del server'}), 500
@@ -93,11 +93,10 @@ def get_donations():
 def get_donation_stats():
     """Ottieni statistiche donazioni"""
     try:
-        # Statistiche generali
+
         total_donations = db.session.query(func.count(Donation.id)).filter_by(status='completed').scalar()
         total_amount = db.session.query(func.sum(Donation.amount)).filter_by(status='completed').scalar() or 0
-        
-        # Questo mese
+
         current_month = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         this_month_donations = db.session.query(func.count(Donation.id))\
             .filter(Donation.status == 'completed')\
@@ -105,8 +104,7 @@ def get_donation_stats():
         this_month_amount = db.session.query(func.sum(Donation.amount))\
             .filter(Donation.status == 'completed')\
             .filter(Donation.created_at >= current_month).scalar() or 0
-        
-        # Top donatore
+
         top_donor = db.session.query(
             Donation.donor_email,
             Donation.donor_name,
@@ -117,11 +115,10 @@ def get_donation_stats():
             Donation.donor_email.isnot(None)
         ).group_by(Donation.donor_email, Donation.donor_name)\
          .order_by(desc('total_amount')).first()
-        
-        # Donazione più alta
+
         max_donation = db.session.query(func.max(Donation.amount))\
             .filter_by(status='completed').scalar() or 0
-        
+
         return jsonify({
             'success': True,
             'stats': {
@@ -138,7 +135,7 @@ def get_donation_stats():
                 } if top_donor else None
             }
         })
-        
+
     except Exception as e:
         logging.error(f"Errore nelle statistiche donazioni: {e}")
         return jsonify({'success': False, 'message': 'Errore interno del server'}), 500
@@ -148,17 +145,15 @@ def get_recent_donations():
     """Ottieni donazioni recenti pubbliche (per homepage)"""
     try:
         limit = min(request.args.get('limit', 10, type=int), 50)
-        
-        # Solo donazioni completate e non anonime degli ultimi 30 giorni
+
         thirty_days_ago = datetime.utcnow() - timedelta(days=30)
-        
+
         donations = Donation.query.filter(
             Donation.status == 'completed',
             Donation.anonymous == False,
             Donation.created_at >= thirty_days_ago
         ).order_by(desc(Donation.created_at)).limit(limit).all()
-        
-        # Rimuovi informazioni sensibili per la visualizzazione pubblica
+
         public_donations = []
         for donation in donations:
             public_donations.append({
@@ -167,12 +162,12 @@ def get_recent_donations():
                 'message': donation.message,
                 'created_at': donation.created_at.isoformat()
             })
-        
+
         return jsonify({
             'success': True,
             'donations': public_donations
         })
-        
+
     except Exception as e:
         logging.error(f"Errore nel caricamento donazioni recenti: {e}")
         return jsonify({'success': False, 'message': 'Errore interno del server'}), 500
@@ -183,21 +178,19 @@ def export_donations():
     """Esporta donazioni in CSV"""
     try:
         format_type = request.args.get('format', 'csv')
-        
+
         donations = Donation.query.order_by(desc(Donation.created_at)).all()
-        
+
         if format_type == 'csv':
             output = io.StringIO()
             writer = csv.writer(output)
-            
-            # Header
+
             writer.writerow([
-                'ID', 'Nome Donatore', 'Email', 'Importo', 'Valuta', 
-                'Messaggio', 'Anonimo', 'Metodo Pagamento', 'ID Transazione', 
+                'ID', 'Nome Donatore', 'Email', 'Importo', 'Valuta',
+                'Messaggio', 'Anonimo', 'Metodo Pagamento', 'ID Transazione',
                 'Stato', 'Data Creazione'
             ])
-            
-            # Dati
+
             for donation in donations:
                 writer.writerow([
                     donation.id,
@@ -212,17 +205,17 @@ def export_donations():
                     donation.status,
                     donation.created_at.strftime('%Y-%m-%d %H:%M:%S')
                 ])
-            
+
             output.seek(0)
-            
+
             response = make_response(output.getvalue())
             response.headers['Content-Type'] = 'text/csv'
             response.headers['Content-Disposition'] = f'attachment; filename=donazioni_{datetime.now().strftime("%Y%m%d")}.csv'
-            
+
             return response
-        
+
         return jsonify({'success': False, 'message': 'Formato non supportato'}), 400
-        
+
     except Exception as e:
         logging.error(f"Errore nell'export donazioni: {e}")
         return jsonify({'success': False, 'message': 'Errore interno del server'}), 500
@@ -233,20 +226,19 @@ def refund_donation(donation_id):
     """Rimborsa una donazione"""
     try:
         donation = Donation.query.get_or_404(donation_id)
-        
+
         if donation.status != 'completed':
             return jsonify({'success': False, 'message': 'Solo donazioni completate possono essere rimborsate'}), 400
-        
-        # Qui dovresti integrare con il sistema di pagamento per il rimborso effettivo
+
         donation.status = 'refunded'
         db.session.commit()
-        
+
         return jsonify({
             'success': True,
             'message': 'Donazione rimborsata',
             'donation': donation.to_dict()
         })
-        
+
     except Exception as e:
         db.session.rollback()
         logging.error(f"Errore nel rimborso donazione: {e}")

@@ -1,15 +1,17 @@
+// finblog-frontend/src/pages/AdminDashboard.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { 
-  PenTool, 
-  Plus, 
-  Search, 
-  Edit, 
-  Trash2, 
+import {
+  PenTool,
+  Plus,
+  Search,
+  Edit,
+  Trash2,
   Eye,
   BarChart3,
   Users,
@@ -40,7 +42,7 @@ const AdminDashboard = ({ user }) => {
       const response = await fetch('/api/my-articles', {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setArticles(data.articles);
@@ -53,7 +55,7 @@ const AdminDashboard = ({ user }) => {
   const fetchCategories = async () => {
     try {
       const response = await fetch('/api/categories');
-      
+
       if (response.ok) {
         const data = await response.json();
         setCategories(data.categories);
@@ -66,7 +68,7 @@ const AdminDashboard = ({ user }) => {
   };
 
   const fetchStats = async () => {
-    // Simula statistiche per la demo
+
     setStats({
       totalArticles: 12,
       publishedArticles: 8,
@@ -116,7 +118,7 @@ const AdminDashboard = ({ user }) => {
   return (
     <div className="min-h-screen bg-muted/30 py-8">
       <div className="container mx-auto px-4">
-        {/* Header */}
+        {}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2">Dashboard Autore</h1>
@@ -132,7 +134,7 @@ const AdminDashboard = ({ user }) => {
           </Link>
         </div>
 
-        {/* Statistiche */}
+        {}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardContent className="p-6">
@@ -145,7 +147,7 @@ const AdminDashboard = ({ user }) => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -157,7 +159,7 @@ const AdminDashboard = ({ user }) => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -169,7 +171,7 @@ const AdminDashboard = ({ user }) => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -183,7 +185,7 @@ const AdminDashboard = ({ user }) => {
           </Card>
         </div>
 
-        {/* Filtri e Ricerca */}
+        {}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
@@ -204,7 +206,7 @@ const AdminDashboard = ({ user }) => {
               </div>
             </div>
 
-            {/* Lista Articoli */}
+            {}
             <div className="space-y-4">
               {filteredArticles.length === 0 ? (
                 <div className="text-center py-8">
@@ -227,7 +229,7 @@ const AdminDashboard = ({ user }) => {
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-2">
-                            <Badge 
+                            <Badge
                               className="finblog-category-badge"
                               style={{ backgroundColor: article.category_color || '#007BFF' }}
                             >
@@ -237,17 +239,17 @@ const AdminDashboard = ({ user }) => {
                               {article.published ? "Pubblicato" : "Bozza"}
                             </Badge>
                           </div>
-                          
+
                           <h3 className="text-lg font-semibold mb-2 line-clamp-2">
                             {article.title}
                           </h3>
-                          
+
                           {article.excerpt && (
                             <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
                               {article.excerpt}
                             </p>
                           )}
-                          
+
                           <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                             <span>Creato: {new Date(article.created_at).toLocaleDateString()}</span>
                             <span>•</span>
@@ -256,7 +258,7 @@ const AdminDashboard = ({ user }) => {
                             <span>{article.likes_count || 0} like</span>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2 ml-4">
                           <Link to={`/article/${article.id}`}>
                             <Button variant="ghost" size="sm">
@@ -268,8 +270,8 @@ const AdminDashboard = ({ user }) => {
                               <Edit className="w-4 h-4" />
                             </Button>
                           </Link>
-                          <Button 
-                            variant="ghost" 
+                          <Button
+                            variant="ghost"
                             size="sm"
                             onClick={() => handleDeleteArticle(article.id)}
                             className="text-red-500 hover:text-red-700"
@@ -291,4 +293,3 @@ const AdminDashboard = ({ user }) => {
 };
 
 export default AdminDashboard;
-

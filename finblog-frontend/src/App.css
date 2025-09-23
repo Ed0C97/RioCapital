@@ -1,11 +1,9 @@
-/* === Dichiarazione del Font Locale "SF Pro Display" === */
-
-/* --- Stili Normali (non corsivo) --- */
+/* finblog-frontend/src/App.css */
 
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYREGULAR.OTF') format('opentype');
-  font-weight: 400; /* Regular */
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -13,7 +11,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYMEDIUM.OTF') format('opentype');
-  font-weight: 500; /* Medium */
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
@@ -21,17 +19,15 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYBOLD.OTF') format('opentype');
-  font-weight: 700; /* Bold */
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
-/* --- Stili Corsivo (italic) --- */
-
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYULTRALIGHTITALIC.OTF') format('opentype');
-  font-weight: 100; /* Ultralight */
+  font-weight: 100;
   font-style: italic;
   font-display: swap;
 }
@@ -39,7 +35,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYTHINITALIC.OTF') format('opentype');
-  font-weight: 200; /* Thin */
+  font-weight: 200;
   font-style: italic;
   font-display: swap;
 }
@@ -47,7 +43,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYLIGHTITALIC.OTF') format('opentype');
-  font-weight: 300; /* Light */
+  font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
@@ -55,7 +51,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYSEMIBOLDITALIC.OTF') format('opentype');
-  font-weight: 600; /* Semibold */
+  font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
@@ -63,7 +59,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYHEAVYITALIC.OTF') format('opentype');
-  font-weight: 800; /* Heavy */
+  font-weight: 800;
   font-style: italic;
   font-display: swap;
 }
@@ -71,7 +67,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYBLACKITALIC.OTF') format('opentype');
-  font-weight: 900; /* Black */
+  font-weight: 900;
   font-style: italic;
   font-display: swap;
 }
@@ -127,13 +123,13 @@
   --card-foreground: oklch(0.2 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0 0);
-  --primary: oklch(0.5 0.15 240); /* Blu finanziario */
+  --primary: oklch(0.5 0.15 240);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.6 0.15 140); /* Verde successo */
+  --secondary: oklch(0.6 0.15 140);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.96 0 0);
   --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.7 0.15 60); /* Giallo opportunità */
+  --accent: oklch(0.7 0.15 60);
   --accent-foreground: oklch(0.2 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.9 0 0);
@@ -195,13 +191,10 @@
   body {
     @apply bg-background text-foreground;
 
-    /* --- AGGIUNGI QUESTA RIGA --- */
     font-family: 'SF Pro Display', sans-serif;
   }
 }
 
-
-/* Stili personalizzati per FinBlog */
 .finblog-gradient {
   background: linear-gradient(135deg, oklch(0.5 0.15 240) 0%, oklch(0.6 0.15 140) 100%);
 }
@@ -276,7 +269,6 @@
   }
 }
 
-/* In fondo a App.css */
 .article-content {
   line-height: 1.7;
 }
@@ -316,7 +308,6 @@
   color: #6b7280;
 }
 
-/* --- 2. Stile per il contenuto degli Articoli (Markdown) --- */
 .article-content {
   line-height: 1.7;
   font-size: 1.125rem;
@@ -337,17 +328,14 @@
   margin: 1.5rem 0; font-style: italic; color: #6b7280;
 }
 
-
-/* --- 3. Layout a Mosaico per la Homepage --- */
 .news-grid {
   display: grid;
-  gap: 24px; /* <-- MODIFICA QUI PER LA DISTANZA TRA CARD */
+  gap: 24px;
   grid-template-columns: repeat(1, 1fr);
 }
 @media (min-width: 768px) { .news-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .news-grid { grid-template-columns: repeat(6, 1fr); } }
 
-/* Posizionamento degli articoli */
 .article-item--1 { grid-column: span 1; }
 @media (min-width: 1024px) { .article-item--1 { grid-column: span 6; } }
 .article-item--2, .article-item--3 { grid-column: span 1; }
@@ -355,10 +343,6 @@
 .article-item--4, .article-item--5, .article-item--6 { grid-column: span 1; }
 @media (min-width: 1024px) { .article-item--4, .article-item--5, .article-item--6 { grid-column: span 2; } }
 
-
-/* --- 4. Stile per le Card (Hero e Standard) --- */
-
-/* Stile base condiviso */
 .news-card {
   background-color: #ffffff; border-radius: 24px; overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.01);
@@ -380,86 +364,75 @@
 .news-card-timestamp { font-size: 0.9rem; color: #86868b; display: flex; align-items: center; margin-top: 1rem; }
 .news-card-timestamp svg { width: 1em; height: 1em; margin-right: 0.5em; }
 
-/* Stile specifico per la Card HERO */
 .news-card--hero .news-card-content { padding: 32px; }
 .news-card--hero .news-card-headline { font-size: 2.2rem; }
 
-/* Stile specifico per le Card STANDARD */
 .news-card--standard .news-card-media {
-  height: 170px; /* <-- ALTEZZA FISSA IMMAGINE */
+  height: 170px;
   flex-shrink: 0;
 }
 .news-card--standard .news-card-content {
-  /* Il contenuto si espande per riempire lo spazio rimanente */
+
 }
 
-/* Regole responsive per la Card HERO */
 @media (min-width: 768px) {
   .news-card--hero { flex-direction: row; }
   .news-card--hero .news-card-media {
     flex-basis: 60%;
-    min-height: 362px; /* <-- ALTEZZA MINIMA HERO */
+    min-height: 362px;
   }
   .news-card--hero .news-card-content {
     flex-basis: 40%;
   }
 }
 
-/* Stile per il badge "Novità" */
-
 .news-card-eyebrow-new {
-  /* Stile del testo che ti piace */
+
   font-size: 0.8rem;
   font-weight: 600;
-  color: #0071e3; /* Colore blu Apple */
+  color: #0071e3;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 
-  /* --- AGGIUNGIAMO QUESTE RIGHE PER IL "BOTTONE" --- */
-  background-color: rgba(0, 113, 227, 0.1); /* Sfondo blu semi-trasparente */
-  padding: 4px 10px; /* Spazio interno per creare il contorno */
-  border-radius: 9999px; /* Bordi arrotondati a pillola */
+  background-color: rgba(0, 113, 227, 0.1);
+  padding: 4px 10px;
+  border-radius: 9999px;
 }
 
-/* === STILI PER LA LISTA "ALTRO DA..." (FINALE E CORRETTO) === */
-
 .related-articles-section {
-  /* 1. Sfondo bianco che occupa tutta la larghezza */
+
   background-color: #f5f5f7;
   width: 100%;
 
-  /* Spaziatura interna verticale */
   padding: 10rem 0;
 }
 
 .related-articles-container {
-  /* Contenitore interno che limita la larghezza del contenuto */
+
   max-width: 980px;
   margin: 0 auto;
-  padding: 0 0rem; /* Spazio di sicurezza ai lati su mobile */
+  padding: 0 0rem;
 }
 
 .related-articles-grid {
   display: grid;
-  grid-template-columns: 1fr; /* 1 colonna su mobile */
-  gap: 2rem; /* Spazio tra le righe */
+  grid-template-columns: 1fr;
+  gap: 2rem;
 }
 
 @media (min-width: 768px) {
   .related-articles-grid {
-    grid-template-columns: 1fr 1fr; /* 2 colonne su desktop */
-    gap: 10rem; /* Spazio tra le colonne */
+    grid-template-columns: 1fr 1fr;
+    gap: 10rem;
   }
 }
 
-/* --- LA LINEA DI SEPARAZIONE --- */
 .article-pair:not(:last-child) {
   padding-bottom: 2rem;
-  /* 2. Linea più spessa */
+
   border-bottom: 2px solid #e5e7eb;
 }
 
-/* Stile per la singola riga/articolo */
 .article-list-item {
   display: flex;
   align-items: center;
@@ -483,7 +456,6 @@
   transform: scale(1.05);
 }
 
-/* Contenitore del testo */
 .article-list-item-content {
   display: flex;
   flex-direction: column;
@@ -491,17 +463,16 @@
   height: 134px;
 }
 
-/* 3. AUMENTA LO SPAZIO TRA GLI ELEMENTI DI TESTO */
 .article-list-item-category {
   font-size: 0.75rem; font-weight: 600; color: #6e6e73;
   text-transform: uppercase;
-  margin-bottom: 0.5rem; /* Spazio sotto la categoria */
+  margin-bottom: 0.5rem;
 }
 .article-list-item-title {
-  font-size: 1.25rem; /* Titolo leggermente più grande */
+  font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.3;
-  margin-bottom: 0.75rem; /* Spazio sotto il titolo */
+  margin-bottom: 0.75rem;
   transition: color 0.2s ease;
 }
 .article-list-item:hover .article-list-item-title {
@@ -512,31 +483,28 @@
   color: #86868b;
 }
 
-/* Input pillola grigio chiaro con padding corretto per l’icona */
 input[data-slot="input"] {
   font-size: 0.9rem;
-  color: #555555; /* Testo un po’ più scuro */
-  background-color: #f2f2f2; /* Grigio chiaro */
+  color: #555555;
+  background-color: #f2f2f2;
   border: none;
   border-radius: 9999px;
-  padding: 6px 14px 6px 3rem; /* 3rem per spostare testo a destra icona */
+  padding: 6px 14px 6px 3rem;
   outline: none;
   box-shadow: none;
 }
 
-/* Placeholder */
 input[data-slot="input"]::placeholder {
   color: #888888;
 }
 
-/* Bottoni grigi */
 button,
 .button,
 .btn {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #333333; /* Colore testo base */
-  background-color: #f2f2f2; /* Grigio chiaro */
+  color: #333333;
+  background-color: #f2f2f2;
   padding: 6px 14px;
   border-radius: 9999px;
   border: none;

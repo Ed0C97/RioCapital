@@ -1,3 +1,5 @@
+<!-- CHANGELOG.md
+
 # Changelog - FinBlog Miglioramenti
 
 ## Versione 1.1.0 - 14 Settembre 2025
@@ -89,4 +91,3 @@ finblog-backend/src/
 - Dashboard admin per gestione contenuti
 - Sistema di commenti e interazioni
 - Ottimizzazioni performance e caching
-

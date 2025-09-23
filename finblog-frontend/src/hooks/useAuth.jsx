@@ -1,3 +1,5 @@
+// finblog-frontend/src/hooks/useAuth.jsx
+
 import { useState, useEffect, useContext, createContext } from 'react';
 
 const AuthContext = createContext();
@@ -23,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       const response = await fetch('/apiauth/me', {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setUser(data.user);
@@ -89,7 +91,7 @@ export const AuthProvider = ({ children }) => {
         method: 'POST',
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         setUser(null);
         return { success: true };

@@ -1,3 +1,5 @@
+<!-- README.md
+
 # FinBlog - Blog Finanziario Completo
 
 Un blog finanziario moderno e completo con UI/UX ispirata a jethr.com, sviluppato con React (frontend) e Flask (backend).
@@ -245,4 +247,3 @@ Per supporto o domande:
 ---
 
 **FinBlog** - Il tuo blog finanziario di fiducia 💰📈
-

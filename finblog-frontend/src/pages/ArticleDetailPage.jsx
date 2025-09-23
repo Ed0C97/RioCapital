@@ -1,11 +1,11 @@
-// src/pages/ArticleDetailPage.jsx
+// finblog-frontend/src/pages/ArticleDetailPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown'; // <-- USA QUESTO
-import remarkMath from 'remark-math';     // <-- 1. Importa
-import rehypeKatex from 'rehype-katex';   // <-- 2. Importa
-import 'katex/dist/katex.min.css';        // <-- 3. Importa il CSS di KaTeX
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 import RelatedArticles from '../components/RelatedArticles';
 
 const ArticleDetailPage = () => {
@@ -34,10 +34,10 @@ const ArticleDetailPage = () => {
   if (!article) return <div className="text-center py-20">Articolo non trovato.</div>;
 
     return (
-    <> {/* <-- 1. AGGIUNGI IL FRAGMENT DI APERTURA QUI */}
+    <> {}
       <div className="container mx-auto py-12 px-4">
         <article className="max-w-4xl mx-auto">
-          {/* ... il contenuto del tuo articolo (h1, p, img, ReactMarkdown) ... */}
+          {}
           <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">{article.title}</h1>
           <p className="text-lg text-muted-foreground mb-8">
             Pubblicato da {article.author_name} il {new Date(article.created_at).toLocaleDateString('it-IT')}
@@ -60,10 +60,10 @@ const ArticleDetailPage = () => {
         </article>
       </div>
 
-      {/* --- MODIFICA QUI --- */}
-      {/* Contenitore per la sezione degli articoli correlati */}
+      {}
+      {}
       {article && (
-        // Aggiungiamo un div con larghezza massima e centrato
+
         <div className="max-w-[980px] mx-auto px-4 py-12">
           <RelatedArticles
             title="Altro da FinBlog"

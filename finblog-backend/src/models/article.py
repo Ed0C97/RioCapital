@@ -1,3 +1,5 @@
+# finblog-backend/src/models/article.py
+
 from datetime import datetime
 from src.extensions import db
 
@@ -18,7 +20,6 @@ class Article(db.Model):
     likes_count = db.Column(db.Integer, default=0)
     views_count = db.Column(db.Integer, default=0)
 
-    # --- RELAZIONI ---
     author = db.relationship("User", back_populates="articles")
     category = db.relationship("Category", back_populates="articles")
     comments = db.relationship("Comment", back_populates="article")

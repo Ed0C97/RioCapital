@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/ui/aspect-ratio.jsx
+
 import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio"
 
 function AspectRatio({

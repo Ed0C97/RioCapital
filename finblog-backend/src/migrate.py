@@ -1,8 +1,9 @@
+# finblog-backend/src/migrate.py
+
 import sqlite3
 
 DB_PATH = '/home/ubuntu/finblog-backend/src/finblog.db'
 
-# I comandi SQL per la creazione delle tabelle con IF NOT EXISTS
 CREATE_TABLE_SQL = """
 CREATE TABLE IF NOT EXISTS comments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,7 +68,6 @@ CREATE TABLE IF NOT EXISTS donations (
 );
 """
 
-# Comandi ALTER TABLE da eseguire separatamente
 ALTER_COMMANDS = [
     "ALTER TABLE user ADD COLUMN role VARCHAR(20) DEFAULT 'user';",
     "ALTER TABLE user ADD COLUMN bio TEXT;",
@@ -78,25 +78,23 @@ ALTER_COMMANDS = [
 ]
 
 def migrate():
-    conn = None # Inizializza conn a None
+    conn = None
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
         print("Connesso al database...")
 
-        # Esegui i comandi CREATE TABLE
         print("Creazione/verifica nuove tabelle...")
         cursor.executescript(CREATE_TABLE_SQL)
         print("Tabelle create/verificate con successo.")
 
-        # Esegui i comandi ALTER TABLE
         print("Aggiornamento tabelle esistenti...")
         for command in ALTER_COMMANDS:
             try:
                 cursor.execute(command)
                 print(f"Eseguito: {command}")
             except sqlite3.OperationalError as e:
-                # Ignora l'errore se la colonna esiste già
+
                 if "duplicate column name" in str(e):
                     print(f"Colonna già esistente, comando saltato: {command}")
                 else:
@@ -115,4 +113,3 @@ def migrate():
 
 if __name__ == '__main__':
     migrate()
-

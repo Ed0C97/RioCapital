@@ -1,12 +1,14 @@
+// finblog-frontend/src/components/ArticleCarousel.jsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import ArticleCard from './ArticleCard';
 
-const ArticleCarousel = ({ 
-  articles, 
-  onLike, 
-  onFavorite, 
+const ArticleCarousel = ({
+  articles,
+  onLike,
+  onFavorite,
   onShare,
   autoPlay = true,
   autoPlayInterval = 5000,
@@ -18,7 +20,6 @@ const ArticleCarousel = ({
   const [itemsToShow, setItemsToShow] = useState(itemsPerView);
   const intervalRef = useRef(null);
 
-  // Responsive items per view
   useEffect(() => {
     const updateItemsPerView = () => {
       if (window.innerWidth < 768) {
@@ -37,7 +38,6 @@ const ArticleCarousel = ({
     return () => window.removeEventListener('resize', updateItemsPerView);
   }, [itemsPerView]);
 
-  // Auto-play functionality
   useEffect(() => {
     if (isPlaying && articles.length > itemsToShow) {
       intervalRef.current = setInterval(() => {
@@ -84,7 +84,7 @@ const ArticleCarousel = ({
 
   return (
     <div className="relative">
-      {/* Header with controls */}
+      {}
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-3xl font-bold">{title}</h2>
         <div className="flex items-center space-x-2">
@@ -131,9 +131,9 @@ const ArticleCarousel = ({
         </div>
       </div>
 
-      {/* Carousel container */}
+      {}
       <div className="relative overflow-hidden">
-        <div 
+        <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{
             transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)`,
@@ -157,7 +157,7 @@ const ArticleCarousel = ({
         </div>
       </div>
 
-      {/* Indicators */}
+      {}
       {canNavigate && (
         <div className="flex justify-center mt-6 space-x-2">
           {Array.from({ length: maxIndex + 1 }, (_, index) => (
@@ -175,7 +175,7 @@ const ArticleCarousel = ({
         </div>
       )}
 
-      {/* Progress bar (only when auto-playing) */}
+      {}
       {isPlaying && canNavigate && (
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-muted-foreground/20">
           <div
@@ -191,4 +191,3 @@ const ArticleCarousel = ({
 };
 
 export default ArticleCarousel;
-

@@ -1,27 +1,29 @@
+// finblog-frontend/src/components/AnalyticsChart.jsx
+
 import React from 'react';
-import { 
-  LineChart, 
-  Line, 
-  AreaChart, 
-  Area, 
-  BarChart, 
-  Bar, 
-  PieChart, 
-  Pie, 
+import {
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
   Cell,
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  Legend, 
-  ResponsiveContainer 
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
 } from 'recharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 
-const AnalyticsChart = ({ 
-  type = 'line', 
-  data = [], 
-  title, 
+const AnalyticsChart = ({
+  type = 'line',
+  data = [],
+  title,
   description,
   xKey = 'date',
   yKey = 'value',
@@ -33,7 +35,7 @@ const AnalyticsChart = ({
   className = ''
 }) => {
   const colors = [
-    '#6366f1', '#8b5cf6', '#06b6d4', '#10b981', 
+    '#6366f1', '#8b5cf6', '#06b6d4', '#10b981',
     '#f59e0b', '#ef4444', '#ec4899', '#84cc16'
   ];
 
@@ -70,10 +72,10 @@ const AnalyticsChart = ({
             <YAxis tickFormatter={formatYAxisTick} />
             {showTooltip && <Tooltip formatter={formatTooltipValue} />}
             {showLegend && <Legend />}
-            <Area 
-              type="monotone" 
-              dataKey={yKey} 
-              stroke={color} 
+            <Area
+              type="monotone"
+              dataKey={yKey}
+              stroke={color}
               fill={color}
               fillOpacity={0.3}
             />
@@ -136,7 +138,7 @@ const AnalyticsChart = ({
           </LineChart>
         );
 
-      default: // line
+      default:
         return (
           <LineChart {...commonProps}>
             {showGrid && <CartesianGrid strokeDasharray="3 3" />}
@@ -144,10 +146,10 @@ const AnalyticsChart = ({
             <YAxis tickFormatter={formatYAxisTick} />
             {showTooltip && <Tooltip formatter={formatTooltipValue} />}
             {showLegend && <Legend />}
-            <Line 
-              type="monotone" 
-              dataKey={yKey} 
-              stroke={color} 
+            <Line
+              type="monotone"
+              dataKey={yKey}
+              stroke={color}
               strokeWidth={2}
               dot={{ r: 4 }}
             />
@@ -182,7 +184,6 @@ const AnalyticsChart = ({
   );
 };
 
-// Componenti predefiniti per casi d'uso comuni
 export const ArticlesOverTimeChart = ({ data, ...props }) => (
   <AnalyticsChart
     type="area"

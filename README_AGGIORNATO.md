@@ -1,3 +1,5 @@
+<!-- README_AGGIORNATO.md
+
 # FinBlog - Blog Finanziario Completo
 
 ## 🚀 Versione 1.1.0 - Aggiornamenti Implementati
@@ -218,4 +220,3 @@ Per supporto tecnico:
 - Email: info@finblog.it
 - GitHub Issues: [Repository Issues]
 - Documentazione: [Wiki del progetto]
-

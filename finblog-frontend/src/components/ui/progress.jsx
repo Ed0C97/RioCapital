@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/ui/progress.jsx
+
 import * as React from "react"
 import * as ProgressPrimitive from "@radix-ui/react-progress"
 

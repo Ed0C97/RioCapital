@@ -1,3 +1,5 @@
+// finblog-frontend/src/hooks/useFavorites.js
+
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 
@@ -15,13 +17,13 @@ export const useFavorites = (user) => {
 
   const fetchFavorites = async () => {
     if (!user) return;
-    
+
     setLoading(true);
     try {
       const response = await fetch('/api/favorites', {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setFavorites(data.favorites || []);
@@ -51,7 +53,7 @@ export const useFavorites = (user) => {
 
       if (response.ok) {
         const data = await response.json();
-        
+
         if (data.added) {
           setFavorites(prev => [...prev, { article_id: articleId }]);
           toast.success('Articolo aggiunto ai preferiti');
@@ -59,7 +61,7 @@ export const useFavorites = (user) => {
           setFavorites(prev => prev.filter(fav => fav.article_id !== articleId));
           toast.success('Articolo rimosso dai preferiti');
         }
-        
+
         return data.added;
       } else {
         toast.error('Errore durante l\'operazione');

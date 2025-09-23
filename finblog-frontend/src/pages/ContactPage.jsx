@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/ContactPage.jsx
+
 import React, { useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -5,13 +7,13 @@ import { Textarea } from '../components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Label } from '../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Clock, 
-  Send, 
-  MessageSquare, 
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  Send,
+  MessageSquare,
   HelpCircle,
   Lightbulb,
   AlertCircle
@@ -112,7 +114,7 @@ const ContactPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Header */}
+      {}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 finblog-text-gradient">Contattaci</h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -121,7 +123,7 @@ const ContactPage = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Informazioni di contatto */}
+        {}
         <div className="lg:col-span-1">
           <div className="space-y-6">
             <Card>
@@ -178,7 +180,7 @@ const ContactPage = () => {
           </div>
         </div>
 
-        {/* Form di contatto */}
+        {}
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
@@ -266,8 +268,8 @@ const ContactPage = () => {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     disabled={loading || formData.message.length < 10}
                     className="flex items-center space-x-2"
                   >
@@ -279,7 +281,7 @@ const ContactPage = () => {
             </CardContent>
           </Card>
 
-          {/* Mappa (placeholder) */}
+          {}
           <Card className="mt-6">
             <CardHeader>
               <CardTitle>Dove Siamo</CardTitle>

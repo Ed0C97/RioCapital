@@ -1,9 +1,10 @@
+// finblog-frontend/src/components/RelatedArticles.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
 
-// --- Componente per la singola riga di articolo ---
 const ArticleListItem = ({ article }) => {
   const placeholderImage = 'https://images.unsplash.com/photo-1518186225043-963158e70a41?q=80&w=1974&auto=format&fit=crop';
 
@@ -29,8 +30,6 @@ const ArticleListItem = ({ article }) => {
   );
 };
 
-
-// --- Componente principale della sezione "Altro da..." ---
 const RelatedArticles = ({ title, fetchUrl }) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,7 +54,6 @@ const RelatedArticles = ({ title, fetchUrl }) => {
     }
   }, [fetchUrl]);
 
-  // --- Logica per raggruppare gli articoli a coppie ---
   const articlePairs = [];
   for (let i = 0; i < articles.length; i += 2) {
     articlePairs.push(articles.slice(i, i + 2));
@@ -64,9 +62,9 @@ const RelatedArticles = ({ title, fetchUrl }) => {
   if (loading || articles.length === 0) return null;
 
   return (
-    // Contenitore a larghezza piena con sfondo bianco
+
     <section className="related-articles-section">
-      {/* Contenitore interno che limita la larghezza */}
+      {}
       <div className="related-articles-container">
         <h2 className="text-3xl font-bold mb-10">{title}</h2>
 

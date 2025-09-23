@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/RichTextEditor.jsx
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
@@ -42,7 +44,6 @@ const RichTextEditor = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Mostra un feedback all'utente
     const toastId = toast.loading("Caricamento immagine in corso...");
 
     const formData = new FormData();
@@ -64,9 +65,8 @@ const RichTextEditor = ({
       const backendUrl = 'http://localhost:5000';
       const fullImageUrl = backendUrl + data.url;
 
-      // Crea la stringa Markdown e la inserisce nel testo
       const markdownImage = `\n![${file.name}](${fullImageUrl})\n`;
-      insertAtCursor(markdownImage); // Usiamo la tua funzione che già esiste!
+      insertAtCursor(markdownImage);
 
       toast.success("Immagine inserita con successo!", { id: toastId });
 
@@ -74,7 +74,7 @@ const RichTextEditor = ({
       toast.error(`Errore: ${error.message}`, { id: toastId });
       console.error(error);
     } finally {
-      // Pulisce l'input per permettere di caricare lo stesso file di nuovo
+
       if (imageInputRef.current) {
         imageInputRef.current.value = "";
       }
@@ -98,15 +98,14 @@ const RichTextEditor = ({
     const end = textarea.selectionEnd;
     const selectedText = content.substring(start, end);
     const textToInsert = selectedText || placeholder;
-    
-    const newContent = 
-      content.substring(0, start) + 
-      before + textToInsert + after + 
+
+    const newContent =
+      content.substring(0, start) +
+      before + textToInsert + after +
       content.substring(end);
-    
+
     handleContentChange(newContent);
-    
-    // Ripristina il focus e la selezione
+
     setTimeout(() => {
       textarea.focus();
       const newCursorPos = start + before.length + textToInsert.length;
@@ -120,14 +119,14 @@ const RichTextEditor = ({
 
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    
-    const newContent = 
-      content.substring(0, start) + 
-      text + 
+
+    const newContent =
+      content.substring(0, start) +
+      text +
       content.substring(end);
-    
+
     handleContentChange(newContent);
-    
+
     setTimeout(() => {
       textarea.focus();
       const newCursorPos = start + text.length;
@@ -204,7 +203,7 @@ const RichTextEditor = ({
   ];
 
   const renderPreview = () => {
-    // Prima, gestiamo il LaTeX
+
     const contentWithLatex = (content || '').replace(/\$\$([^$]+)\$\$/g, (match, latex) => {
       try {
         return katex.renderToString(latex, { throwOnError: false, displayMode: true });
@@ -213,7 +212,6 @@ const RichTextEditor = ({
       }
     });
 
-    // Poi, passiamo tutto a 'marked' per il Markdown
     const finalHtml = marked(contentWithLatex);
 
     return { __html: finalHtml };
@@ -230,7 +228,7 @@ const RichTextEditor = ({
       derivative: '\\frac{d}{dx} f(x)',
       partial: '\\frac{\\partial f}{\\partial x}'
     };
-    
+
     insertText('$$', '$$', templates[template]);
   };
 
@@ -264,7 +262,7 @@ const RichTextEditor = ({
           </TabsList>
 
           <TabsContent value="edit" className="space-y-4">
-            {/* Toolbar */}
+            {}
             <div className="border rounded-lg p-2">
               <div className="flex flex-wrap gap-1 mb-2">
                 {toolbarButtons.map((button, index) => (
@@ -280,8 +278,8 @@ const RichTextEditor = ({
                   </Button>
                 ))}
               </div>
-              
-              {/* LaTeX Templates */}
+
+              {}
               <div className="border-t pt-2">
                 <div className="flex items-center space-x-2 mb-2">
                   <Calculator className="w-4 h-4" />
@@ -312,7 +310,7 @@ const RichTextEditor = ({
               </div>
             </div>
 
-            {/* Editor */}
+            {}
             <Textarea
               ref={textareaRef}
               value={content}
@@ -322,7 +320,7 @@ const RichTextEditor = ({
               style={{ height }}
             />
 
-            {/* Guida rapida */}
+            {}
             <div className="text-xs text-muted-foreground space-y-2 pt-2">
               <div className="flex flex-wrap items-center gap-1">
                 <Badge variant="secondary">**grassetto**</Badge>

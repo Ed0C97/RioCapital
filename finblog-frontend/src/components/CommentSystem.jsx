@@ -1,15 +1,17 @@
+// finblog-frontend/src/components/CommentSystem.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Badge } from './ui/badge';
-import { 
-  MessageSquare, 
-  Send, 
-  ThumbsUp, 
-  ThumbsDown, 
-  Flag, 
+import {
+  MessageSquare,
+  Send,
+  ThumbsUp,
+  ThumbsDown,
+  Flag,
   MoreVertical,
   Edit,
   Trash2,
@@ -53,7 +55,7 @@ const CommentSystem = ({ articleId }) => {
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
-    
+
     if (!user) {
       toast.error('Devi essere loggato per commentare');
       return;
@@ -109,7 +111,7 @@ const CommentSystem = ({ articleId }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setComments(prev => prev.map(comment => 
+        setComments(prev => prev.map(comment =>
           comment.id === commentId ? data.comment : comment
         ));
         setEditingComment(null);
@@ -161,8 +163,8 @@ const CommentSystem = ({ articleId }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setComments(prev => prev.map(comment => 
-          comment.id === commentId 
+        setComments(prev => prev.map(comment =>
+          comment.id === commentId
             ? { ...comment, likes_count: data.likes_count, user_liked: data.user_liked }
             : comment
         ));
@@ -241,7 +243,7 @@ const CommentSystem = ({ articleId }) => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {/* Form nuovo commento */}
+          {}
           {user ? (
             <form onSubmit={handleSubmitComment} className="space-y-4 mb-6">
               <div className="flex items-start space-x-3">
@@ -263,8 +265,8 @@ const CommentSystem = ({ articleId }) => {
                     <p className="text-sm text-muted-foreground">
                       I commenti sono moderati prima della pubblicazione
                     </p>
-                    <Button 
-                      type="submit" 
+                    <Button
+                      type="submit"
                       disabled={submitting || !newComment.trim()}
                       size="sm"
                     >
@@ -287,7 +289,7 @@ const CommentSystem = ({ articleId }) => {
             </div>
           )}
 
-          {/* Lista commenti */}
+          {}
           <div className="space-y-4">
             {comments.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">
@@ -317,7 +319,7 @@ const CommentSystem = ({ articleId }) => {
                       </div>
                     </div>
 
-                    {/* Menu azioni */}
+                    {}
                     {user && (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -359,7 +361,7 @@ const CommentSystem = ({ articleId }) => {
                     )}
                   </div>
 
-                  {/* Contenuto commento */}
+                  {}
                   {editingComment === comment.id ? (
                     <div className="space-y-2">
                       <Textarea
@@ -368,14 +370,14 @@ const CommentSystem = ({ articleId }) => {
                         rows={3}
                       />
                       <div className="flex space-x-2">
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           onClick={() => handleEditComment(comment.id)}
                         >
                           Salva
                         </Button>
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           variant="outline"
                           onClick={() => {
                             setEditingComment(null);
@@ -392,7 +394,7 @@ const CommentSystem = ({ articleId }) => {
                         {comment.content}
                       </p>
 
-                      {/* Azioni commento */}
+                      {}
                       <div className="flex items-center space-x-4">
                         <Button
                           variant="ghost"

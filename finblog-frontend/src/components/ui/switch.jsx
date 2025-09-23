@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/ui/switch.jsx
+
 "use client"
 
 import * as React from "react"

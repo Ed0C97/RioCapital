@@ -1,3 +1,5 @@
+# finblog-backend/src/models/newsletter.py
+
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from src.extensions import db
@@ -7,7 +9,7 @@ class NewsletterSubscriber(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     subscribed_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_active = db.Column(db.Boolean, default=True)
-    preferences = db.Column(db.JSON, default={})  # Preferenze di notifica
+    preferences = db.Column(db.JSON, default={})
 
     def __repr__(self):
         return f'<NewsletterSubscriber {self.email}>'
@@ -29,8 +31,8 @@ class Donation(db.Model):
     donor_email = db.Column(db.String(120), nullable=True)
     message = db.Column(db.Text, nullable=True)
     payment_method = db.Column(db.String(50), nullable=False)
-    payment_id = db.Column(db.String(255), nullable=True)  # ID transazione
-    status = db.Column(db.String(20), default='pending')  # pending, completed, failed
+    payment_id = db.Column(db.String(255), nullable=True)
+    status = db.Column(db.String(20), default='pending')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_anonymous = db.Column(db.Boolean, default=False)
 
@@ -54,12 +56,11 @@ class Donation(db.Model):
 class NotificationPreference(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    notification_type = db.Column(db.String(50), nullable=False)  # new_article, category, author
-    target_id = db.Column(db.Integer, nullable=True)  # ID categoria o autore
+    notification_type = db.Column(db.String(50), nullable=False)
+    target_id = db.Column(db.Integer, nullable=True)
     is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    # Relazioni
     user = db.relationship('User')
 
     def __repr__(self):
@@ -74,4 +75,3 @@ class NotificationPreference(db.Model):
             'is_active': self.is_active,
             'created_at': self.created_at.isoformat() if self.created_at else None
         }
-

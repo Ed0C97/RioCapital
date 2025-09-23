@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/ProfilePage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Button } from '../components/ui/button';
@@ -51,13 +53,13 @@ const ProfilePage = () => {
     setLoading(true);
 
     const result = await updateProfile(formData);
-    
+
     if (result.success) {
       toast.success('Profilo aggiornato con successo!');
     } else {
       toast.error(result.error || 'Errore durante l\'aggiornamento del profilo');
     }
-    
+
     setLoading(false);
   };
 
@@ -103,7 +105,7 @@ const ProfilePage = () => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
-        {/* Sidebar con info utente */}
+        {}
         <div className="md:col-span-1">
           <Card>
             <CardHeader className="text-center">
@@ -133,7 +135,7 @@ const ProfilePage = () => {
           </Card>
         </div>
 
-        {/* Form di modifica profilo */}
+        {}
         <div className="md:col-span-2">
           <Card>
             <CardHeader>
@@ -190,7 +192,7 @@ const ProfilePage = () => {
                     <Bell className="w-5 h-5" />
                     <span>Preferenze</span>
                   </h3>
-                  
+
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label htmlFor="newsletter">Newsletter</Label>

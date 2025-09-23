@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/ui/slider.jsx
+
 "use client"
 
 import * as React from "react"

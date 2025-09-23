@@ -1,3 +1,4 @@
+<!-- design_notes.md
 
 ## Analisi UI/UX Jethr.com
 
@@ -44,8 +45,6 @@
 
 Il prossimo passo sarà creare un concept di design più strutturato basandomi su queste osservazioni, includendo una palette colori definita e una selezione di font.
 
-
-
 ## Concept di Design per il Blog Finanziario
 
 ### Obiettivo:
@@ -67,8 +66,7 @@ Creare un blog finanziario con un'interfaccia utente pulita, moderna e intuitiva
 
 #### 3. Layout Generale:
 - **Header:**
-    - Logo del blog (es. 
-
+    - Logo del blog (es.
 
 FinBlog) a sinistra.
     - Menu di navigazione principale (Home, Categorie, Chi Siamo, Contatti) a destra.
@@ -99,4 +97,3 @@ FinBlog) a sinistra.
 
 ### Prossimi Passi:
 Con questo concept di design, posso procedere con la ricerca e la raccolta degli asset visivi necessari (immagini stock, icone) e poi iniziare lo sviluppo del backend e del frontend, implementando prima il layout base e poi le funzionalità specifiche.
-

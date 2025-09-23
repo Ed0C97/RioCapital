@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/DonatePage.jsx
+
 import React, { useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -6,13 +8,13 @@ import { Label } from '../components/ui/label';
 import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group';
 import { Textarea } from '../components/ui/textarea';
 import { Badge } from '../components/ui/badge';
-import { 
-  Heart, 
-  Coffee, 
-  Gift, 
-  Star, 
-  Users, 
-  TrendingUp, 
+import {
+  Heart,
+  Coffee,
+  Gift,
+  Star,
+  Users,
+  TrendingUp,
   Shield,
   CreditCard,
   Banknote,
@@ -73,7 +75,7 @@ const DonatePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const amount = getFinalAmount();
-    
+
     if (!amount || parseFloat(amount) < 1) {
       toast.error('Inserisci un importo valido (minimo 1€)');
       return;
@@ -102,14 +104,11 @@ const DonatePage = () => {
       if (response.ok) {
         const data = await response.json();
         toast.success('Grazie per la tua donazione! Stai per essere reindirizzato al pagamento.');
-        
-        // Qui normalmente si redirigerebbe al gateway di pagamento
-        // Per ora mostriamo solo un messaggio di successo
+
         setTimeout(() => {
           toast.info('Funzionalità di pagamento in fase di implementazione');
         }, 2000);
-        
-        // Reset form
+
         setSelectedAmount('');
         setCustomAmount('');
         setDonorInfo({
@@ -152,7 +151,7 @@ const DonatePage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Header */}
+      {}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 finblog-text-gradient">Sostieni FinBlog</h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -160,7 +159,7 @@ const DonatePage = () => {
         </p>
       </div>
 
-      {/* Statistiche */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {stats.map((stat, index) => (
           <Card key={index} className="text-center">
@@ -179,7 +178,7 @@ const DonatePage = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Perché donare */}
+        {}
         <div className="lg:col-span-1">
           <Card className="mb-6">
             <CardHeader>
@@ -255,7 +254,7 @@ const DonatePage = () => {
           </Card>
         </div>
 
-        {/* Form donazione */}
+        {}
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
@@ -289,7 +288,7 @@ const DonatePage = () => {
                       </Button>
                     ))}
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="custom-amount">Oppure inserisci un importo personalizzato</Label>
                     <div className="relative">
@@ -308,7 +307,7 @@ const DonatePage = () => {
                   </div>
                 </div>
 
-                {/* Metodo di pagamento */}
+                {}
                 <div className="space-y-4">
                   <Label>Metodo di pagamento</Label>
                   <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
@@ -324,7 +323,7 @@ const DonatePage = () => {
                   </RadioGroup>
                 </div>
 
-                {/* Informazioni donatore */}
+                {}
                 <div className="space-y-4">
                   <Label>Informazioni (opzionali)</Label>
                   <div className="grid gap-4 md:grid-cols-2">
@@ -351,7 +350,7 @@ const DonatePage = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="message">Messaggio (opzionale)</Label>
                     <Textarea
@@ -379,7 +378,7 @@ const DonatePage = () => {
                   </div>
                 </div>
 
-                {/* Riepilogo */}
+                {}
                 {getFinalAmount() && (
                   <Card className="bg-muted/50">
                     <CardContent className="pt-4">
@@ -392,8 +391,8 @@ const DonatePage = () => {
                 )}
 
                 <div className="flex justify-end">
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     disabled={loading || !getFinalAmount()}
                     className="flex items-center space-x-2"
                     size="lg"

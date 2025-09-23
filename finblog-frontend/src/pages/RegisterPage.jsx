@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/RegisterPage.jsx
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
@@ -44,9 +46,9 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
-    
+
     setLoading(true);
     setError('');
 
@@ -260,4 +262,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-

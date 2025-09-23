@@ -1,6 +1,8 @@
+// finblog-frontend/src/pages/ArticlesByCategoryPage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-// Potresti voler riutilizzare il componente ArticleCard che hai già
+
 import ArticleCard from '../components/ArticleCard';
 
 const ArticlesByCategoryPage = () => {

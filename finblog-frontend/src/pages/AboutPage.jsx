@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/AboutPage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Button } from '../components/ui/button';
@@ -136,7 +138,7 @@ Crediamo che l'informazione finanziaria debba essere accessibile a tutti, indipe
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Header */}
+      {}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 finblog-text-gradient">Chi Siamo</h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -144,7 +146,7 @@ Crediamo che l'informazione finanziaria debba essere accessibile a tutti, indipe
         </p>
       </div>
 
-      {/* Contenuto principale */}
+      {}
       <div className="max-w-4xl mx-auto mb-12">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
@@ -195,7 +197,7 @@ Crediamo che l'informazione finanziaria debba essere accessibile a tutti, indipe
         </Card>
       </div>
 
-      {/* Statistiche */}
+      {}
       <div className="mb-12">
         <h2 className="text-3xl font-bold text-center mb-8">I Nostri Numeri</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -216,7 +218,7 @@ Crediamo che l'informazione finanziaria debba essere accessibile a tutti, indipe
         </div>
       </div>
 
-      {/* Team */}
+      {}
       <div className="mb-12">
         <h2 className="text-3xl font-bold text-center mb-8">Il Nostro Team</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -241,7 +243,7 @@ Crediamo che l'informazione finanziaria debba essere accessibile a tutti, indipe
         </div>
       </div>
 
-      {/* Valori */}
+      {}
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8">I Nostri Valori</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -255,7 +257,7 @@ Crediamo che l'informazione finanziaria debba essere accessibile a tutti, indipe
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader>
               <CardTitle className="text-center">Accessibilità</CardTitle>
@@ -266,7 +268,7 @@ Crediamo che l'informazione finanziaria debba essere accessibile a tutti, indipe
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader>
               <CardTitle className="text-center">Qualità</CardTitle>

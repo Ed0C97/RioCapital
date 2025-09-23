@@ -1,3 +1,5 @@
+// finblog-frontend/src/App.jsx
+
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider, useAuth } from './hooks/useAuth.jsx';
@@ -33,39 +35,39 @@ function App() {
           <Header />
           <main className="flex-1 flex justify-center">
             <Routes>
-              {/* === Rotte Pubbliche Principali === */}
+              {}
               <Route path="/" element={<HomePage />} />
               <Route path="/articolo/:slug" element={<ArticleDetailPage />} />
               <Route path="/categoria/:slug" element={<ArticlesByCategoryPage />} />
               <Route path="/" element={<HomePage />} />
               <Route path="/archivio" element={<ArchivePage />} />
 
-              {/* === Rotte Pubbliche Secondarie === */}
+              {}
               <Route path="/categorie" element={<CategoriesPage />} />
               <Route path="/chi-siamo" element={<AboutPage />} />
               <Route path="/contatti" element={<ContactPage />} />
               <Route path="/dona" element={<DonatePage />} />
 
-              {/* === Rotte di Autenticazione === */}
+              {}
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
 
-              {/* === Rotte Utente Autenticato === */}
+              {}
               <Route path="/profilo" element={<ProfilePage />} />
               <Route path="/preferiti" element={<FavoritesPage />} />
 
-              {/* === Rotte Collaboratore/Admin === */}
+              {}
               <Route path="/admin/articoli" element={<MyArticlesPage />} />
               <Route path="/admin/articoli/nuovo" element={<ArticleEditorPage />} />
               <Route path="/admin/articoli/modifica/:id" element={<ArticleEditorPage />} />
 
-              {/* === Rotte Solo Admin === */}
+              {}
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
               <Route path="/admin/commenti" element={<CommentModerationPage />} />
               <Route path="/admin/donazioni" element={<DonationsPage />} />
 
-              {/* === Rotte Legacy per Compatibilità (opzionali ma utili) === */}
+              {}
               <Route path="/admin/articles" element={<MyArticlesPage />} />
               <Route path="/admin/articles/new" element={<ArticleEditor-page />} />
               <Route path="/admin/articles/edit/:id" element={<ArticleEditorPage />} />
@@ -76,7 +78,7 @@ function App() {
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/favorites" element={<FavoritesPage />} />
 
-              {/* === Rotta Catch-All per Pagine Non Trovate (404) === */}
+              {}
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>

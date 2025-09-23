@@ -1,4 +1,4 @@
-# src/models/user.py
+# finblog-backend/src/models/user.py
 
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -20,7 +20,6 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=True)
     newsletter_subscribed = db.Column(db.Boolean, default=False)
 
-    # --- RELAZIONI ---
     articles = db.relationship("Article", back_populates="author")
     comments = db.relationship("Comment", back_populates="user")
     article_likes = db.relationship("ArticleLike", back_populates="user")

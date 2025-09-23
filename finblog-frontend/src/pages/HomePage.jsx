@@ -1,4 +1,4 @@
-// src/pages/HomePage.jsx
+// finblog-frontend/src/pages/HomePage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -29,7 +29,6 @@ const HomePage = () => {
     fetchArticles();
   }, []);
 
-  // --- Funzioni di supporto ---
   const formatDate = (dateString) => {
     try {
       const date = new Date(dateString);
@@ -44,7 +43,7 @@ const HomePage = () => {
     try {
       return differenceInDays(new Date(), new Date(dateString)) <= 7;
     } catch { return false; }
-  }; // <-- LA PARENTESI MANCANTE È STATA AGGIUNTA QUI
+  };
 
   const isVeryRecent = (dateString) => {
     try {
@@ -75,7 +74,7 @@ const HomePage = () => {
         <h1 className="text-4xl font-bold">Ultime notizie</h1>
       </div>
 
-      {/* --- Sezione Articolo HERO --- */}
+      {}
       <div className="mb-8">
         <Link to={`/articolo/${heroArticle.slug}`} className="news-card news-card--hero">
           <div className="news-card-media">
@@ -99,7 +98,7 @@ const HomePage = () => {
         </Link>
       </div>
 
-      {/* --- Griglia per gli Articoli Secondari --- */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9">
         {secondaryArticles.map(article => (
           <Link to={`/articolo/${article.slug}`} key={article.id} className="news-card news-card--standard">
@@ -134,8 +133,7 @@ const HomePage = () => {
       <div className="w-full px-0 py-12" style={{ maxWidth: '980px' }}>
         <RelatedArticles
           title="I più popolari"
-          // Per ora carichiamo gli ultimi 4, in futuro potrai creare un endpoint
-          // per gli articoli più popolari in base alle visualizzazioni
+
           fetchUrl="/api/articles?per_page=4"
         />
       </div>

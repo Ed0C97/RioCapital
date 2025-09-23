@@ -1,10 +1,12 @@
+# finblog-backend/src/models/donation.py
+
 from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, Float
 from datetime import datetime
 from src.extensions import db
 
-class Donation(db.Model): # Eredita da db.Model
+class Donation(db.Model):
     __tablename__ = 'donations'
-    
+
     id = Column(Integer, primary_key=True)
     donor_name = Column(String(100), nullable=True)
     donor_email = Column(String(255), nullable=True)
@@ -12,12 +14,12 @@ class Donation(db.Model): # Eredita da db.Model
     currency = Column(String(3), default='EUR')
     message = Column(Text, nullable=True)
     anonymous = Column(Boolean, default=False)
-    payment_method = Column(String(50), nullable=False)  # card, paypal, etc.
+    payment_method = Column(String(50), nullable=False)
     transaction_id = Column(String(255), nullable=True)
-    status = Column(String(20), default='pending')  # pending, completed, failed, refunded
+    status = Column(String(20), default='pending')
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
+
     def to_dict(self):
         return {
             'id': self.id,

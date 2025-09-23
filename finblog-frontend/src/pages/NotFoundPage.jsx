@@ -1,14 +1,16 @@
+// finblog-frontend/src/pages/NotFoundPage.jsx
+
 import React from 'react';
 import { Card, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { 
-  Home, 
-  Search, 
-  ArrowLeft, 
-  FileQuestion, 
-  TrendingUp, 
-  BookOpen, 
+import {
+  Home,
+  Search,
+  ArrowLeft,
+  FileQuestion,
+  TrendingUp,
+  BookOpen,
   Users,
   Mail
 } from 'lucide-react';
@@ -60,7 +62,7 @@ const NotFoundPage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
-        {/* Main 404 Section */}
+        {}
         <div className="text-center mb-12">
           <div className="mb-8">
             <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-primary/20 to-primary/40 rounded-full flex items-center justify-center">
@@ -69,14 +71,14 @@ const NotFoundPage = () => {
             <h1 className="text-6xl font-bold text-primary mb-4">404</h1>
             <h2 className="text-3xl font-bold mb-4">Pagina Non Trovata</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Ops! La pagina che stai cercando non esiste o è stata spostata. 
+              Ops! La pagina che stai cercando non esiste o è stata spostata.
               Non preoccuparti, ti aiutiamo a trovare quello che cerchi.
             </p>
           </div>
 
-          {/* Quick Actions */}
+          {}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button 
+            <Button
               size="lg"
               onClick={() => window.history.back()}
               className="flex items-center"
@@ -84,8 +86,8 @@ const NotFoundPage = () => {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Torna Indietro
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="lg"
               onClick={() => window.location.href = '/'}
               className="flex items-center"
@@ -96,7 +98,7 @@ const NotFoundPage = () => {
           </div>
         </div>
 
-        {/* Search Section */}
+        {}
         <Card className="mb-12">
           <CardContent className="p-8">
             <div className="text-center mb-6">
@@ -123,13 +125,13 @@ const NotFoundPage = () => {
           </CardContent>
         </Card>
 
-        {/* Popular Pages */}
+        {}
         <div className="mb-12">
           <h3 className="text-2xl font-bold text-center mb-8">Pagine Popolari</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {popularPages.map((page, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className="hover:shadow-lg transition-shadow cursor-pointer group"
                 onClick={() => window.location.href = page.href}
               >
@@ -145,7 +147,7 @@ const NotFoundPage = () => {
           </div>
         </div>
 
-        {/* Helpful Tips */}
+        {}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card>
             <CardContent className="p-6">
@@ -169,7 +171,7 @@ const NotFoundPage = () => {
                 <p className="text-muted-foreground mb-4">
                   Se non riesci a trovare quello che cerchi, contattaci direttamente.
                 </p>
-                <Button 
+                <Button
                   variant="outline"
                   onClick={() => window.location.href = '/contatti'}
                 >
@@ -180,7 +182,7 @@ const NotFoundPage = () => {
           </Card>
         </div>
 
-        {/* Error Code for Developers */}
+        {}
         <div className="mt-12 text-center">
           <details className="inline-block text-left">
             <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground">
@@ -199,4 +201,3 @@ const NotFoundPage = () => {
 };
 
 export default NotFoundPage;
-

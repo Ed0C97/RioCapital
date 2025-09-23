@@ -1,3 +1,5 @@
+// finblog-frontend/src/components/ui/menubar.jsx
+
 import * as React from "react"
 import * as MenubarPrimitive from "@radix-ui/react-menubar"
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react"

@@ -1,8 +1,9 @@
+# finblog-backend/src/models/share.py
+
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from src.extensions import db
-
 
 class Share(db.Model):
     __tablename__ = 'shares'
@@ -14,6 +15,5 @@ class Share(db.Model):
     ip_address = Column(String(45), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    # --- RELAZIONI ---
     user = relationship("User", back_populates="shares")
     article = relationship("Article", back_populates="shares")

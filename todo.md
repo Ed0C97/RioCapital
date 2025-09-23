@@ -1,3 +1,5 @@
+<!-- todo.md
+
 ## Task Plan
 
 ### Fase 1: Analisi del sito di riferimento e pianificazione
@@ -38,4 +40,3 @@
 - [ ] Deploy del backend e del frontend
 - [ ] Generazione dell'anteprima e dello zip completo
 - [ ] Consegna al user
-

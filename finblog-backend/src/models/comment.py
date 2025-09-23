@@ -1,7 +1,7 @@
-# src/models/comment.py
+# finblog-backend/src/models/comment.py
+
 from datetime import datetime
 from src.extensions import db
-
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

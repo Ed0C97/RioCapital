@@ -1,23 +1,23 @@
-from datetime import datetime
-from sqlalchemy import func  # <-- 1. IMPORTA 'func'
-from src.extensions import db
-from src.models.article import Article  # <-- 2. IMPORTA IL MODELLO 'Article'
+# finblog-backend/src/models/category.py
 
+from datetime import datetime
+from sqlalchemy import func
+from src.extensions import db
+from src.models.article import Article
 
 class Category(db.Model):
-    __tablename__ = 'category'  # Buona pratica
+    __tablename__ = 'category'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
     slug = db.Column(db.String(100), unique=True, nullable=False)
     description = db.Column(db.Text, nullable=True)
     color = db.Column(db.String(7), default='#007BFF')
-    image_url = db.Column(db.String(500), nullable=True)  # Colonna per l'immagine
+    image_url = db.Column(db.String(500), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     created_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
 
-    # --- RELAZIONI ---
     creator = db.relationship("User", back_populates="created_categories")
     articles = db.relationship("Article", back_populates="category")
 
@@ -25,7 +25,7 @@ class Category(db.Model):
         return f'<Category {self.name}>'
 
     def to_dict(self):
-        # Trova la data di creazione dell'articolo più recente in questa categoria
+
         latest_article_date = db.session.query(func.max(Article.created_at)) \
             .filter(Article.category_id == self.id) \
             .scalar()

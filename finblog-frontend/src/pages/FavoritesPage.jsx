@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/FavoritesPage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -7,11 +9,11 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import FavoriteButton from '../components/FavoriteButton';
 import ShareButton from '../components/ShareButton';
-import { 
-  Heart, 
-  Calendar, 
-  User, 
-  Clock, 
+import {
+  Heart,
+  Calendar,
+  User,
+  Clock,
   BookOpen,
   Filter,
   Search,
@@ -51,7 +53,7 @@ const FavoritesPage = () => {
       const response = await fetch('/api/favorites/articles', {
         credentials: 'include'
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setArticles(data.articles || []);
@@ -66,7 +68,6 @@ const FavoritesPage = () => {
   const filterAndSortArticles = () => {
     let filtered = [...articles];
 
-    // Filtro per ricerca
     if (searchTerm) {
       filtered = filtered.filter(article =>
         article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -74,12 +75,10 @@ const FavoritesPage = () => {
       );
     }
 
-    // Filtro per categoria
     if (categoryFilter !== 'all') {
       filtered = filtered.filter(article => article.category?.slug === categoryFilter);
     }
 
-    // Ordinamento
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'date_added':
@@ -117,7 +116,7 @@ const FavoritesPage = () => {
         }
         return unique;
       }, []);
-    
+
     return categories;
   };
 
@@ -153,14 +152,14 @@ const FavoritesPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Header */}
+      {}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2 flex items-center space-x-2">
           <Heart className="w-8 h-8 text-red-500" />
           <span>I Miei Preferiti</span>
         </h1>
         <p className="text-muted-foreground">
-          {articles.length === 0 
+          {articles.length === 0
             ? 'Non hai ancora salvato nessun articolo nei preferiti'
             : `Hai salvato ${articles.length} articolo${articles.length !== 1 ? 'i' : ''} nei preferiti`
           }
@@ -183,10 +182,10 @@ const FavoritesPage = () => {
         </div>
       ) : (
         <>
-          {/* Filtri e controlli */}
+          {}
           <div className="mb-6 space-y-4">
             <div className="flex flex-col md:flex-row gap-4">
-              {/* Ricerca */}
+              {}
               <div className="flex-1">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -200,7 +199,7 @@ const FavoritesPage = () => {
                 </div>
               </div>
 
-              {/* Filtri */}
+              {}
               <div className="flex gap-2">
                 <Select value={categoryFilter} onValueChange={setCategoryFilter}>
                   <SelectTrigger className="w-40">
@@ -228,7 +227,7 @@ const FavoritesPage = () => {
                   </SelectContent>
                 </Select>
 
-                {/* Toggle vista */}
+                {}
                 <div className="flex border rounded-lg">
                   <Button
                     variant={viewMode === 'grid' ? 'default' : 'ghost'}
@@ -250,7 +249,7 @@ const FavoritesPage = () => {
               </div>
             </div>
 
-            {/* Risultati filtro */}
+            {}
             <div className="flex items-center justify-between text-sm text-muted-foreground">
               <span>
                 {filteredArticles.length} di {articles.length} articoli
@@ -259,7 +258,7 @@ const FavoritesPage = () => {
             </div>
           </div>
 
-          {/* Lista articoli */}
+          {}
           {filteredArticles.length === 0 ? (
             <div className="text-center py-8">
               <Filter className="w-12 h-12 text-muted-foreground mx-auto mb-2 opacity-50" />
@@ -269,7 +268,7 @@ const FavoritesPage = () => {
             </div>
           ) : (
             <div className={
-              viewMode === 'grid' 
+              viewMode === 'grid'
                 ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
                 : 'space-y-4'
             }>
@@ -290,7 +289,7 @@ const FavoritesPage = () => {
                       )}
                       <CardHeader>
                         <div className="flex items-center justify-between mb-2">
-                          <Badge 
+                          <Badge
                             variant="secondary"
                             style={{ backgroundColor: article.category?.color + '20', color: article.category?.color }}
                           >
@@ -337,7 +336,7 @@ const FavoritesPage = () => {
                         )}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between mb-2">
-                            <Badge 
+                            <Badge
                               variant="secondary"
                               style={{ backgroundColor: article.category?.color + '20', color: article.category?.color }}
                             >

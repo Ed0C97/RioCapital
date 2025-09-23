@@ -1,11 +1,13 @@
+// finblog-frontend/src/components/ImageUploader.jsx
+
 import React, { useState, useRef } from 'react';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Progress } from './ui/progress';
-import { 
-  Upload, 
-  Image as ImageIcon, 
-  X, 
+import {
+  Upload,
+  Image as ImageIcon,
+  X,
   AlertCircle,
   Check,
   Loader2
@@ -18,7 +20,7 @@ const NEW_LIMIT_IN_BYTES = NEW_LIMIT_IN_MB * 1024 * 1024;
 const ImageUploader = ({
   onImageUploaded,
   currentImage = null,
-  maxSize = NEW_LIMIT_IN_BYTES, // Il limite ora è 10MB
+  maxSize = NEW_LIMIT_IN_BYTES,
   acceptedTypes = ['image/jpeg', 'image/png', 'image/webp'],
   className = ''
 }) => {
@@ -59,12 +61,10 @@ const ImageUploader = ({
           const formData = new FormData();
           formData.append('image', file);
 
-          // La simulazione del progresso va bene
           const progressInterval = setInterval(() => {
               setUploadProgress(prev => (prev >= 90 ? prev : prev + 10));
           }, 200);
 
-          // La chiamata fetch è corretta, usa il proxy
           const response = await fetch('/api/upload/image', {
               method: 'POST',
               body: formData,
@@ -77,13 +77,9 @@ const ImageUploader = ({
           if (response.ok) {
               const data = await response.json();
 
-              // --- LA CORREZIONE FONDAMENTALE È QUI ---
-              // Il backend ci dà un URL relativo (es. /static/uploads/img.jpg)
-              // Noi lo trasformiamo in un URL assoluto che il browser può usare.
               const backendUrl = 'http://localhost:5000';
               const fullImageUrl = backendUrl + data.url;
 
-              // Usiamo l'URL completo per l'anteprima e per passarlo al form principale
               setPreviewUrl(fullImageUrl);
               onImageUploaded?.(fullImageUrl);
 
@@ -92,16 +88,16 @@ const ImageUploader = ({
               const error = await response.json();
               toast.error(error.message || 'Errore durante il caricamento');
               setPreviewUrl(null);
-              onImageUploaded?.(null); // Pulisci anche in caso di errore
+              onImageUploaded?.(null);
           }
       } catch (error) {
           console.error('Errore upload:', error);
           toast.error('Errore di connessione durante il caricamento');
           setPreviewUrl(null);
-          onImageUploaded?.(null); // Pulisci anche in caso di errore
+          onImageUploaded?.(null);
       } finally {
           setUploading(false);
-          // Ritardiamo l'azzeramento della barra per un feedback visivo
+
           setTimeout(() => setUploadProgress(0), 1000);
       }
   };
@@ -109,7 +105,7 @@ const ImageUploader = ({
   const handleDrop = (e) => {
     e.preventDefault();
     setDragOver(false);
-    
+
     const file = e.dataTransfer.files?.[0];
     if (file) {
       uploadFile(file);
@@ -188,8 +184,8 @@ const ImageUploader = ({
       ) : (
         <Card
           className={`border-2 border-dashed transition-colors cursor-pointer ${
-            dragOver 
-              ? 'border-primary bg-primary/5' 
+            dragOver
+              ? 'border-primary bg-primary/5'
               : 'border-muted-foreground/25 hover:border-primary/50'
           }`}
           onDrop={handleDrop}
@@ -237,7 +233,7 @@ const ImageUploader = ({
         </Card>
       )}
 
-      {/* Messaggi di stato */}
+      {}
       {previewUrl && !uploading && (
         <div className="mt-2 flex items-center space-x-2 text-sm text-green-600">
           <Check className="w-4 h-4" />

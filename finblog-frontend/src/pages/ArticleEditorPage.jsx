@@ -1,3 +1,5 @@
+// finblog-frontend/src/pages/ArticleEditorPage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -15,11 +17,11 @@ import { Badge } from '../components/ui/badge';
 import { marked } from 'marked';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
-import { 
-  Save, 
-  Eye, 
-  ArrowLeft, 
-  FileText, 
+import {
+  Save,
+  Eye,
+  ArrowLeft,
+  FileText,
   Image as ImageIcon,
   Settings,
   Calendar,
@@ -52,7 +54,7 @@ const ArticleEditorPage = () => {
 
   useEffect(() => {
   fetchCategories();
-  // Riesegui questa logica solo se abbiamo un 'id' (siamo in modifica) E l'utente è stato caricato
+
   if (isEditing && user) {
     fetchArticle();
   } else if (!isEditing) {
@@ -88,7 +90,6 @@ const ArticleEditorPage = () => {
           return;
       }
 
-      // Verifica se l'utente può modificare questo articolo
       if (!isAdmin() && articleData.author_id !== user.id) {
         toast.error('Non hai i permessi per modificare questo articolo');
         navigate('/admin/articoli');
@@ -140,7 +141,6 @@ const ArticleEditorPage = () => {
       [field]: value
     }));
 
-    // Auto-genera slug dal titolo
     if (field === 'title' && !isEditing) {
       setArticle(prev => ({
         ...prev,
@@ -221,12 +221,11 @@ const ArticleEditorPage = () => {
       return;
     }
 
-    // Prima converte il LaTeX in HTML
     const contentWithLatex = (article.content || '').replace(/\$\$([^$]+)\$\$/g, (match, latex) => {
         try { return katex.renderToString(latex, { throwOnError: false, displayMode: true }); }
         catch (e) { return match; }
     });
-    // Poi converte il resto del Markdown
+
     const htmlContent = marked(contentWithLatex);
     const htmlExcerpt = marked(article.excerpt || '');
 
@@ -261,7 +260,7 @@ const ArticleEditorPage = () => {
   return (
     <RoleGuard user={user} requiredRoles={['collaborator', 'admin']}>
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Header */}
+        {}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
             <Button
@@ -309,9 +308,9 @@ const ArticleEditorPage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Contenuto principale */}
+          {}
           <div className="lg:col-span-2 space-y-6">
-            {/* Informazioni base */}
+            {}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
@@ -364,7 +363,7 @@ const ArticleEditorPage = () => {
               </CardContent>
             </Card>
 
-            {/* Immagine di copertina */}
+            {}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
@@ -473,7 +472,7 @@ const ArticleEditorPage = () => {
               </CardContent>
             </Card>
 
-            {/* Stato articolo */}
+            {}
             <Card>
               <CardHeader>
                 <CardTitle>Stato</CardTitle>
@@ -508,7 +507,7 @@ const ArticleEditorPage = () => {
               </CardContent>
             </Card>
 
-            {/* Guida */}
+            {}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
