@@ -1,6 +1,6 @@
 <!-- README.md
 
-# FinBlog - Blog Finanziario Completo
+# Rio Capital Blog - Blog Finanziario Completo
 
 Un blog finanziario moderno e completo con UI/UX ispirata a jethr.com, sviluppato con React (frontend) e Flask (backend).
 
@@ -82,12 +82,12 @@ Un blog finanziario moderno e completo con UI/UX ispirata a jethr.com, sviluppat
 ### 1. Clona il repository
 ```bash
 git clone <repository-url>
-cd finblog-complete
+cd Rio Capital Blog-complete
 ```
 
 ### 2. Setup Backend (Flask)
 ```bash
-cd finblog-backend
+cd Rio Capital Blog-backend
 
 # Crea virtual environment
 python -m venv venv
@@ -108,7 +108,7 @@ Il backend sarà disponibile su `http://localhost:5000`
 
 ### 3. Setup Frontend (React)
 ```bash
-cd finblog-frontend
+cd Rio Capital Blog-frontend
 
 # Installa dipendenze
 pnpm install
@@ -121,7 +121,7 @@ Il frontend sarà disponibile su `http://localhost:5173`
 ### 4. Build per produzione
 ```bash
 # Frontend
-cd finblog-frontend
+cd Rio Capital Blog-frontend
 pnpm run build
 
 # Il build sarà nella cartella dist/
@@ -146,7 +146,7 @@ pnpm run build
 ## 🔧 Configurazione
 
 ### Variabili d'Ambiente Backend
-Crea un file `.env` in `finblog-backend/`:
+Crea un file `.env` in `Rio Capital Blog-backend/`:
 ```env
 SECRET_KEY=your-secret-key-here
 DATABASE_URL=sqlite:///database/app.db
@@ -159,8 +159,8 @@ Il database SQLite viene creato automaticamente al primo avvio. Per utilizzare P
 ## 📁 Struttura del Progetto
 
 ```
-finblog-complete/
-├── finblog-frontend/          # Frontend React
+Rio Capital Blog-complete/
+├── Rio Capital Blog-frontend/          # Frontend React
 │   ├── src/
 │   │   ├── components/        # Componenti riutilizzabili
 │   │   ├── pages/            # Pagine dell'applicazione
@@ -168,7 +168,7 @@ finblog-complete/
 │   │   └── ...
 │   ├── package.json
 │   └── vite.config.js
-├── finblog-backend/           # Backend Flask
+├── Rio Capital Blog-backend/           # Backend Flask
 │   ├── src/
 │   │   ├── models/           # Modelli database
 │   │   ├── routes/           # Route API
@@ -197,20 +197,20 @@ finblog-complete/
 ## 🎨 Personalizzazione
 
 ### Colori e Tema
-Modifica i colori in `finblog-frontend/src/App.css`:
+Modifica i colori in `Rio Capital Blog-frontend/src/App.css`:
 ```css
 :root {
-  --finblog-primary: #007BFF;
-  --finblog-secondary: #28A745;
+  --Rio Capital Blog-primary: #007BFF;
+  --Rio Capital Blog-secondary: #28A745;
   /* ... altri colori */
 }
 ```
 
 ### Logo e Branding
-Sostituisci il logo e le immagini in `finblog-frontend/src/assets/`
+Sostituisci il logo e le immagini in `Rio Capital Blog-frontend/src/assets/`
 
 ### Categorie Predefinite
-Modifica le categorie in `finblog-frontend/src/pages/HomePage.jsx`
+Modifica le categorie in `Rio Capital Blog-frontend/src/pages/HomePage.jsx`
 
 ## 🐛 Troubleshooting
 
@@ -246,4 +246,4 @@ Per supporto o domande:
 
 ---
 
-**FinBlog** - Il tuo blog finanziario di fiducia 💰📈
+**Rio Capital Blog** - Il tuo blog finanziario di fiducia 💰📈

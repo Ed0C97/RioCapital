@@ -68,7 +68,7 @@ Creare un blog finanziario con un'interfaccia utente pulita, moderna e intuitiva
 - **Header:**
     - Logo del blog (es.
 
-FinBlog) a sinistra.
+Rio Capital Blog) a sinistra.
     - Menu di navigazione principale (Home, Categorie, Chi Siamo, Contatti) a destra.
     - Pulsanti per Login/Registrazione e Donazioni.
     - Barra di ricerca.

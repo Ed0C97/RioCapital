@@ -1,6 +1,6 @@
 <!-- README_AGGIORNATO.md
 
-# FinBlog - Blog Finanziario Completo
+# Rio Capital Blog - Blog Finanziario Completo
 
 ## 🚀 Versione 1.1.0 - Aggiornamenti Implementati
 
@@ -36,7 +36,7 @@
 
 ### Backend (Flask)
 ```bash
-cd finblog-backend
+cd Rio Capital Blog-backend
 pip install -r requirements.txt
 cd src
 python main.py
@@ -45,7 +45,7 @@ Il backend sarà disponibile su `http://localhost:5000`
 
 ### Frontend (React + Vite)
 ```bash
-cd finblog-frontend
+cd Rio Capital Blog-frontend
 npm install --legacy-peer-deps
 npm run dev
 ```
@@ -217,6 +217,6 @@ Per contribuire al progetto:
 ## 📞 Supporto
 
 Per supporto tecnico:
-- Email: info@finblog.it
+- Email: info@Rio Capital Blog.it
 - GitHub Issues: [Repository Issues]
 - Documentazione: [Wiki del progetto]

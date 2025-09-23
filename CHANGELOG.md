@@ -1,6 +1,6 @@
 <!-- CHANGELOG.md
 
-# Changelog - FinBlog Miglioramenti
+# Changelog - Rio Capital Blog Miglioramenti
 
 ## Versione 1.1.0 - 14 Settembre 2025
 
@@ -47,7 +47,7 @@
 ### 📁 Struttura File Aggiornata
 
 ```
-finblog-frontend/src/
+Rio Capital Blog-frontend/src/
 ├── components/
 │   ├── ArticleCarousel.jsx (NUOVO)
 │   └── ArticleCard.jsx (MODIFICATO)
@@ -59,7 +59,7 @@ finblog-frontend/src/
 │   └── HomePage.jsx (MODIFICATO)
 └── App.jsx (MODIFICATO)
 
-finblog-backend/src/
+Rio Capital Blog-backend/src/
 ├── routes/
 │   └── contact.py (NUOVO)
 └── main.py (MODIFICATO)
@@ -68,8 +68,8 @@ finblog-backend/src/
 ### 🚀 Istruzioni per l'Uso
 
 #### Avvio del Progetto
-1. **Backend**: `cd finblog-backend && pip install -r requirements.txt && cd src && python main.py`
-2. **Frontend**: `cd finblog-frontend && npm install --legacy-peer-deps && npm run dev`
+1. **Backend**: `cd Rio Capital Blog-backend && pip install -r requirements.txt && cd src && python main.py`
+2. **Frontend**: `cd Rio Capital Blog-frontend && npm install --legacy-peer-deps && npm run dev`
 
 #### Nuove Funzionalità
 - Visita `/categorie` per esplorare le categorie
