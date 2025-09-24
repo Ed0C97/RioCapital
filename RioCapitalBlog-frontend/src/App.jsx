@@ -33,7 +33,7 @@ function App() {
       <Router>
         <div className="min-h-screen flex flex-col">
           <Header />
-          <main className="flex-1 flex justify-center">
+          <main className="flex-grow">
             <Routes>
               {}
               <Route path="/" element={<HomePage />} />

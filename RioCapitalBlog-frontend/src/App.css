@@ -1,9 +1,32 @@
-/* RioCapitalBlog-frontend/src/App.css */
+/*
+
+================================================================================
+File: App.css
+Progetto: RioCapitalBlog-frontend
+Descrizione: Foglio di stile principale per l'applicazione RioCapitalBlog.
+Questo file contiene:
+- Importazione di font personalizzati.
+- Integrazione e configurazione di Tailwind CSS.
+- Definizione di variabili CSS per il tema (light e dark).
+- Stili di base e classi di utilità personalizzate.
+- Stili per componenti specifici come card, griglie di notizie e articoli.
+- Media query per il design responsivo.
+================================================================================
+
+*/
+
+/* ==============================================================================
+   1. IMPORTAZIONE FONT
+   ==============================================================================
+   Descrizione: Importazione del font custom 'SF Pro Display' con diversi pesi
+   e stili. L'attributo `font-display: swap;` assicura che il testo sia
+   visibile con un font di fallback mentre il font personalizzato viene caricato.
+   ============================================================================== */
 
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYREGULAR.OTF') format('opentype');
-  font-weight: 400;
+  font-weight: 400; /* Regular */
   font-style: normal;
   font-display: swap;
 }
@@ -11,7 +34,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYMEDIUM.OTF') format('opentype');
-  font-weight: 500;
+  font-weight: 500; /* Medium */
   font-style: normal;
   font-display: swap;
 }
@@ -19,7 +42,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYBOLD.OTF') format('opentype');
-  font-weight: 700;
+  font-weight: 700; /* Bold */
   font-style: normal;
   font-display: swap;
 }
@@ -27,7 +50,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYULTRALIGHTITALIC.OTF') format('opentype');
-  font-weight: 100;
+  font-weight: 100; /* Ultra Light Italic */
   font-style: italic;
   font-display: swap;
 }
@@ -35,7 +58,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYTHINITALIC.OTF') format('opentype');
-  font-weight: 200;
+  font-weight: 200; /* Thin Italic */
   font-style: italic;
   font-display: swap;
 }
@@ -43,7 +66,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYLIGHTITALIC.OTF') format('opentype');
-  font-weight: 300;
+  font-weight: 300; /* Light Italic */
   font-style: italic;
   font-display: swap;
 }
@@ -51,7 +74,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYSEMIBOLDITALIC.OTF') format('opentype');
-  font-weight: 600;
+  font-weight: 600; /* Semibold Italic */
   font-style: italic;
   font-display: swap;
 }
@@ -59,7 +82,7 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYHEAVYITALIC.OTF') format('opentype');
-  font-weight: 800;
+  font-weight: 800; /* Heavy Italic */
   font-style: italic;
   font-display: swap;
 }
@@ -67,44 +90,78 @@
 @font-face {
   font-family: 'SF Pro Display';
   src: url('./assets/fonts/SFPRODISPLAYBLACKITALIC.OTF') format('opentype');
-  font-weight: 900;
+  font-weight: 900; /* Black Italic */
   font-style: italic;
   font-display: swap;
 }
 
+/* ==============================================================================
+   2. INTEGRAZIONE TAILWIND CSS
+   ==============================================================================
+   Descrizione: Importazione delle direttive di base di Tailwind CSS e di una
+   libreria di animazioni aggiuntiva. Viene definita anche una variante
+   personalizzata per il tema scuro.
+   ============================================================================== */
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Variante personalizzata per applicare stili specifici ai figli di un elemento .dark */
 @custom-variant dark (&:is(.dark *));
 
+/* ==============================================================================
+   3. DEFINIZIONE DEL TEMA (THEME)
+   ==============================================================================
+   Descrizione: Definizione delle variabili CSS che verranno utilizzate in tutta
+   l'applicazione. Questo permette una facile personalizzazione e coerenza
+   del design. Le variabili sono definite per colori, raggi dei bordi, ecc.
+   ============================================================================== */
+
 @theme inline {
+  /* Raggi dei bordi */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Colori di base */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* Colori per componenti Card */
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+
+  /* Colori per componenti Popover */
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+
+  /* Colori primari e secondari */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+
+  /* Colori per stati "muted" e "accent" */
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+
+  /* Altri colori */
   --color-destructive: var(--destructive);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* Colori per i grafici */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  /* Colori per la Sidebar */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -115,31 +172,55 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ==============================================================================
+   4. TEMA LIGHT (DEFAULT)
+   ==============================================================================
+   Descrizione: Valori specifici delle variabili CSS per il tema chiaro (light).
+   Utilizza la notazione di colore OKLCH per una migliore percezione
+   e consistenza dei colori.
+   ============================================================================== */
+
 :root {
-  --radius: 0.625rem;
+  --radius: 0.625rem; /* 10px */
+
+  /* Colori di base */
   --background: #f5f5f7;
   --foreground: oklch(0.2 0 0);
+
+  /* Colori per componenti Card */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.2 0 0);
+
+  /* Colori per componenti Popover */
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0 0);
+
+  /* Colori primari e secondari */
   --primary: oklch(0.5 0.15 240);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.6 0.15 140);
   --secondary-foreground: oklch(0.985 0 0);
+
+  /* Colori per stati "muted" e "accent" */
   --muted: oklch(0.96 0 0);
   --muted-foreground: oklch(0.5 0 0);
   --accent: oklch(0.7 0.15 60);
   --accent-foreground: oklch(0.2 0 0);
+
+  /* Altri colori */
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.9 0 0);
   --input: oklch(0.95 0 0);
   --ring: oklch(0.5 0.15 240);
+
+  /* Colori per i grafici */
   --chart-1: oklch(0.5 0.15 240);
   --chart-2: oklch(0.6 0.15 140);
   --chart-3: oklch(0.7 0.15 60);
   --chart-4: oklch(0.577 0.245 27.325);
   --chart-5: oklch(0.4 0.15 280);
+
+  /* Colori per la Sidebar */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.2 0 0);
   --sidebar-primary: oklch(0.5 0.15 240);
@@ -150,30 +231,52 @@
   --sidebar-ring: oklch(0.5 0.15 240);
 }
 
+/* ==============================================================================
+   5. TEMA DARK
+   ==============================================================================
+   Descrizione: Sovrascrive le variabili CSS per il tema scuro (dark).
+   Questi stili vengono applicati quando un elemento ha la classe `.dark`.
+   ============================================================================== */
+
 .dark {
+  /* Colori di base */
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
+
+  /* Colori per componenti Card */
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
+
+  /* Colori per componenti Popover */
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
+
+  /* Colori primari e secondari */
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
+
+  /* Colori per stati "muted" e "accent" */
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
+
+  /* Altri colori */
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
+
+  /* Colori per i grafici */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
+
+  /* Colori per la Sidebar */
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -184,21 +287,40 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* ==============================================================================
+   6. STILI DI BASE (LAYER BASE)
+   ==============================================================================
+   Descrizione: Stili di base applicati a tutti gli elementi (`*`) e al `body`.
+   Utilizza la direttiva `@layer base` di Tailwind per garantire che questi
+   stili abbiano una precedenza corretta.
+   ============================================================================== */
+
 @layer base {
+  /* Applica un bordo e un anello di focus a tutti gli elementi */
   * {
     @apply border-border outline-ring/50;
   }
+
+  /* Imposta il colore di sfondo, il colore del testo e il font per il corpo della pagina */
   body {
     @apply bg-background text-foreground;
-
     font-family: 'SF Pro Display', sans-serif;
   }
 }
 
+/* ==============================================================================
+   7. CLASSI DI UTILITÀ PERSONALIZZATE
+   ==============================================================================
+   Descrizione: Classi riutilizzabili per effetti specifici come gradienti,
+   effetti hover e stili per il testo.
+   ============================================================================== */
+
+/* Gradiente per sfondi */
 .RioCapitalBlog-gradient {
   background: linear-gradient(135deg, oklch(0.5 0.15 240) 0%, oklch(0.6 0.15 140) 100%);
 }
 
+/* Effetto hover per le card */
 .RioCapitalBlog-card-hover {
   transition: all 0.3s ease;
 }
@@ -208,6 +330,7 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.01);
 }
 
+/* Gradiente per il testo */
 .RioCapitalBlog-text-gradient {
   background: linear-gradient(135deg, oklch(0.5 0.15 240), oklch(0.6 0.15 140));
   -webkit-background-clip: text;
@@ -215,10 +338,12 @@
   background-clip: text;
 }
 
+/* Sfondo per la sezione Hero */
 .RioCapitalBlog-hero-bg {
   background: linear-gradient(135deg, oklch(0.99 0 0) 0%, oklch(0.96 0 0) 100%);
 }
 
+/* Badge per le categorie */
 .RioCapitalBlog-category-badge {
   display: inline-flex;
   align-items: center;
@@ -229,6 +354,15 @@
   color: white;
 }
 
+/* ==============================================================================
+   8. STILI PER IL CONTENUTO DEGLI ARTICOLI
+   ==============================================================================
+   Descrizione: Stili per la formattazione del contenuto degli articoli, come
+   titoli, paragrafi, liste e citazioni. Ci sono due set di stili, probabilmente
+   per contesti diversi o in fase di refactoring.
+   ============================================================================== */
+
+/* Stili per il contenuto degli articoli (Set 1) */
 .RioCapitalBlog-article-content {
   line-height: 1.8;
 }
@@ -259,38 +393,38 @@
   color: oklch(0.4 0 0);
 }
 
-@media (max-width: 768px) {
-  .RioCapitalBlog-hero-title {
-    font-size: 2rem;
-  }
-
-  .RioCapitalBlog-hero-subtitle {
-    font-size: 1rem;
-  }
-}
-
+/* Stili per il contenuto degli articoli (Set 2) - Più dettagliato */
 .article-content {
   line-height: 1.7;
+  font-size: 1.125rem; /* 18px */
 }
 
-.article-content h1,
-.article-content h2,
-.article-content h3 {
+.article-content img {
+  display: block;
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 1600px;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+}
+
+.article-content h1, .article-content h2, .article-content h3 {
   margin-top: 1.8rem;
   margin-bottom: 1rem;
   font-weight: 600;
   line-height: 1.3;
 }
-.article-content h1 { font-size: 2rem; }
-.article-content h2 { font-size: 1.75rem; }
-.article-content h3 { font-size: 1.5rem; }
+
+.article-content h1 { font-size: 2rem; } /* 32px */
+.article-content h2 { font-size: 1.75rem; } /* 28px */
+.article-content h3 { font-size: 1.5rem; } /* 24px */
 
 .article-content p {
   margin-bottom: 1.25rem;
 }
 
-.article-content ul,
-.article-content ol {
+.article-content ul, .article-content ol {
   margin-bottom: 1.25rem;
   padding-left: 2rem;
 }
@@ -308,110 +442,179 @@
   color: #6b7280;
 }
 
-.article-content {
-  line-height: 1.7;
-  font-size: 1.125rem;
-}
-.article-content img {
-  display: block; margin: 2rem auto; width: 100%;
-  max-width: 1600px; height: auto; border-radius: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.01);
-}
-.article-content h1, .article-content h2, .article-content h3 {
-  margin-top: 1.8rem; margin-bottom: 1rem; font-weight: 600; line-height: 1.3;
-}
-.article-content p { margin-bottom: 1.25rem; }
-.article-content ul, .article-content ol { margin-bottom: 1.25rem; padding-left: 2rem; }
-.article-content li { margin-bottom: 0.5rem; }
-.article-content blockquote {
-  border-left: 3px solid #e5e7eb; padding-left: 1rem;
-  margin: 1.5rem 0; font-style: italic; color: #6b7280;
+/* ==============================================================================
+   9. LAYOUT E GRIGLIE
+   ==============================================================================
+   Descrizione: Stili per il layout principale, le griglie di notizie e la
+   disposizione degli articoli.
+   ============================================================================== */
+
+/* Contenitore principale per le sezioni */
+.main-content-container {
+  max-width: 980px; /* Larghezza massima del contenuto */
+  margin: 0 auto; /* Centra il contenitore */
+  padding: 3rem 1rem; /* Spaziatura interna */
 }
 
+/* Griglia per le notizie */
 .news-grid {
   display: grid;
-  gap: 24px;
+  gap: 38px 38px;
   grid-template-columns: repeat(1, 1fr);
 }
+
+/* Media query per la griglia di notizie su schermi medi e grandi */
 @media (min-width: 768px) { .news-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .news-grid { grid-template-columns: repeat(6, 1fr); } }
 
+/* Stili per gli elementi della griglia */
 .article-item--1 { grid-column: span 1; }
 @media (min-width: 1024px) { .article-item--1 { grid-column: span 6; } }
+
 .article-item--2, .article-item--3 { grid-column: span 1; }
 @media (min-width: 1024px) { .article-item--2, .article-item--3 { grid-column: span 3; } }
+
 .article-item--4, .article-item--5, .article-item--6 { grid-column: span 1; }
 @media (min-width: 1024px) { .article-item--4, .article-item--5, .article-item--6 { grid-column: span 2; } }
 
+/* ==============================================================================
+   10. COMPONENTE: NEWS CARD
+   ==============================================================================
+   Descrizione: Stili per le card che mostrano le anteprime delle notizie.
+   Include varianti per card di tipo 'hero', 'standard' e 'small'.
+   ============================================================================== */
+
 .news-card {
-  background-color: #ffffff; border-radius: 24px; overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 34px;
+  overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.01);
   transition: box-shadow 0.3s ease;
-  display: flex; flex-direction: column; height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
+
 .news-card:hover {
   box-shadow: 0 6px 17px rgba(0,0,0,0.01);
 }
-.news-card-media { overflow: hidden; background-color: #f5f5f7; position: relative; }
+
+.news-card-media {
+  overflow: hidden;
+  background-color: #f5f5f7;
+  position: relative;
+}
+
 .news-card-media img {
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.news-card:hover .news-card-media img { transform: scale(1.04); }
-.news-card-content { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
-.news-card-category { font-size: 0.8rem; font-weight: 600; color: #6e6e73; text-transform: uppercase; margin-bottom: 0.5rem; }
-.news-card-headline { font-size: 1.5rem; font-weight: 600; line-height: 1.3; }
-.news-card-timestamp { font-size: 0.9rem; color: #86868b; display: flex; align-items: center; margin-top: 1rem; }
-.news-card-timestamp svg { width: 1em; height: 1em; margin-right: 0.5em; }
 
+.news-card:hover .news-card-media img {
+  transform: scale(1.04);
+}
+
+.news-card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.news-card-category {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6e6e73;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.news-card-headline {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.news-card-timestamp {
+  font-size: 0.9rem;
+  color: #86868b;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.news-card-timestamp svg {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+}
+
+/* Varianti della News Card */
 .news-card--hero .news-card-content { padding: 32px; }
 .news-card--hero .news-card-headline { font-size: 2.2rem; }
 
 .news-card--standard .news-card-media {
-  height: 170px;
+  height: 265px;
   flex-shrink: 0;
 }
-.news-card--standard .news-card-content {
 
+.news-card--standard .news-card-content {
+  min-height: 208px;
 }
 
+.news-card--small .news-card-media {
+  height: 165px;
+  flex-shrink: 0;
+}
+
+.news-card--small .news-card-content {
+  min-height: 100px;
+}
+
+/* Stili per la card hero su schermi più grandi */
 @media (min-width: 768px) {
-  .news-card--hero { flex-direction: row; }
+  .news-card--hero {
+    flex-direction: row;
+  }
   .news-card--hero .news-card-media {
-    flex-basis: 60%;
+    flex-basis: 66%;
     min-height: 362px;
   }
   .news-card--hero .news-card-content {
-    flex-basis: 40%;
+    flex-basis: 34%;
   }
 }
 
+/* Stile per il badge "New" */
 .news-card-eyebrow-new {
-
   font-size: 0.8rem;
   font-weight: 600;
   color: #0071e3;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-
   background-color: rgba(0, 113, 227, 0.1);
   padding: 4px 10px;
   border-radius: 9999px;
 }
 
+/* ==============================================================================
+   11. SEZIONE ARTICOLI CORRELATI
+   ==============================================================================
+   Descrizione: Stili per la sezione che mostra gli articoli correlati.
+   ============================================================================== */
+
 .related-articles-section {
-
-  background-color: #f5f5f7;
+  background-color: #ffffff;
   width: 100%;
-
-  padding: 10rem 0;
+  padding: 4rem 0;
 }
 
 .related-articles-container {
-
   max-width: 980px;
   margin: 0 auto;
-  padding: 0 0rem;
+  padding: 0 1rem;
 }
 
 .related-articles-grid {
@@ -423,15 +626,21 @@
 @media (min-width: 768px) {
   .related-articles-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 10rem;
+    gap: 4rem;
   }
 }
 
 .article-pair:not(:last-child) {
   padding-bottom: 2rem;
-
   border-bottom: 2px solid #e5e7eb;
 }
+
+/* ==============================================================================
+   12. COMPONENTE: ARTICLE LIST ITEM
+   ==============================================================================
+   Descrizione: Stili per gli elementi della lista di articoli, usati nella
+   sezione degli articoli correlati.
+   ============================================================================== */
 
 .article-list-item {
   display: flex;
@@ -448,10 +657,14 @@
   border-radius: 18px;
   overflow: hidden;
 }
+
 .article-list-item-image img {
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.3s ease;
 }
+
 .article-list-item:hover .article-list-item-image img {
   transform: scale(1.05);
 }
@@ -464,10 +677,13 @@
 }
 
 .article-list-item-category {
-  font-size: 0.75rem; font-weight: 600; color: #6e6e73;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6e6e73;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
+
 .article-list-item-title {
   font-size: 1.25rem;
   font-weight: 600;
@@ -475,14 +691,23 @@
   margin-bottom: 0.75rem;
   transition: color 0.2s ease;
 }
+
 .article-list-item:hover .article-list-item-title {
   color: #0071e3;
 }
+
 .article-list-item-date {
   font-size: 0.9rem;
   color: #86868b;
 }
 
+/* ==============================================================================
+   13. STILI PER ELEMENTI DI FORM
+   ==============================================================================
+   Descrizione: Stili per input e bottoni.
+   ============================================================================== */
+
+/* Stile per l'input (probabilmente da un componente UI) */
 input[data-slot="input"] {
   font-size: 0.9rem;
   color: #555555;
@@ -498,6 +723,7 @@ input[data-slot="input"]::placeholder {
   color: #888888;
 }
 
+/* Stili generici per bottoni */
 button,
 .button,
 .btn {
@@ -517,4 +743,22 @@ button:hover,
 .button:hover,
 .btn:hover {
   background-color: #e0e0e0;
+}
+
+/* ==============================================================================
+   MEDIA QUERIES RESPONSIVE
+   ==============================================================================
+   Descrizione: Media query per adattare il layout a diverse dimensioni
+   dello schermo.
+   ============================================================================== */
+
+@media (max-width: 768px) {
+  /* Stili per la sezione Hero su schermi piccoli */
+  .RioCapitalBlog-hero-title {
+    font-size: 2rem;
+  }
+
+  .RioCapitalBlog-hero-subtitle {
+    font-size: 1rem;
+  }
 }

@@ -149,7 +149,7 @@ def create_article():
             slug=new_slug,
             content=data['content'],
             excerpt=data.get('excerpt', ''),
-            image_url=data.get('image_url', ''),
+            image_url=data.get('image_url', None),
             author_id=session['user_id'],
             category_id=data['category_id'],
             published=data.get('published', False)

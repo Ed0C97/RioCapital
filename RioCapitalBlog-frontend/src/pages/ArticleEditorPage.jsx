@@ -46,7 +46,7 @@ const ArticleEditorPage = () => {
     excerpt: '',
     content: '',
     category_id: '',
-    cover_image: null,
+    image_url: null,
     published: false,
     featured: false,
     tags: ''
@@ -102,7 +102,7 @@ const ArticleEditorPage = () => {
           excerpt: articleData.excerpt || '',
           content: articleData.content || '',
           category_id: articleData.category_id || '',
-          cover_image: articleData.cover_image || null,
+          image_url: articleData.image_url || null,
           published: articleData.published || false,
           featured: articleData.featured || false,
           tags: articleData.tags ? articleData.tags.join(', ') : ''
@@ -376,8 +376,8 @@ const ArticleEditorPage = () => {
               </CardHeader>
               <CardContent>
                 <ImageUploader
-                  currentImage={article.cover_image}
-                  onImageUploaded={(url) => handleInputChange('cover_image', url)}
+                  currentImage={article.image_url}
+                  onImageUploaded={(url) => handleInputChange('image_url', url)}
                 />
               </CardContent>
             </Card>

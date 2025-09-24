@@ -69,75 +69,102 @@ const HomePage = () => {
   const secondaryArticles = articles.slice(1);
 
   return (
-    <div className="w-full px-0 py-12" style={{ maxWidth: '980px' }}>
-      <div className="mb-12">
-        <h1 className="text-4xl font-bold">Ultime notizie</h1>
-      </div>
+    <>
+      {/* === Blocco 1: Ultime Notizie (con larghezza limitata) === */}
+      <div className="mx-auto px-4 py-12" style={{ maxWidth: '1012px' }}>
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold">Ultime notizie</h1>
+        </div>
 
-      {}
-      <div className="mb-8">
-        <Link to={`/articolo/${heroArticle.slug}`} className="news-card news-card--hero">
-          <div className="news-card-media">
-            <img src={heroArticle.image_url || placeholderImage} alt={heroArticle.title} />
-          </div>
-          <div className="news-card-content">
-            <div className="flex-grow">
-              <div className="flex justify-between items-baseline">
-                <p className="news-card-category">{heroArticle.category_name}</p>
-                {isVeryRecent(heroArticle.created_at) && (
-                  <p className="news-card-eyebrow-new">Novità</p>
-                )}
-              </div>
-              <h3 className="news-card-headline">{heroArticle.title}</h3>
-            </div>
-            <p className="news-card-timestamp">
-              {isRecent(heroArticle.created_at) && <Clock size={16} />}
-              <span>{formatDate(heroArticle.created_at)}</span>
-            </p>
-          </div>
-        </Link>
-      </div>
+        {articles.length > 0 ? (
+          <div className="news-grid">
 
-      {}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9">
-        {secondaryArticles.map(article => (
-          <Link to={`/articolo/${article.slug}`} key={article.id} className="news-card news-card--standard">
-            <div className="news-card-media">
-              <img src={article.image_url || placeholderImage} alt={article.title} />
-            </div>
-            <div className="news-card-content">
-              <div className="flex-grow">
-                <div className="flex justify-between items-baseline">
-                  <p className="news-card-category">{article.category_name}</p>
-                  {isVeryRecent(article.created_at) && (
-                    <p className="news-card-eyebrow-new">Novità</p>
-                  )}
+            {/* Articolo HERO (Riga 1) */}
+            <div className="article-item--1">
+              <Link to={`/articolo/${articles[0].slug}`} className="news-card news-card--hero">
+                <div className="news-card-media">
+                  <img src={articles[0].image_url || placeholderImage} alt={articles[0].title} />
                 </div>
-                <h3 className="news-card-headline">{article.title}</h3>
-              </div>
-              <p className="news-card-timestamp">
-                {isRecent(article.created_at) && <Clock size={16} />}
-                <span>{formatDate(article.created_at)}</span>
-              </p>
+                <div className="news-card-content">
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-baseline">
+                      <p className="news-card-category">{articles[0].category_name}</p>
+                      {isVeryRecent(articles[0].created_at) && <p className="news-card-eyebrow-new">Novità</p>}
+                    </div>
+                    <h3 className="news-card-headline">{articles[0].title}</h3>
+                  </div>
+                  <p className="news-card-timestamp">
+                    {isRecent(articles[0].created_at) && <Clock size={16} />}
+                    <span>{formatDate(articles[0].created_at)}</span>
+                  </p>
+                </div>
+              </Link>
             </div>
+
+            {/* Articoli MEDI (Riga 2) */}
+            {articles[1] && (
+              <div className="article-item--2">
+                <Link to={`/articolo/${articles[1].slug}`} className="news-card news-card--standard">
+                  <div className="news-card-media"><img src={articles[1].image_url || placeholderImage} alt={articles[1].title} /></div>
+                  <div className="news-card-content">
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-baseline"><p className="news-card-category">{articles[1].category_name}</p>{isVeryRecent(articles[1].created_at) && <p className="news-card-eyebrow-new">Novità</p>}</div>
+                      <h3 className="news-card-headline">{articles[1].title}</h3>
+                    </div>
+                    <p className="news-card-timestamp">{isRecent(articles[1].created_at) && <Clock size={16} />}<span>{formatDate(articles[1].created_at)}</span></p>
+                  </div>
+                </Link>
+              </div>
+            )}
+            {articles[2] && (
+              <div className="article-item--3">
+                <Link to={`/articolo/${articles[2].slug}`} className="news-card news-card--standard">
+                  <div className="news-card-media"><img src={articles[2].image_url || placeholderImage} alt={articles[2].title} /></div>
+                  <div className="news-card-content">
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-baseline"><p className="news-card-category">{articles[2].category_name}</p>{isVeryRecent(articles[2].created_at) && <p className="news-card-eyebrow-new">Novità</p>}</div>
+                      <h3 className="news-card-headline">{articles[2].title}</h3>
+                    </div>
+                    <p className="news-card-timestamp">{isRecent(articles[2].created_at) && <Clock size={16} />}<span>{formatDate(articles[2].created_at)}</span></p>
+                  </div>
+                </Link>
+              </div>
+            )}
+
+            {/* Articoli PICCOLI (Riga 3) */}
+            {articles.slice(3, 6).map((article, index) => (
+            <div className={`article-item--${index + 4}`} key={article.id}>
+              {/* Aggiunta la classe 'news-card--small' */}
+              <Link to={`/articolo/${article.slug}`} className="news-card news-card--standard news-card--small">
+                  <div className="news-card-media"><img src={article.image_url || placeholderImage} alt={article.title} /></div>
+                  <div className="news-card-content">
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-baseline"><p className="news-card-category">{article.category_name}</p>{isVeryRecent(article.created_at) && <p className="news-card-eyebrow-new">Novità</p>}</div>
+                      <h3 className="news-card-headline">{article.title}</h3>
+                    </div>
+                    <p className="news-card-timestamp">{isRecent(article.created_at) && <Clock size={16} />}<span>{formatDate(article.created_at)}</span></p>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12"><h3 className="text-xl font-semibold">Nessun articolo da mostrare.</h3></div>
+        )}
+
+        <div className="text-center mt-16">
+          <Link to="/archivio">
+            <Button size="lg">Sfoglia l'archivio</Button>
           </Link>
-        ))}
+        </div>
       </div>
 
-      <div className="text-center mt-16">
-        <Link to="/archivio">
-          <Button size="lg">Sfoglia l'archivio</Button>
-        </Link>
-      </div>
-
-      <div className="w-full px-0 py-12" style={{ maxWidth: '980px' }}>
-        <RelatedArticles
-          title="I più popolari"
-
-          fetchUrl="/api/articles?per_page=4"
-        />
-      </div>
-    </div>
+      {/* === Blocco 2: I Più Popolari (con sfondo a larghezza piena) === */}
+      <RelatedArticles
+        title="I più popolari"
+        fetchUrl="/api/articles?per_page=4"
+      />
+    </>
   );
 };
 

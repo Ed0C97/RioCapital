@@ -64,12 +64,12 @@ const ArticleDetailPage = () => {
       {}
       {article && (
 
-        <div className="max-w-[980px] mx-auto px-4 py-12">
+        <div className="mt-24">
           <RelatedArticles
-            title="Altro da RioCapitalBlog"
+            title="Altro da Rio Capital Blog"
             fetchUrl={`/api/articles?category_id=${article.category_id}&exclude_id=${article.id}&per_page=4`}
-          />
-        </div>
+        />
+      </div>
       )}
     </>
   );
