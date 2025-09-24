@@ -77,6 +77,8 @@ const ArticleEditorPage = () => {
   const fetchArticle = async () => {
     setLoading(true);
     try {
+      // 'id' qui può essere un numero (dalla modifica) o uno slug (non usato, ma per coerenza)
+      // Usiamo l'endpoint che accetta l'ID numerico
       const response = await fetch(`/api/articles/${id}`, {
         credentials: 'include'
       });
@@ -109,11 +111,10 @@ const ArticleEditorPage = () => {
         });
       } else {
         toast.error('Articolo non trovato');
-        navigate('/admin/articles');
+        navigate('/admin/articoli');
       }
     } catch (error) {
-      console.error('Errore nel caricamento dell\'articolo:', error);
-      toast.error('Errore nel caricamento dell\'articolo');
+      console.error("Errore:", error);
     } finally {
       setLoading(false);
     }

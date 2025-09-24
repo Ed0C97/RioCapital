@@ -7,7 +7,6 @@ from flask.cli import with_appcontext
 from flask_cors import CORS
 
 from src.extensions import db
-
 from src.models.user import User
 from src.models.article import Article
 from src.models.category import Category
@@ -17,7 +16,6 @@ from src.models.favorite import ArticleFavorite
 from src.models.like import ArticleLike
 from src.models.share import Share
 from src.models.newsletter import NewsletterSubscriber, NotificationPreference
-
 from src.routes.user import user_bp
 from src.routes.auth import auth_bp
 from src.routes.articles import articles_bp
@@ -28,8 +26,8 @@ from src.routes.comments import comments_bp
 from src.routes.favorites import favorites_bp
 from src.routes.donations import donations_bp
 from src.routes.analytics import analytics_bp
-
 from src.routes.upload import upload_bp
+from src.routes.filters import filters_bp
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'asdf#FGSgvasgf$5$WGT'
@@ -90,6 +88,7 @@ app.register_blueprint(favorites_bp, url_prefix='/api')
 app.register_blueprint(donations_bp, url_prefix='/api')
 app.register_blueprint(analytics_bp, url_prefix='/api')
 app.register_blueprint(upload_bp, url_prefix='/api')
+app.register_blueprint(filters_bp, url_prefix='/api')
 
 app.register_blueprint(frontend_bp)
 

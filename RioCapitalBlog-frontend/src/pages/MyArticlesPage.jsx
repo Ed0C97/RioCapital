@@ -402,7 +402,7 @@ const MyArticlesPage = () => {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem asChild>
-                              <Link to={`/admin/articles/edit/${article.id}`}>
+                              <Link to={`/admin/articoli/modifica/${article.id}`}>
                                 <Edit className="w-4 h-4 mr-2" />
                                 Modifica
                               </Link>

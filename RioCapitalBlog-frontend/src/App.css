@@ -812,3 +812,159 @@ button:hover,
   transform: scale(1.05); /* Leggero ingrandimento */
   box-shadow: none;
 }
+
+/* === STILI PER LA PAGINA ARCHIVIO (STILE APPLE NEWSROOM) === */
+
+/* Contenitore per la lista di articoli nell'archivio */
+.archive-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem; /* Spazio verticale tra le righe */
+}
+
+/* Stile per la singola riga/articolo */
+.archive-item-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #d2d2d7; /* Linea di separazione */
+}
+
+/* Rimuove la linea all'ultimo elemento */
+.archive-list > *:last-child .archive-item-link {
+  border-bottom: none;
+}
+
+.archive-item {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 colonna su mobile */
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .archive-item {
+    /* Su desktop, l'immagine occupa 295px, il testo il resto */
+    grid-template-columns: 295px 1fr;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+/* Contenitore dell'immagine */
+.archive-item-image {
+  width: 100%;
+  aspect-ratio: 295 / 167; /* Rapporto d'aspetto esatto */
+  border-radius: 22px;
+  overflow: hidden;
+  background-color: #f5f5f7;
+}
+
+.archive-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.archive-item-link:hover .archive-item-image img {
+  transform: scale(1.05);
+}
+
+/* Contenitore del testo */
+.archive-item-content {
+  /* Il testo si adatta */
+}
+
+.archive-item-category {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6e6e73;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.archive-item-title {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.archive-item-link:hover .archive-item-title {
+  color: #0071e3;
+}
+
+.archive-item-date {
+  font-size: 0.9rem;
+  color: #86868b;
+}
+
+/* === STILI PER LA PAGINAZIONE (STILE APPLE) === */
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem; /* Spazio tra gli elementi */
+  margin-top: 5rem;
+}
+
+/* Stile per i pulsanti freccia */
+.pagination-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;  /* ~2.588rem */
+  height: 44px; /* ~2.588rem */
+  background-color: #f5f5f7;
+  color: #6e6e73;
+  border: none;
+  border-radius: 9999px; /* Cerchio */
+  cursor: pointer;
+  transition: background-color 0.2s linear, color 0.2s linear;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #e8e8ed;
+  color: #1d1d1f;
+}
+
+.pagination-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Contenitore per l'input e il testo */
+.pagination-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+/* Stile per l'input del numero di pagina */
+.pagination-input {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d2d2d7;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  -moz-appearance: textfield; /* Nasconde le freccette su Firefox */
+}
+/* Nasconde le freccette su Chrome, Safari, Edge */
+.pagination-input::-webkit-outer-spin-button,
+.pagination-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
