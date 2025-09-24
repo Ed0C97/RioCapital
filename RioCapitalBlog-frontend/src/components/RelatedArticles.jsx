@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
+import { Button } from './ui/button'; // <-- AGGIUNGI QUESTA RIGA
 
 const ArticleListItem = ({ article }) => {
   const placeholderImage = 'https://images.unsplash.com/photo-1518186225043-963158e70a41?q=80&w=1974&auto=format&fit=crop';
@@ -66,21 +67,30 @@ const RelatedArticles = ({ title, fetchUrl }) => {
     <section className="related-articles-section">
       {}
       <div className="related-articles-container">
-        <h2 className="text-3xl font-bold mb-10">{title}</h2>
+        <h2 className="text-4xl font-bold mb-18">{title}</h2>
 
         <div className="space-y-8">
           {articlePairs.map((pair, index) => (
             <div key={index} className="article-pair">
               <div className="related-articles-grid">
                 {pair.map(article => (
-                  <ArticleListItem key={article.id} article={article} />
+                  <div className="article-list-item-wrapper" key={article.id}>
+                    <ArticleListItem article={article} />
+                  </div>
                 ))}
               </div>
             </div>
           ))}
         </div>
-      </div>
-    </section>
+
+        <div className="archive-button-container">
+          <Link to="/archivio">
+            <Button size="lg" variant="outline">Sfoglia l'archivio</Button>
+          </Link>
+        </div>
+
+       </div>
+     </section>
   );
 };
 

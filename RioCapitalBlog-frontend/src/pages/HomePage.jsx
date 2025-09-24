@@ -72,8 +72,8 @@ const HomePage = () => {
     <>
       {/* === Blocco 1: Ultime Notizie (con larghezza limitata) === */}
       <div className="mx-auto px-4 py-12" style={{ maxWidth: '1012px' }}>
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold">Ultime notizie</h1>
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold">Ultimi Articoli</h1>
         </div>
 
         {articles.length > 0 ? (
@@ -152,18 +152,21 @@ const HomePage = () => {
           <div className="text-center py-12"><h3 className="text-xl font-semibold">Nessun articolo da mostrare.</h3></div>
         )}
 
-        <div className="text-center mt-16">
-          <Link to="/archivio">
-            <Button size="lg">Sfoglia l'archivio</Button>
-          </Link>
+        {/* --- DISCLAIMER --- */}
+        <div className="text-center mt-30 max-w-4xl mx-auto">
+          <p className="text-sm text-muted-foreground">
+            I contenuti di Rio Capital Blog hanno scopo puramente informativo e non costituiscono in alcun modo una consulenza finanziaria. Per decisioni di investimento, si raccomanda di consultare un professionista qualificato. Per ulteriori informazioni puoi consultare la nostra pagina
+          </p>
         </div>
       </div>
 
       {/* === Blocco 2: I Più Popolari (con sfondo a larghezza piena) === */}
-      <RelatedArticles
-        title="I più popolari"
-        fetchUrl="/api/articles?per_page=4"
-      />
+      <div className="mt-16"> {/* <-- MODIFICA QUESTO VALORE */}
+        <RelatedArticles
+          title="I più popolari"
+          fetchUrl="/api/articles?per_page=4"
+        />
+      </div>
     </>
   );
 };
