@@ -19,6 +19,7 @@ class Article(db.Model):
     published = db.Column(db.Boolean, default=False)
     likes_count = db.Column(db.Integer, default=0)
     views_count = db.Column(db.Integer, default=0)
+    show_author_contacts = db.Column(db.Boolean, nullable=False, default=False)
 
     author = db.relationship("User", back_populates="articles")
     category = db.relationship("Category", back_populates="articles")
@@ -39,7 +40,7 @@ class Article(db.Model):
             'excerpt': self.excerpt,
             'image_url': self.image_url,
             'author_id': self.author_id,
-            'author_name': self.author.username if self.author else None,
+            'author_name': self.author.to_dict().get('full_name') if self.author else None,
             'category_id': self.category_id,
             'category_name': self.category.name if self.category else None,
             'category_color': self.category.color if self.category else None,
@@ -47,5 +48,9 @@ class Article(db.Model):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
             'published': self.published,
             'likes_count': self.likes_count,
-            'views_count': self.views_count
+            'views_count': self.views_count,
+
+            'show_author_contacts': self.show_author_contacts,
+            'author_email': self.author.email if self.author else None,
+            'author_linkedin_url': self.author.linkedin_url if self.author else None
         }

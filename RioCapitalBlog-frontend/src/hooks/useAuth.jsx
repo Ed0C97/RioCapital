@@ -103,8 +103,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateProfile = async (profileData) => {
+    // --- MODIFICA CHIAVE QUI ---
+    // Prima di tutto, controlliamo se l'utente è loggato e abbiamo il suo ID
+    if (!user || !user.id) {
+      return { success: false, error: 'Utente non autenticato.' };
+    }
+
     try {
-      const response = await fetch('/api/user/profile', {
+      // Costruiamo l'URL corretto usando l'ID dell'utente
+      // Nota: Ho usato /api/users/ che corrisponde alla struttura standard.
+      // Se il tuo prefisso è diverso (es. /api/user/), adattalo.
+      const response = await fetch(`/api/users/${user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -115,11 +124,12 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setUser(data.user);
-        return { success: true, user: data.user };
+        // Aggiorniamo lo stato locale dell'utente con i nuovi dati dal server
+        setUser(data); // Assumendo che l'API restituisca l'oggetto utente aggiornato
+        return { success: true, user: data };
       } else {
         const error = await response.json();
-        return { success: false, error: error.message };
+        return { success: false, error: error.error || 'Errore sconosciuto' };
       }
     } catch (error) {
       return { success: false, error: 'Errore di connessione' };

@@ -67,7 +67,7 @@ const RelatedArticles = ({ title, fetchUrl }) => {
     <section className="related-articles-section">
       {}
       <div className="related-articles-container">
-        <h2 className="text-4xl font-bold mb-18">{title}</h2>
+        <h2 className="text-4xl font-bold mb-16">{title}</h2>
 
         <div className="space-y-8">
           {articlePairs.map((pair, index) => (

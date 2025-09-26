@@ -49,7 +49,8 @@ const ArticleEditorPage = () => {
     image_url: null,
     published: false,
     featured: false,
-    tags: ''
+    tags: '',
+    show_author_contacts: false
   });
 
   useEffect(() => {
@@ -107,7 +108,8 @@ const ArticleEditorPage = () => {
           image_url: articleData.image_url || null,
           published: articleData.published || false,
           featured: articleData.featured || false,
-          tags: articleData.tags ? articleData.tags.join(', ') : ''
+          tags: articleData.tags ? articleData.tags.join(', ') : '',
+          show_author_contacts: articleData.show_author_contacts || false
         });
       } else {
         toast.error('Articolo non trovato');
@@ -410,11 +412,13 @@ const ArticleEditorPage = () => {
                       Rendi l'articolo visibile pubblicamente
                     </p>
                   </div>
-                  <Switch
-                    id="published"
-                    checked={article.published}
-                    onCheckedChange={(checked) => handleInputChange('published', checked)}
-                  />
+                  <div className="switch-container">
+                    <Switch
+                      id="published"
+                      checked={article.published}
+                      onCheckedChange={(checked) => handleInputChange('published', checked)}
+                    />
+                  </div>
                 </div>
 
                 {isAdmin() && (
@@ -425,13 +429,31 @@ const ArticleEditorPage = () => {
                         Mostra in homepage
                       </p>
                     </div>
-                    <Switch
-                      id="featured"
-                      checked={article.featured}
-                      onCheckedChange={(checked) => handleInputChange('featured', checked)}
-                    />
+                    <div className="switch-container">
+                      <Switch
+                        id="featured"
+                        checked={article.featured}
+                        onCheckedChange={(checked) => handleInputChange('featured', checked)}
+                      />
+                    </div>
                   </div>
                 )}
+
+                <div className="flex items-center justify-between pt-4 border-t">
+                  <div>
+                    <Label htmlFor="show-contacts">Mostra Contatti Autore</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Mostra firma e contatti alla fine dell'articolo.
+                    </p>
+                  </div>
+                  <div className="switch-container">
+                    <Switch
+                      id="show-contacts"
+                      checked={article.show_author_contacts}
+                      onCheckedChange={(checked) => handleInputChange('show_author_contacts', checked)}
+                    />
+                  </div>
+                </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="category">Categoria *</Label>
@@ -490,6 +512,14 @@ const ArticleEditorPage = () => {
                     <div className="flex items-center justify-between">
                       <span className="text-sm">Evidenza:</span>
                       <Badge variant="outline">In evidenza</Badge>
+                    </div>
+                  )}
+                  {article.show_author_contacts && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Contatti Autore:</span>
+                      <Badge variant="outline" className="border-green-500 text-green-600">
+                        Attivi
+                      </Badge>
                     </div>
                   )}
                   <div className="flex items-center justify-between">

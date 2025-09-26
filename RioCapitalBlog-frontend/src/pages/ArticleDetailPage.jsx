@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/pages/ArticleDetailPage.jsx
+// src/pages/ArticleDetailPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -6,7 +6,12 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
+import { format } from 'date-fns';
+import { it } from 'date-fns/locale';
+import Disclaimer from '../components/Disclaimer';
 import RelatedArticles from '../components/RelatedArticles';
+import ShareLinks from '../components/ShareLinks';
+import ArticleContacts from '../components/ArticleContacts';
 
 const ArticleDetailPage = () => {
   const { slug } = useParams();
@@ -30,48 +35,77 @@ const ArticleDetailPage = () => {
     if (slug) fetchArticle();
   }, [slug]);
 
-  if (loading) return <div className="text-center py-20">Caricamento articolo...</div>;
-  if (!article) return <div className="text-center py-20">Articolo non trovato.</div>;
+  const formatDate = (dateString) => {
+    try {
+      return format(new Date(dateString), 'd MMMM yyyy', { locale: it });
+    } catch {
+      return '';
+    }
+  };
 
-    return (
-    <> {}
+  if (loading) return <div className="bg-white text-center py-20">Caricamento articolo...</div>;
+  if (!article) return <div className="bg-white text-center py-20">Articolo non trovato.</div>;
+
+  return (
+    <div className="bg-white">
       <div className="container mx-auto py-12 px-4">
-        <article className="max-w-4xl mx-auto">
-          {}
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">{article.title}</h1>
-          <p className="text-lg text-muted-foreground mb-8">
-            Pubblicato da {article.author_name} il {new Date(article.created_at).toLocaleDateString('it-IT')}
-          </p>
-          {article.image_url && (
-            <img
-              src={article.image_url}
-              alt={article.title}
-              className="w-full h-auto max-h-96 object-cover rounded-xl mb-8"
+        {/* ================================================================== */}
+        {/* IL PARAMETRO DA REGOLARE È QUI: max-w-3xl                       */}
+        {/* Puoi cambiarlo in max-w-4xl (più largo) o max-w-2xl (più stretto) */}
+        {/* ================================================================== */}
+        <article className="max-w-3xl mx-auto">
+          <header className="mb-8">
+            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
+              {article.category_name}
+            </p>
+            <p className="text-base text-gray-500 mb-4">
+              {formatDate(article.created_at)}
+            </p>
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-10">
+              {article.title}
+            </h1>
+            <div className="mb-8">
+              <ShareLinks articleTitle={article.title} />
+            </div>
+            <div className="border-b border-[#d2d2d7]"></div>
+          </header>
+
+          <div className="article-content">
+            <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+              {article.content}
+            </ReactMarkdown>
+          </div>
+
+          <footer className="mt-12">
+            <h3 className="text-lg font-semibold mb-4">
+              Condividi articolo
+            </h3>
+            <div className="mb-8">
+              <ShareLinks articleTitle={article.title} />
+            </div>
+          </footer>
+
+          <Disclaimer variant="gray"/>
+
+          {article.show_author_contacts && (
+            <ArticleContacts
+              name={article.author_name}
+              email={article.author_email}
+              linkedinUrl={article.author_linkedin_url}
             />
           )}
-          <div className="article-content">
-              <ReactMarkdown
-                  remarkPlugins={[remarkMath]}
-                  rehypePlugins={[rehypeKatex]}
-              >
-                  {article.content}
-              </ReactMarkdown>
+
+          {/* --- MODIFICA: Aggiunto un wrapper con la classe "is-compact" --- */}
+          <div className="mt-16 is-compact">
+            <RelatedArticles
+              title="Altro da Rio Capital Blog"
+              fetchUrl={`/api/articles?category_id=${article.category_id}&exclude_id=${article.id}&per_page=4`}
+            />
           </div>
+
         </article>
       </div>
-
-      {}
-      {}
-      {article && (
-
-        <div className="mt-24">
-          <RelatedArticles
-            title="Altro da Rio Capital Blog"
-            fetchUrl={`/api/articles?category_id=${article.category_id}&exclude_id=${article.id}&per_page=4`}
-        />
-      </div>
-      )}
-    </>
+    </div>
   );
 };
 

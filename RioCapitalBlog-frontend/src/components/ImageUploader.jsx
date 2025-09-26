@@ -77,7 +77,7 @@ const ImageUploader = ({
           if (response.ok) {
               const data = await response.json();
 
-              const backendUrl = 'http://localhost:5000';
+              const backendUrl = import.meta.env.VITE_API_BASE_URL;
               const fullImageUrl = backendUrl + data.url;
 
               setPreviewUrl(fullImageUrl);

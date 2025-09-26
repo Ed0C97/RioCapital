@@ -25,13 +25,26 @@ def get_user(user_id):
     user = User.query.get_or_404(user_id)
     return jsonify(user.to_dict())
 
+
 @user_bp.route('/users/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     user = User.query.get_or_404(user_id)
     data = request.json
+
+    # Aggiungi un print per il debug
+    print(f"Dati ricevuti per l'utente {user_id}: {data}")
+
     user.username = data.get('username', user.username)
     user.email = data.get('email', user.email)
+    user.first_name = data.get('first_name', user.first_name)  # Assicurati di avere anche questi
+    user.last_name = data.get('last_name', user.last_name)  # Assicurati di avere anche questi
+    user.bio = data.get('bio', user.bio)  # Assicurati di avere anche questi
+    user.linkedin_url = data.get('linkedin_url', user.linkedin_url)
+
     db.session.commit()
+
+    print(f"Utente {user_id} aggiornato con successo.")
+
     return jsonify(user.to_dict())
 
 @user_bp.route('/users/<int:user_id>', methods=['DELETE'])

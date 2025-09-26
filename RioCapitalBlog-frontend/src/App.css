@@ -1,10 +1,12 @@
 /*
 
 ================================================================================
-File: App.css
+File: App.css (Riorganizzato)
 Progetto: RioCapitalBlog-frontend
-Descrizione: Foglio di stile principale per l'applicazione RioCapitalBlog.
-Questo file contiene:
+Descrizione: Foglio di stile principale per l'applicazione RioCapitalBlog,
+             riorganizzato per chiarezza, manutenibilità e coerenza dei colori.
+
+Contenuti:
 - Importazione di font personalizzati.
 - Integrazione e configurazione di Tailwind CSS.
 - Definizione di variabili CSS per il tema (light e dark).
@@ -16,6 +18,31 @@ Questo file contiene:
 */
 
 /* ==============================================================================
+   0. DEFINIZIONE VARIABILI COLORE GLOBALI
+   ==============================================================================
+   Descrizione: Variabili CSS globali per i colori principali, per una gestione
+                centralizzata e una facile personalizzazione del tema.
+   ============================================================================== */
+
+:root {
+  --color-text-primary: #1d1d1f; /* Testo scuro principale */
+  --color-background-light: #f5f5f7; /* Sfondo grigio chiaro */
+  --color-background-white: #ffffff; /* Sfondo bianco */
+  --color-blue-accent: #0e549c; /* Blu principale */
+  --color-border-light: #d2d2d7; /* Bordo grigio chiaro */
+  --color-text-secondary: #6e6e73; /* Testo grigio secondario */
+  --color-text-muted: #86868b; /* Testo grigio muted */
+  --color-blue-link: #0066cc; /* Blu per link */
+  --color-blue-highlight: #0071e3; /* Blu per evidenziazioni */
+  --color-background-button: #e8e8ed; /* Sfondo pulsante grigio */
+  --color-border-separator: #e5e7eb; /* Bordo separatore */
+  --color-input-background: #f2f2f2; /* Sfondo input */
+  --color-input-placeholder: #888888; /* Placeholder input */
+  --color-button-text: #333333; /* Testo pulsante */
+  --color-button-hover: #e0e0e0; /* Sfondo pulsante hover */
+}
+
+/* ==============================================================================
    1. IMPORTAZIONE FONT
    ==============================================================================
    Descrizione: Importazione del font custom 'SF Pro Display' con diversi pesi
@@ -25,7 +52,7 @@ Questo file contiene:
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('./assets/fonts/SFPRODISPLAYREGULAR.OTF') format('opentype');
+  src: url('./assets/fonts/SFPRODISPLAYREGULAR.woff2') format('opentype');
   font-weight: 400; /* Regular */
   font-style: normal;
   font-display: swap;
@@ -33,7 +60,7 @@ Questo file contiene:
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('./assets/fonts/SFPRODISPLAYMEDIUM.OTF') format('opentype');
+  src: url('./assets/fonts/SFPRODISPLAYMEDIUM.woff2') format('opentype');
   font-weight: 500; /* Medium */
   font-style: normal;
   font-display: swap;
@@ -41,7 +68,7 @@ Questo file contiene:
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('./assets/fonts/SFPRODISPLAYBOLD.OTF') format('opentype');
+  src: url('./assets/fonts/SFPRODISPLAYBOLD.woff2') format('opentype');
   font-weight: 700; /* Bold */
   font-style: normal;
   font-display: swap;
@@ -49,7 +76,7 @@ Questo file contiene:
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('./assets/fonts/SFPRODISPLAYULTRALIGHTITALIC.OTF') format('opentype');
+  src: url('./assets/fonts/SFPRODISPLAYULTRALIGHTITALIC.woff2') format('opentype');
   font-weight: 100; /* Ultra Light Italic */
   font-style: italic;
   font-display: swap;
@@ -57,7 +84,7 @@ Questo file contiene:
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('./assets/fonts/SFPRODISPLAYTHINITALIC.OTF') format('opentype');
+  src: url('./assets/fonts/SFPRODISPLAYTHINITALIC.woff2') format('opentype');
   font-weight: 200; /* Thin Italic */
   font-style: italic;
   font-display: swap;
@@ -65,7 +92,7 @@ Questo file contiene:
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('./assets/fonts/SFPRODISPLAYLIGHTITALIC.OTF') format('opentype');
+  src: url('./assets/fonts/SFPRODISPLAYLIGHTITALIC.woff2') format('opentype');
   font-weight: 300; /* Light Italic */
   font-style: italic;
   font-display: swap;
@@ -73,7 +100,7 @@ Questo file contiene:
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('./assets/fonts/SFPRODISPLAYSEMIBOLDITALIC.OTF') format('opentype');
+  src: url('./assets/fonts/SFPRODISPLAYSEMIBOLDITALIC.woff2') format('opentype');
   font-weight: 600; /* Semibold Italic */
   font-style: italic;
   font-display: swap;
@@ -81,7 +108,7 @@ Questo file contiene:
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('./assets/fonts/SFPRODISPLAYHEAVYITALIC.OTF') format('opentype');
+  src: url('./assets/fonts/SFPRODISPLAYHEAVYITALIC.woff2') format('opentype');
   font-weight: 800; /* Heavy Italic */
   font-style: italic;
   font-display: swap;
@@ -89,7 +116,7 @@ Questo file contiene:
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('./assets/fonts/SFPRODISPLAYBLACKITALIC.OTF') format('opentype');
+  src: url('./assets/fonts/SFPRODISPLAYBLACKITALIC.woff2') format('opentype');
   font-weight: 900; /* Black Italic */
   font-style: italic;
   font-display: swap;
@@ -184,15 +211,15 @@ Questo file contiene:
   --radius: 0.625rem; /* 10px */
 
   /* Colori di base */
-  --background: #f5f5f7;
+  --background: var(--color-background-light);
   --foreground: oklch(0.2 0 0);
 
   /* Colori per componenti Card */
-  --card: oklch(1 0 0);
+  --card: var(--color-background-white);
   --card-foreground: oklch(0.2 0 0);
 
   /* Colori per componenti Popover */
-  --popover: oklch(1 0 0);
+  --popover: var(--color-background-white);
   --popover-foreground: oklch(0.2 0 0);
 
   /* Colori primari e secondari */
@@ -351,80 +378,63 @@ Questo file contiene:
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 500;
-  color: white;
+  color: var(--color-background-white);
 }
 
 /* ==============================================================================
-   8. STILI PER IL CONTENUTO DEGLI ARTICOLI
+   8. STILI PER IL CONTENUTO DEGLI ARTICOLI (Stile Apple Newsroom)
    ==============================================================================
-   Descrizione: Stili per la formattazione del contenuto degli articoli, come
-   titoli, paragrafi, liste e citazioni. Ci sono due set di stili, probabilmente
-   per contesti diversi o in fase di refactoring.
+   Descrizione: Stili per la formattazione del contenuto degli articoli generato
+   da ReactMarkdown, per imitare il layout pulito e leggibile di Apple Newsroom.
    ============================================================================== */
 
-/* Stili per il contenuto degli articoli (Set 1) */
-.RioCapitalBlog-article-content {
-  line-height: 1.8;
-}
-
-.RioCapitalBlog-article-content h1,
-.RioCapitalBlog-article-content h2,
-.RioCapitalBlog-article-content h3 {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.RioCapitalBlog-article-content p {
-  margin-bottom: 1rem;
-}
-
-.RioCapitalBlog-article-content ul,
-.RioCapitalBlog-article-content ol {
-  margin-bottom: 1rem;
-  padding-left: 1.5rem;
-}
-
-.RioCapitalBlog-article-content blockquote {
-  border-left: 4px solid oklch(0.5 0.15 240);
-  padding-left: 1rem;
-  margin: 1.5rem 0;
-  font-style: italic;
-  color: oklch(0.4 0 0);
-}
-
-/* Stili per il contenuto degli articoli (Set 2) - Più dettagliato */
 .article-content {
-  line-height: 1.7;
+  color: var(--color-text-primary); /* Un nero leggermente più morbido */
   font-size: 1.125rem; /* 18px */
+  line-height: 1.7;
 }
-
-.article-content img {
-  display: block;
-  margin: 2rem auto;
-  width: 100%;
-  max-width: 1600px;
-  height: auto;
-  border-radius: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.01);
-}
-
-.article-content h1, .article-content h2, .article-content h3 {
-  margin-top: 1.8rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.article-content h1 { font-size: 2rem; } /* 32px */
-.article-content h2 { font-size: 1.75rem; } /* 28px */
-.article-content h3 { font-size: 1.5rem; } /* 24px */
 
 .article-content p {
   margin-bottom: 1.25rem;
 }
 
-.article-content ul, .article-content ol {
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+  font-weight: 600;
+  margin-top: 1.8rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.article-content h1 { font-size: 2rem; }    /* 32px */
+.article-content h2 { font-size: 1.75rem; } /* 28px */
+.article-content h3 { font-size: 1.5rem; }  /* 24px */
+.article-content h4 { font-size: 1.25rem; } /* 20px */
+
+
+.article-content a {
+  color: var(--color-blue-link);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-blue-link);
+  transition: border-bottom-color 0.2s ease;
+}
+
+.article-content a:hover {
+  border-bottom-color: transparent;
+}
+
+.article-content blockquote {
+  border-left: 3px solid var(--color-border-separator);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.article-content ul,
+.article-content ol {
   margin-bottom: 1.25rem;
   padding-left: 2rem;
 }
@@ -432,26 +442,27 @@ Questo file contiene:
 .article-content ul { list-style-type: disc; }
 .article-content ol { list-style-type: decimal; }
 
-.article-content li { margin-bottom: 0.5rem; }
+.article-content li {
+  margin-bottom: 0.5rem;
+}
 
-.article-content blockquote {
-  border-left: 3px solid #e5e7eb;
-  padding-left: 1rem;
-  margin: 1.5rem 0;
-  font-style: italic;
-  color: #6b7280;
+.article-content img {
+  display: block;
+  margin: 2.5rem auto; /* Aumenta lo spazio verticale */
+  width: 100%;
+  max-width: 100%; /* L'immagine si adatta al contenitore del testo */
+  height: auto;
+  border-radius: 18px; /* Bordi arrotondati come su Apple */
 }
 
 /* ==============================================================================
    9. LAYOUT E GRIGLIE
    ==============================================================================
-   Descrizione: Stili per il layout principale, le griglie di notizie e la
-   disposizione degli articoli.
+   Descrizione: Stili per il layout principale e le griglie.
    ============================================================================== */
 
-/* Contenitore principale per le sezioni */
-.main-content-container {
-  max-width: 980px; /* Larghezza massima del contenuto */
+.main-container {
+  max-width: 1440px;
   margin: 0 auto; /* Centra il contenitore */
   padding: 3rem 1rem; /* Spaziatura interna */
 }
@@ -481,11 +492,10 @@ Questo file contiene:
    10. COMPONENTE: NEWS CARD
    ==============================================================================
    Descrizione: Stili per le card che mostrano le anteprime delle notizie.
-   Include varianti per card di tipo 'hero', 'standard' e 'small'.
    ============================================================================== */
 
 .news-card {
-  background-color: #ffffff;
+  background-color: var(--color-background-white);
   border-radius: 30px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.01);
@@ -501,7 +511,7 @@ Questo file contiene:
 
 .news-card-media {
   overflow: hidden;
-  background-color: #f5f5f7;
+  background-color: var(--color-background-light);
   position: relative;
 }
 
@@ -526,7 +536,7 @@ Questo file contiene:
 .news-card-category {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #6e6e73;
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
@@ -539,7 +549,7 @@ Questo file contiene:
 
 .news-card-timestamp {
   font-size: 0.9rem;
-  color: #86868b;
+  color: var(--color-text-muted);
   display: flex;
   align-items: center;
   margin-top: 1rem;
@@ -591,7 +601,7 @@ Questo file contiene:
 .news-card-eyebrow-new {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #0071e3;
+  color: var(--color-blue-highlight);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   background-color: rgba(0, 113, 227, 0.1);
@@ -606,7 +616,7 @@ Questo file contiene:
    ============================================================================== */
 
 .related-articles-section {
-  background-color: #ffffff;
+  background-color: var(--color-background-white);
   width: 100%;
   padding: 4.8rem 0;
 }
@@ -633,13 +643,13 @@ Questo file contiene:
 .article-pair:not(:last-child) {
   padding-bottom: 2.8rem;
   margin-bottom: 2.8rem;
-  border-bottom: 1.5px solid #e5e7eb;
+  border-bottom: 1.5px solid var(--color-border-separator);
 }
 
 @media (max-width: 767px) {
   .related-articles-grid > *:not(:last-child) {
     padding-bottom: 2rem;
-    border-bottom: 1.5px solid #e5e7eb;
+    border-bottom: 1.5px solid var(--color-border-separator);
   }
 }
 
@@ -681,7 +691,7 @@ Questo file contiene:
 }
 
 .article-list-item-category {
-  font-size: 0.75rem; font-weight: 600; color: #6e6e73;
+  font-size: 0.75rem; font-weight: 600; color: var(--color-text-secondary);
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
@@ -693,11 +703,11 @@ Questo file contiene:
   transition: color 0.2s ease;
 }
 .article-list-item:hover .article-list-item-title {
-  color: #0071e3;
+  color: var(--color-blue-highlight);
 }
 .article-list-item-date {
   font-size: 0.9rem;
-  color: #86868b;
+  color: var(--color-text-muted);
 }
 
 /* ==============================================================================
@@ -709,8 +719,8 @@ Questo file contiene:
 /* Stile per l'input (probabilmente da un componente UI) */
 input[data-slot="input"] {
   font-size: 0.9rem;
-  color: #555555;
-  background-color: #f2f2f2;
+  color: var(--color-button-text);
+  background-color: var(--color-input-background);
   border: none;
   border-radius: 9999px;
   padding: 6px 14px 6px 3rem;
@@ -719,7 +729,7 @@ input[data-slot="input"] {
 }
 
 input[data-slot="input"]::placeholder {
-  color: #888888;
+  color: var(--color-input-placeholder);
 }
 
 /* Stili generici per bottoni */
@@ -728,8 +738,8 @@ button,
 .btn {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #333333;
-  background-color: #f2f2f2;
+  color: var(--color-button-text);
+  background-color: var(--color-input-background);
   padding: 6px 14px;
   border-radius: 9999px;
   border: none;
@@ -741,11 +751,11 @@ button,
 button:hover,
 .button:hover,
 .btn:hover {
-  background-color: #e0e0e0;
+  background-color: var(--color-button-hover);
 }
 
 /* ==============================================================================
-   MEDIA QUERIES RESPONSIVE
+   14. MEDIA QUERIES RESPONSIVE GENERALI
    ==============================================================================
    Descrizione: Media query per adattare il layout a diverse dimensioni
    dello schermo.
@@ -762,102 +772,90 @@ button:hover,
   }
 }
 
-/* --- STILE PER IL PULSANTE ARCHIVIO NELLA SEZIONE RELATED --- */
+/* ==============================================================================
+   15. COMPONENTE: PULSANTE ARCHIVIO
+   ==============================================================================
+   Descrizione: Stili per il pulsante 'Archivio' nella sezione correlata.
+   ============================================================================== */
 
 .archive-button-container {
   text-align: center;
-  /* Rimuoviamo i bordi e aggiungiamo solo spaziatura */
-  padding-top: 3rem; /* Aumenta lo spazio sopra il pulsante */
+  padding-top: 3rem;
   margin-top: 3rem;
 }
 
-/*
-  Usiamo direttamente il selettore del bottone di ShadCN/UI per essere più specifici.
-  Questo sovrascriverà gli stili di default.
-*/
 .archive-button-container button {
-  /* Stile a riposo (invariato) */
   font-size: 1rem;
-  font-weight: 600;
-  background-color: #e8e8ed;
-  color: #1d1d1f;
+  font-weight: 400;
+  background-color: transparent;        /* sfondo trasparente */
+  color: var(--color-blue-highlight);      /* testo blu */
   border-radius: 9999px;
-  border: none;
+  border: 1px solid var(--color-blue-highlight); /* bordo blu */
   transition: all 0.3s ease;
-
-  /* --- NUOVE REGOLE PER LE DIMENSIONI --- */
-
-  /* 1. Imposta l'altezza del pulsante (puoi cambiare questo valore) */
   height: 48px;
-
-  /* 2. Lascia che la larghezza si adatti automaticamente */
   width: auto;
-
-  /* 3. Applica il rapporto esatto che hai chiesto */
   aspect-ratio: 4.5 / 1.2;
-
-  /* 4. Rimuovi il padding per non interferire con le dimensioni */
   padding: 0;
-
-  /* Assicura che il testo rimanga centrato (già presente nel componente Button) */
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Effetto al passaggio del mouse */
 .archive-button-container button:hover {
-  background-color: #0071e3; /* Blu Apple */
-  color: #ffffff; /* Testo bianco */
-  transform: scale(1.05); /* Leggero ingrandimento */
+  background-color: var(--color-blue-highlight); /* Blu Apple */
+  color: var(--color-background-white); /* Testo bianco */
+  transform: scale(1.05);
   box-shadow: none;
 }
 
-/* === STILI PER LA PAGINA ARCHIVIO (STILE APPLE NEWSROOM) === */
+/* ==============================================================================
+   16. STILI PER LA PAGINA ARCHIVIO (STILE APPLE NEWSROOM)
+   ==============================================================================
+   Descrizione: Stili specifici per la pagina dell'archivio, ispirati al layout
+                pulito e leggibile di Apple Newsroom.
+   ============================================================================== */
 
-/* Contenitore per la lista di articoli nell'archivio */
 .archive-list {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem; /* Spazio verticale tra le righe */
+  gap: 1.2rem;
+  border-top: 1px solid var(--color-border-light);
+  padding-top: 1.5rem;
 }
 
-/* Stile per la singola riga/articolo */
 .archive-item-link {
   display: block;
   text-decoration: none;
   color: inherit;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid #d2d2d7; /* Linea di separazione */
+  padding: 1.6rem 0;
+  padding-bottom: 2.8rem;
+  border-bottom: 1px solid var(--color-border-light);
 }
 
-/* Rimuove la linea all'ultimo elemento */
-.archive-list > *:last-child .archive-item-link {
+.archive-list > .archive-item-link:last-child {
   border-bottom: none;
 }
 
 .archive-item {
   display: grid;
-  grid-template-columns: 1fr; /* 1 colonna su mobile */
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
 @media (min-width: 768px) {
   .archive-item {
-    /* Su desktop, l'immagine occupa 295px, il testo il resto */
     grid-template-columns: 295px 1fr;
     align-items: center;
     gap: 2rem;
   }
 }
 
-/* Contenitore dell'immagine */
 .archive-item-image {
   width: 100%;
-  aspect-ratio: 295 / 167; /* Rapporto d'aspetto esatto */
+  aspect-ratio: 295 / 167;
   border-radius: 22px;
   overflow: hidden;
-  background-color: #f5f5f7;
+  background-color: var(--color-background-light);
 }
 
 .archive-item-image img {
@@ -871,7 +869,6 @@ button:hover,
   transform: scale(1.05);
 }
 
-/* Contenitore del testo */
 .archive-item-content {
   /* Il testo si adatta */
 }
@@ -879,13 +876,13 @@ button:hover,
 .archive-item-category {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #6e6e73;
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   margin-bottom: 0.25rem;
 }
 
 .archive-item-title {
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.4;
   margin-bottom: 0.5rem;
@@ -893,42 +890,45 @@ button:hover,
 }
 
 .archive-item-link:hover .archive-item-title {
-  color: #0071e3;
+  color: var(--color-blue-highlight);
 }
 
 .archive-item-date {
   font-size: 0.9rem;
-  color: #86868b;
+  color: var(--color-text-muted);
 }
 
-/* === STILI PER LA PAGINAZIONE (STILE APPLE) === */
+/* ==============================================================================
+   17. STILI PER LA PAGINAZIONE (STILE APPLE)
+   ==============================================================================
+   Descrizione: Stili per il componente di paginazione, ispirati al design Apple.
+   ============================================================================== */
 
 .pagination-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4rem; /* Spazio tra gli elementi */
+  gap: 4rem;
   margin-top: 5rem;
 }
 
-/* Stile per i pulsanti freccia */
 .pagination-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;  /* ~2.588rem */
-  height: 44px; /* ~2.588rem */
-  background-color: #f5f5f7;
-  color: #6e6e73;
+  width: 44px;
+  height: 44px;
+  background-color: var(--color-background-light);
+  color: var(--color-text-secondary);
   border: none;
-  border-radius: 9999px; /* Cerchio */
+  border-radius: 9999px;
   cursor: pointer;
   transition: background-color 0.2s linear, color 0.2s linear;
 }
 
 .pagination-button:hover:not(:disabled) {
-  background-color: #e8e8ed;
-  color: #1d1d1f;
+  background-color: var(--color-background-button);
+  color: var(--color-text-primary);
 }
 
 .pagination-button:disabled {
@@ -941,30 +941,168 @@ button:hover,
   height: 18px;
 }
 
-/* Contenitore per l'input e il testo */
 .pagination-status {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #1d1d1f;
+  color: var(--color-text-primary);
 }
 
-/* Stile per l'input del numero di pagina */
 .pagination-input {
   width: 44px;
   height: 44px;
-  border: 1px solid #d2d2d7;
+  border: 1px solid var(--color-border-light);
   border-radius: 12px;
   text-align: center;
   font-weight: 600;
   font-size: 1rem;
-  -moz-appearance: textfield; /* Nasconde le freccette su Firefox */
+  -moz-appearance: textfield;
 }
-/* Nasconde le freccette su Chrome, Safari, Edge */
+
 .pagination-input::-webkit-outer-spin-button,
 .pagination-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+/* ==============================================================================
+   18. VARIANTE COMPATTA ARTICOLI CORRELATI (Colonna Singola Responsiva)
+   ==============================================================================
+   Descrizione: Stili per una visualizzazione compatta degli articoli correlati,
+                adattabile a diverse dimensioni dello schermo.
+   ============================================================================== */
+
+.is-compact .related-articles-container {
+  padding: 0;
+}
+
+.is-compact .related-articles-grid {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.is-compact .article-pair:not(:last-child) {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.is-compact .article-list-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1.5px solid var(--color-border-separator);
+  align-items: center;
+}
+
+.is-compact .related-articles-grid > *:last-child .article-list-item {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.is-compact .article-list-item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  aspect-ratio: 1 / 1;
+}
+
+.is-compact .article-list-item-content {
+  height: auto;
+}
+
+.is-compact .article-list-item-title {
+  font-size: 1.125rem;
+}
+
+@media (min-width: 500px) {
+  .is-compact .article-list-item {
+    grid-template-columns: 180px 1fr;
+    gap: 1.5rem;
+  }
+
+  .is-compact .article-list-item-image {
+    aspect-ratio: 295 / 167;
+  }
+}
+
+/* ==============================================================================
+   19. STILI PERSONALIZZATI PER COMPONENTI UI (SWITCH)
+   ==============================================================================
+   Descrizione: Stili per il componente Switch personalizzato.
+   ============================================================================== */
+
+.switch-container {
+  --switch-width: 44px;
+  --switch-height: 26px;
+  --thumb-size: 22px;
+  --thumb-offset: 2px;
+
+  --color-grey: var(--color-border-separator); /* Utilizzo variabile esistente */
+  --color-blue: var(--color-blue-highlight); /* Utilizzo variabile esistente */
+}
+
+.switch-container button[role="switch"] {
+  display: inline-block !important;
+  position: relative;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 0 !important;
+
+  width: var(--switch-width) !important;
+  height: var(--switch-height) !important;
+
+  background-color: var(--color-grey) !important;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.switch-container button[role="switch"] > span {
+  display: block !important;
+  position: absolute;
+  top: var(--thumb-offset);
+  left: var(--thumb-offset);
+
+  width: var(--thumb-size) !important;
+  height: var(--thumb-size) !important;
+  border-radius: 50%;
+  background-color: var(--color-background-white) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  transform: translateX(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+.switch-container button[role="switch"][data-state="checked"] {
+  background-color: var(--color-blue) !important;
+}
+
+.switch-container button[role="switch"][data-state="checked"] > span {
+  transform: translateX(-2px);
+}
+
+.ticker-content {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  white-space: nowrap;
+  height: 100%;
+}
+
+.ticker-content:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }

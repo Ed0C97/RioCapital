@@ -19,7 +19,8 @@ const ProfilePage = () => {
     first_name: '',
     last_name: '',
     bio: '',
-    newsletter_subscribed: false
+    newsletter_subscribed: false,
+    linkedin_url: ''
   });
 
   useEffect(() => {
@@ -28,7 +29,8 @@ const ProfilePage = () => {
         first_name: user.first_name || '',
         last_name: user.last_name || '',
         bio: user.bio || '',
-        newsletter_subscribed: user.newsletter_subscribed || false
+        newsletter_subscribed: user.newsletter_subscribed || false,
+        linkedin_url: ''
       });
     }
   }, [user]);
@@ -184,6 +186,21 @@ const ProfilePage = () => {
                   />
                   <p className="text-sm text-muted-foreground">
                     Massimo 500 caratteri
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="linkedin_url">Profilo LinkedIn</Label>
+                  <Input
+                    id="linkedin_url"
+                    name="linkedin_url"
+                    type="url" // Usiamo type="url" per una migliore semantica e validazione del browser
+                    value={formData.linkedin_url}
+                    onChange={handleInputChange}
+                    placeholder="https://www.linkedin.com/in/tuo-profilo"
+                  />
+                  <p className="text-sm text-muted-foreground">
+                    Inserisci l'URL completo del tuo profilo LinkedIn.
                   </p>
                 </div>
 

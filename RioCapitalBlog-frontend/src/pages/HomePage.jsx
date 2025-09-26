@@ -8,6 +8,9 @@ import { format, formatDistanceToNow, differenceInDays } from 'date-fns';
 import { it } from 'date-fns/locale';
 import RelatedArticles from '../components/RelatedArticles';
 
+// --- MODIFICA CHIAVE: Aggiungi questa riga di importazione ---
+import Disclaimer from '../components/Disclaimer';
+
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -134,7 +137,6 @@ const HomePage = () => {
             {/* Articoli PICCOLI (Riga 3) */}
             {articles.slice(3, 6).map((article, index) => (
             <div className={`article-item--${index + 4}`} key={article.id}>
-              {/* Aggiunta la classe 'news-card--small' */}
               <Link to={`/articolo/${article.slug}`} className="news-card news-card--standard news-card--small">
                   <div className="news-card-media"><img src={article.image_url || placeholderImage} alt={article.title} /></div>
                   <div className="news-card-content">
@@ -152,16 +154,14 @@ const HomePage = () => {
           <div className="text-center py-12"><h3 className="text-xl font-semibold">Nessun articolo da mostrare.</h3></div>
         )}
 
-        {/* --- DISCLAIMER --- */}
-        <div className="text-center mt-30 max-w-4xl mx-auto">
-          <p className="text-sm text-muted-foreground">
-            I contenuti di Rio Capital Blog hanno scopo puramente informativo e non costituiscono in alcun modo una consulenza finanziaria. Per decisioni di investimento, si raccomanda di consultare un professionista qualificato. Per ulteriori informazioni puoi consultare la nostra pagina
-          </p>
+        <div className="mt-24 mb-4">
+          <Disclaimer variant="white" />
         </div>
+
       </div>
 
       {/* === Blocco 2: I Più Popolari (con sfondo a larghezza piena) === */}
-      <div className="mt-16"> {/* <-- MODIFICA QUESTO VALORE */}
+      <div className="mt-8">
         <RelatedArticles
           title="I più popolari"
           fetchUrl="/api/articles?per_page=4"

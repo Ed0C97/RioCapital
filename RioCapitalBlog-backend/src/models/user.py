@@ -19,6 +19,7 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_active = db.Column(db.Boolean, default=True)
     newsletter_subscribed = db.Column(db.Boolean, default=False)
+    linkedin_url = db.Column(db.String(255), nullable=True)
 
     articles = db.relationship("Article", back_populates="author")
     comments = db.relationship("Comment", back_populates="user")
@@ -43,6 +44,12 @@ class User(db.Model):
         return self.role == 'admin'
 
     def to_dict(self):
+        # --- COSTRUISCI IL NOME COMPLETO QUI DENTRO ---
+        full_name_str = self.username  # Inizia con l'username come fallback
+        if self.first_name and self.last_name:
+            full_name_str = f"{self.first_name} {self.last_name}"
+        # ---------------------------------------------
+
         return {
             'id': self.id,
             'username': self.username,
@@ -54,5 +61,10 @@ class User(db.Model):
             'avatar_url': self.avatar_url,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'is_active': self.is_active,
-            'newsletter_subscribed': self.newsletter_subscribed
+            'newsletter_subscribed': self.newsletter_subscribed,
+
+            # --- AGGIUNGI QUESTI DUE CAMPI ---
+            'linkedin_url': self.linkedin_url,
+            'full_name': full_name_str
+            # ---------------------------------
         }
