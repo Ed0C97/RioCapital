@@ -1,7 +1,7 @@
 // src/components/ShareLinks.jsx
 
 import React, { useState } from 'react';
-import { Facebook, Twitter, Instagram, Mail, Link2, Check } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Mail, Link, Check } from 'lucide-react';
 import { toast } from 'sonner';
 
 const ShareLinks = ({ articleTitle }) => {
@@ -47,14 +47,13 @@ const ShareLinks = ({ articleTitle }) => {
           <option.icon className="w-5 h-5" />
         </a>
       ))}
-      <button
+      <span
         onClick={copyLink}
         aria-label="Copia link"
-        className="text-gray-500 hover:text-gray-800 transition-colors flex items-center"
+        className="text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
       >
-        {/* --- MODIFICA 2: Icone più piccole (anche qui) --- */}
-        {copied ? <Check className="w-5 h-5 text-green-500" /> : <Link2 className="w-5 h-5" />}
-      </button>
+        {copied ? <Check className="w-5 h-5 text-green-500" /> : <Link className="w-5 h-5" />}
+      </span>
     </div>
   );
 };
