@@ -30,7 +30,6 @@ import {
 
 // Importa il tuo logo dalla cartella assets
 import RioCapitalLogo from '../assets/logo_white.svg';
-import StockTicker from './StockTicker';
 
 const Header = () => {
   const { user, logout, canWriteArticles, isAdmin } = useAuth();
@@ -262,7 +261,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <StockTicker />
     </>
   );
 };

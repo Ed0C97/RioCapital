@@ -12,6 +12,7 @@ import Disclaimer from '../components/Disclaimer';
 import RelatedArticles from '../components/RelatedArticles';
 import ShareLinks from '../components/ShareLinks';
 import ArticleContacts from '../components/ArticleContacts';
+import ArticleActions from '../components/ArticleActions';
 
 const ArticleDetailPage = () => {
   const { slug } = useParams();
@@ -64,11 +65,12 @@ const ArticleDetailPage = () => {
             <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-10">
               {article.title}
             </h1>
-            <div className="mb-8">
+            <div className="flex items-center justify-between mb-8">
               <ShareLinks articleTitle={article.title} />
+              {article && <ArticleActions article={article} />}
             </div>
             <div className="border-b border-[#d2d2d7]"></div>
-          </header>
+          </header> {/* <-- LA CHIUSURA DELL'HEADER VA QUI */}
 
           <div className="article-content">
             <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
@@ -77,7 +79,7 @@ const ArticleDetailPage = () => {
           </div>
 
           <footer className="mt-12">
-            <h3 className="text-lg font-semibold mb-4">
+            <h3 className="text-lg font-semibold text-center mb-4"> {/* Modificato per centrare il testo */}
               Condividi articolo
             </h3>
             <div className="mb-8">
@@ -95,14 +97,12 @@ const ArticleDetailPage = () => {
             />
           )}
 
-          {/* --- MODIFICA: Aggiunto un wrapper con la classe "is-compact" --- */}
           <div className="mt-16 is-compact">
             <RelatedArticles
               title="Altro da Rio Capital Blog"
               fetchUrl={`/api/articles?category_id=${article.category_id}&exclude_id=${article.id}&per_page=4`}
             />
           </div>
-
         </article>
       </div>
     </div>

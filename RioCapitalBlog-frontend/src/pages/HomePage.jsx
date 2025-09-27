@@ -7,6 +7,7 @@ import { ArrowRight, Clock } from 'lucide-react';
 import { format, formatDistanceToNow, differenceInDays } from 'date-fns';
 import { it } from 'date-fns/locale';
 import RelatedArticles from '../components/RelatedArticles';
+import ArticleActions from '../components/ArticleActions';
 
 // --- MODIFICA CHIAVE: Aggiungi questa riga di importazione ---
 import Disclaimer from '../components/Disclaimer';
@@ -96,10 +97,13 @@ const HomePage = () => {
                     </div>
                     <h3 className="news-card-headline">{articles[0].title}</h3>
                   </div>
-                  <p className="news-card-timestamp">
-                    {isRecent(articles[0].created_at) && <Clock size={16} />}
-                    <span>{formatDate(articles[0].created_at)}</span>
-                  </p>
+                  <div className="flex items-baseline justify-between mt-4">
+                    <p className="news-card-timestamp">
+                      {isRecent(articles[0].created_at) && <Clock size={16} />}
+                      <span>{formatDate(articles[0].created_at)}</span>
+                    </p>
+                    <ArticleActions article={articles[0]} size="small" />
+                  </div>
                 </div>
               </Link>
             </div>
@@ -114,7 +118,10 @@ const HomePage = () => {
                       <div className="flex justify-between items-baseline"><p className="news-card-category">{articles[1].category_name}</p>{isVeryRecent(articles[1].created_at) && <p className="news-card-eyebrow-new">Novità</p>}</div>
                       <h3 className="news-card-headline">{articles[1].title}</h3>
                     </div>
-                    <p className="news-card-timestamp">{isRecent(articles[1].created_at) && <Clock size={16} />}<span>{formatDate(articles[1].created_at)}</span></p>
+                    <div className="flex items-baseline justify-between mt-4">
+                      <p className="news-card-timestamp">{isRecent(articles[1].created_at) && <Clock size={16} />}<span>{formatDate(articles[1].created_at)}</span></p>
+                      <ArticleActions article={articles[1]} size="small" />
+                    </div>
                   </div>
                 </Link>
               </div>
@@ -128,7 +135,10 @@ const HomePage = () => {
                       <div className="flex justify-between items-baseline"><p className="news-card-category">{articles[2].category_name}</p>{isVeryRecent(articles[2].created_at) && <p className="news-card-eyebrow-new">Novità</p>}</div>
                       <h3 className="news-card-headline">{articles[2].title}</h3>
                     </div>
-                    <p className="news-card-timestamp">{isRecent(articles[2].created_at) && <Clock size={16} />}<span>{formatDate(articles[2].created_at)}</span></p>
+                      <div className="flex items-baseline justify-between mt-4">
+                        <p className="news-card-timestamp">{isRecent(articles[2].created_at) && <Clock size={16} />}<span>{formatDate(articles[2].created_at)}</span></p>
+                        <ArticleActions article={articles[2]} size="small" />
+                      </div>
                   </div>
                 </Link>
               </div>
@@ -144,7 +154,10 @@ const HomePage = () => {
                       <div className="flex justify-between items-baseline"><p className="news-card-category">{article.category_name}</p>{isVeryRecent(article.created_at) && <p className="news-card-eyebrow-new">Novità</p>}</div>
                       <h3 className="news-card-headline">{article.title}</h3>
                     </div>
-                    <p className="news-card-timestamp">{isRecent(article.created_at) && <Clock size={16} />}<span>{formatDate(article.created_at)}</span></p>
+                      <div className="flex items-baseline justify-between mt-4">
+                        <p className="news-card-timestamp">{isRecent(article.created_at) && <Clock size={16} />}<span>{formatDate(article.created_at)}</span></p>
+                        <ArticleActions article={article} size="small" />
+                      </div>
                   </div>
                 </Link>
               </div>
