@@ -97,7 +97,7 @@ const ArticleDetailPage = () => {
             />
           )}
 
-          <div className="mt-16 is-compact">
+          <div className="mt-0 is-compact">
             <RelatedArticles
               title="Altro da Rio Capital Blog"
               fetchUrl={`/api/articles?category_id=${article.category_id}&exclude_id=${article.id}&per_page=4`}

@@ -618,7 +618,7 @@ Contenuti:
 .related-articles-section {
   background-color: var(--color-background-white);
   width: 100%;
-  padding: 4.8rem 0;
+  padding: 1rem 0;
 }
 
 .related-articles-container {
@@ -636,7 +636,7 @@ Contenuti:
 @media (min-width: 768px) {
   .related-articles-grid {
     grid-template-columns: 1fr 1fr; /* 2 colonne su desktop */
-    gap: 100rem 10rem;
+    gap: 10rem 10rem;
   }
 }
 
