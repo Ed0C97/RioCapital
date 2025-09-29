@@ -2,6 +2,8 @@
 
 from datetime import datetime
 from src.extensions import db
+from flask import session
+from src.models.like import ArticleLike
 
 class Article(db.Model):
     __tablename__ = 'article'
@@ -17,6 +19,7 @@ class Article(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     published = db.Column(db.Boolean, default=False)
+    featured = db.Column(db.Boolean, default=False, nullable=False)
     likes_count = db.Column(db.Integer, default=0)
     views_count = db.Column(db.Integer, default=0)
     show_author_contacts = db.Column(db.Boolean, nullable=False, default=False)
@@ -32,6 +35,15 @@ class Article(db.Model):
         return f'<Article {self.title}>'
 
     def to_dict(self):
+        user_has_liked = False
+        if 'user_id' in session:
+            user_has_liked = db.session.query(
+                ArticleLike.query.filter_by(
+                    user_id=session['user_id'],
+                    article_id=self.id
+                ).exists()
+            ).scalar()
+
         return {
             'id': self.id,
             'title': self.title,
@@ -49,8 +61,8 @@ class Article(db.Model):
             'published': self.published,
             'likes_count': self.likes_count,
             'views_count': self.views_count,
-
             'show_author_contacts': self.show_author_contacts,
             'author_email': self.author.email if self.author else None,
-            'author_linkedin_url': self.author.linkedin_url if self.author else None
+            'author_linkedin_url': self.author.linkedin_url if self.author else None,
+            'user_has_liked': user_has_liked # <-- CAMPO AGGIUNTO
         }

@@ -1,285 +1,165 @@
-// RioCapitalBlog-frontend/src/pages/AboutPage.jsx
+// src/pages/AboutPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Textarea } from '../components/ui/textarea';
-import { Badge } from '../components/ui/badge';
-import { Edit, Save, X, Users, Target, Award, TrendingUp } from 'lucide-react';
+import { Edit, Save, X } from 'lucide-react';
 import { toast } from 'sonner';
+import RelatedArticles from '../components/RelatedArticles';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+import founderImage from '../assets/img.png';
+import clsx from 'clsx';
+import RichTextEditor from '../components/RichTextEditor';
 
 const AboutPage = () => {
   const { user, isAdmin } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState({
+    founderName: 'Lit Investor',
+    founderRole: 'Direttore',
+    mainText: '',
+  });
   const [editContent, setEditContent] = useState('');
+  const [isJustified, setIsJustified] = useState(true);
+
+  const fetchAboutContent = async () => {
+  try {
+    const response = await fetch('/api/content/about');
+    if (response.ok) {
+      const data = await response.json();
+      setContent(prev => ({ ...prev, mainText: data.content.body }));
+    } else {
+      // Se non trova il contenuto nel DB, mainText rimane vuoto
+      setContent(prev => ({ ...prev, mainText: '' }));
+    }
+  } catch (error) {
+    console.error('Errore nel caricamento del contenuto:', error);
+    setContent(prev => ({ ...prev, mainText: '' }));
+  }
+};
 
   useEffect(() => {
     fetchAboutContent();
   }, []);
 
-  const fetchAboutContent = async () => {
-    try {
-      const response = await fetch('/api/content/about');
-      if (response.ok) {
-        const data = await response.json();
-        setContent(data.content || getDefaultContent());
-      } else {
-        setContent(getDefaultContent());
-      }
-    } catch (error) {
-      console.error('Errore nel caricamento del contenuto:', error);
-      setContent(getDefaultContent());
-    }
-  };
-
-  const getDefaultContent = () => {
-    return `RioCapitalBlog è la tua fonte di riferimento per informazioni finanziarie accurate, analisi di mercato approfondite e consigli pratici per la gestione del denaro.
-
-La nostra missione è democratizzare l'accesso all'educazione finanziaria, fornendo contenuti di qualità che aiutino i nostri lettori a prendere decisioni informate sui loro investimenti e sulla gestione delle finanze personali.
-
-Il nostro team è composto da esperti del settore finanziario, analisti di mercato e giornalisti specializzati che lavorano ogni giorno per portarvi le notizie più rilevanti e le analisi più accurate del mondo della finanza.
-
-Crediamo che l'informazione finanziaria debba essere accessibile a tutti, indipendentemente dal livello di esperienza. Per questo motivo, i nostri articoli spaziano dai concetti base per principianti alle analisi più sofisticate per investitori esperti.`;
-  };
-
   const handleEdit = () => {
-    setEditContent(content);
+    setEditContent(content.mainText);
     setIsEditing(true);
   };
 
   const handleCancel = () => {
-    setEditContent('');
     setIsEditing(false);
   };
 
+  // src/pages/AboutPage.jsx
+
   const handleSave = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/content/about', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content: editContent }),
-        credentials: 'include'
-      });
+  setLoading(true);
+  try {
+    const response = await fetch('/api/content/about', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body: editContent }), // <-- Corretto in 'body'
+      credentials: 'include',
+    });
+    if (!response.ok) throw new Error('Salvataggio fallito.');
 
-      if (response.ok) {
-        setContent(editContent);
-        setIsEditing(false);
-        toast.success('Contenuto aggiornato con successo!');
-      } else {
-        toast.error('Errore durante l\'aggiornamento del contenuto');
-      }
-    } catch (error) {
-      console.error('Errore:', error);
-      toast.error('Errore di connessione');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const stats = [
-    {
-      icon: Users,
-      label: 'Lettori Attivi',
-      value: '10,000+',
-      description: 'Utenti che si fidano dei nostri contenuti'
-    },
-    {
-      icon: Target,
-      label: 'Articoli Pubblicati',
-      value: '500+',
-      description: 'Contenuti di qualità dal 2020'
-    },
-    {
-      icon: Award,
-      label: 'Esperti nel Team',
-      value: '15+',
-      description: 'Professionisti del settore finanziario'
-    },
-    {
-      icon: TrendingUp,
-      label: 'Crescita Mensile',
-      value: '25%',
-      description: 'Aumento costante dei lettori'
-    }
-  ];
-
-  const teamMembers = [
-    {
-      name: 'Marco Rossi',
-      role: 'Direttore Editoriale',
-      description: 'Esperto in analisi finanziaria con 15 anni di esperienza nei mercati internazionali.',
-      avatar: 'MR'
-    },
-    {
-      name: 'Laura Bianchi',
-      role: 'Analista Senior',
-      description: 'Specializzata in criptovalute e tecnologie blockchain, ex Goldman Sachs.',
-      avatar: 'LB'
-    },
-    {
-      name: 'Giuseppe Verdi',
-      role: 'Consulente Investimenti',
-      description: 'Consulente finanziario certificato con focus su finanza personale e pianificazione.',
-      avatar: 'GV'
-    },
-    {
-      name: 'Anna Neri',
-      role: 'Giornalista Finanziaria',
-      description: 'Giornalista economica con collaborazioni per Il Sole 24 Ore e Milano Finanza.',
-      avatar: 'AN'
-    }
-  ];
+    const data = await response.json();
+    // Aggiorna lo stato con i dati freschi dal server
+    setContent(prev => ({ ...prev, mainText: data.content.body }));
+    setIsEditing(false);
+    toast.success('Contenuto aggiornato!');
+  } catch (error) {
+    toast.error(error.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 RioCapitalBlog-text-gradient">Chi Siamo</h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Scopri la storia, la missione e il team dietro RioCapitalBlog
-        </p>
+    <div className="bg-white">
+      {/* --- BLOCCO HEADER DI PAGINA (Larghezza Limitata) --- */}
+      <div className="w-full mb-16">
+        <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
+          <div className="border-b border-[#d2d2d7] my-2"></div>
+          <h2 className="text-2xl font-regular text-gray-500">About me</h2>
+        </div>
       </div>
 
-      {}
-      <div className="max-w-4xl mx-auto mb-12">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-              <CardTitle>La Nostra Storia</CardTitle>
-              <CardDescription>
-                Scopri come è nato RioCapitalBlog e qual è la nostra missione
-              </CardDescription>
-            </div>
-            {isAdmin() && !isEditing && (
-              <Button onClick={handleEdit} variant="outline" size="sm">
-                <Edit className="w-4 h-4 mr-2" />
-                Modifica
-              </Button>
-            )}
-            {isAdmin() && isEditing && (
-              <div className="flex space-x-2">
-                <Button onClick={handleSave} disabled={loading} size="sm">
-                  <Save className="w-4 h-4 mr-2" />
-                  {loading ? 'Salvando...' : 'Salva'}
-                </Button>
-                <Button onClick={handleCancel} variant="outline" size="sm">
-                  <X className="w-4 h-4 mr-2" />
-                  Annulla
-                </Button>
-              </div>
-            )}
-          </CardHeader>
-          <CardContent>
+      {/* --- BLOCCO FONDATORE (Larghezza Limitata) --- */}
+      <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+          <div className="md:col-span-2 text-left">
+            <h2 className="text-5xl font-semibold text-gray-800">
+              {content.founderName}
+            </h2>
+            <p className="text-xl text-gray-500 mt-4">
+              {content.founderRole}
+            </p>
+          </div>
+          <div className="md:col-span-1 flex justify-center md:justify-end">
+            <img
+              src={founderImage}
+              alt={content.founderName}
+              className="w-[320px] h-[320px] object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* --- MODIFICA CHIAVE: NUOVA SEZIONE A LARGHEZZA PIENA PER IL TESTO --- */}
+      <div className="bg-gray-50">
+        <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] py-20 my-0">
+          {/* Contenuto Testo Principale */}
+          <div>
             {isEditing ? (
-              <Textarea
+              <RichTextEditor
                 value={editContent}
-                onChange={(e) => setEditContent(e.target.value)}
-                rows={12}
-                className="w-full"
-                placeholder="Inserisci il contenuto della sezione Chi Siamo..."
+                onChange={setEditContent}
+                placeholder="Scrivi qui la tua storia..."
+                height="200px"
               />
             ) : (
-              <div className="prose prose-lg max-w-none">
-                {content.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="mb-4 text-foreground leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
+              <div className="article-content">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{content.mainText}</ReactMarkdown>
               </div>
             )}
-          </CardContent>
-        </Card>
-      </div>
 
-      {}
-      <div className="mb-12">
-        <h2 className="text-3xl font-bold text-center mb-8">I Nostri Numeri</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => (
-            <Card key={index} className="text-center">
-              <CardContent className="pt-6">
-                <div className="flex justify-center mb-4">
-                  <div className="w-12 h-12 RioCapitalBlog-gradient rounded-lg flex items-center justify-center">
-                    <stat.icon className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-                <div className="text-3xl font-bold mb-2">{stat.value}</div>
-                <div className="font-medium mb-1">{stat.label}</div>
-                <div className="text-sm text-muted-foreground">{stat.description}</div>
-              </CardContent>
-            </Card>
-          ))}
+            {/* Link di Azione per Admin */}
+            {isAdmin() && (
+              <div className="flex justify-end items-center space-x-6 mt-6">
+                {!isEditing ? (
+                  <a href="#" onClick={(e) => { e.preventDefault(); handleEdit(); }} className="flex items-center text-sm text-gray-500 hover:text-blue-600 font-medium transition-colors">
+                    <Edit className="w-4 h-4 mr-2" /> Modifica Testo
+                  </a>
+                ) : (
+                  <>
+                    <a href="#" onClick={(e) => { e.preventDefault(); handleSave(); }} className="flex items-center text-sm text-gray-500 hover:text-blue-600 font-medium transition-colors">
+                      <Save className="w-4 h-4 mr-2" /> {loading ? 'Salvataggio...' : 'Salva'}
+                    </a>
+                    <a href="#" onClick={(e) => { e.preventDefault(); handleCancel(); }} className="flex items-center text-sm text-gray-500 hover:text-blue-600 font-medium transition-colors">
+                      <X className="w-4 h-4 mr-2" /> Annulla
+                    </a>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
+      {/* -------------------------------------------------------------------- */}
 
-      {}
-      <div className="mb-12">
-        <h2 className="text-3xl font-bold text-center mb-8">Il Nostro Team</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {teamMembers.map((member, index) => (
-            <Card key={index}>
-              <CardContent className="pt-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-16 h-16 RioCapitalBlog-gradient rounded-full flex items-center justify-center text-white font-bold text-lg">
-                    {member.avatar}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
-                    <Badge variant="secondary" className="mb-3">
-                      {member.role}
-                    </Badge>
-                    <p className="text-muted-foreground">{member.description}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {}
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-8">I Nostri Valori</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-center">Trasparenza</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-center text-muted-foreground">
-                Forniamo informazioni chiare e oneste, senza conflitti di interesse nascosti.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-center">Accessibilità</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-center text-muted-foreground">
-                Rendiamo l'educazione finanziaria comprensibile e accessibile a tutti.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-center">Qualità</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-center text-muted-foreground">
-                Ogni contenuto è accuratamente ricercato e verificato dai nostri esperti.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+      {/* Sezione "I più popolari" (già a larghezza piena) */}
+      <div className="mt-16">
+        <RelatedArticles
+          title="I più popolari"
+          fetchUrl="/api/articles?per_page=4"
+        />
       </div>
     </div>
   );

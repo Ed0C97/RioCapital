@@ -1,42 +1,52 @@
-<!-- todo.md
+# ToDo – Edoardo’s Blog Project
 
-## Task Plan
+## 🔴 Alta Priorità
+- [ ] **Commenti e Like**
+  - Implementare sistema di commenti per articoli
+  - Integrare contatore e gestione dei Like
+- [ ] **Integrazione Donazioni**
+  - Scegliere servizio esterno (Stripe / PayPal / altri)
+  - Collegare frontend (React) e backend (Python)
+- [ ] **Password dimenticata**
+  - Funzione di reset via email con token temporaneo
+- [ ] **Ridefinire Navbar Struttura**
+  - **Home**: mostra ultimi 10 articoli
+  - **Archivio**: elenco completo articoli
+  - **About Me**: inserire storia personale
+  - **References**
+  - **Contatti**
+  - **Services**
 
-### Fase 1: Analisi del sito di riferimento e pianificazione
-- [x] Analisi della UI/UX del sito jethr.com
-- [x] Definizione degli elementi di design chiave (colori, font, layout, componenti)
-- [x] Creazione di un concept di design
+---
 
-### Fase 2: Ricerca e raccolta di asset visivi
-- [x] Ricerca e download di immagini e icone pertinenti
-- [x] Organizzazione degli asset visivi
+## 🟡 Media Priorità
+- [ ] **Sezione citazioni**
+  - Aggiungere spazio dedicato a citazioni selezionate
+  - Possibilità di aggiornarle dinamicamente
+- [ ] **Aggiornare Tre Categorie**
+  - Personal Finance
+  - Investments
+  - Alternative Thinking
+- [ ] **Sezione firma articoli**
+  - Firma automatica autore a fine articolo
+  - Stile coerente con branding del blog
 
-### Fase 3: Sviluppo del backend Flask con database e API
-- [x] Inizializzazione del progetto Flask
-- [x] Configurazione del database (es. PostgreSQL/SQLite)
-- [x] Implementazione delle API per articoli, utenti, commenti, donazioni, newsletter, notifiche
-- [x] Implementazione dell'autenticazione e autorizzazione utenti
+---
 
-### Fase 4: Sviluppo del frontend React con design responsivo
-- [x] Inizializzazione del progetto React
-- [x] Implementazione del layout base e dei componenti UI/UX ispirati a jethr.com
-- [x] Creazione delle pagine principali (Home, Articolo, Donazioni, Newsletter, Registrazione/Login)
+## 🟢 Bassa Priorità
+- [ ] **Logo**
+  - Creazione / aggiornamento del logo
+  - Ottimizzazione per favicon e social sharing
 
-### Fase 5: Integrazione delle funzionalità avanzate
-- [x] Integrazione del sistema di commenti con registrazione obbligatoria
-- [x] Implementazione di like, condivisione e salvataggio articoli preferiti
-- [x] Implementazione della sezione donazioni
-- [x] Implementazione della newsletter funzionante
-- [x] Implementazione del sistema di notifiche personalizzate
+---
 
-### Fase 6: Test e ottimizzazione del sito
-- [x] Test unitari e di integrazione
-- [x] Test di responsività e compatibilità cross-browser
-- [x] Ottimizzazione delle performance
-- [x] Correzione bug
+## 📌 Gestione dinamica delle priorità
+Per rendere dinamica l’assegnazione della priorità:
+1. Ogni task è un item indipendente con checkbox (`[ ]`).
+2. Puoi spostare un task da una sezione all’altra (Alta/Media/Bassa) a seconda dell’urgenza.
+3. In alternativa, puoi adottare una **label system**:
+   - `P1` → Alta
+   - `P2` → Media
+   - `P3` → Bassa  
 
-### Fase 7: Deploy e consegna finale
-- [ ] Preparazione per il deploy
-- [ ] Deploy del backend e del frontend
-- [ ] Generazione dell'anteprima e dello zip completo
-- [ ] Consegna al user
+   Esempio:

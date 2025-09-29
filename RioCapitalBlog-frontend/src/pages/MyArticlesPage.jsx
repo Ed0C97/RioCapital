@@ -56,7 +56,7 @@ const MyArticlesPage = () => {
 
   const fetchArticles = async () => {
     try {
-      const response = await fetch('/api/my-articles', {
+      const response = await fetch('/api/articles/my-articles', { // <-- URL MODIFICATO
       credentials: 'include',
       cache: 'no-cache',
       });

@@ -4,6 +4,7 @@ from flask import Blueprint, request, jsonify, session
 from datetime import datetime
 import re
 from sqlalchemy import extract
+from sqlalchemy.exc import IntegrityError
 
 from src.models.article import Article
 from src.models.like import ArticleLike
@@ -23,7 +24,7 @@ def create_slug(title):
     slug = re.sub(r'[-\s]+', '-', slug)
     return slug.strip('-')
 
-@articles_bp.route('/articles', methods=['GET'])
+@articles_bp.route('/', methods=['GET'])
 def get_articles():
     try:
 
@@ -83,7 +84,7 @@ def get_articles():
         print(f"Errore in get_articles: {e}")
         return jsonify({'error': 'Si è verificato un errore interno'}), 500
 
-@articles_bp.route('/articles/<int:article_id>', methods=['GET'])
+@articles_bp.route('/<int:article_id>', methods=['GET'])
 def get_article(article_id):
     try:
         article = Article.query.get_or_404(article_id)
@@ -101,7 +102,7 @@ def get_article(article_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@articles_bp.route('/articles/<string:slug>', methods=['GET'])
+@articles_bp.route('/<string:slug>', methods=['GET'])
 def get_article_by_slug(slug):
     try:
         article = Article.query.filter_by(slug=slug).first_or_404()
@@ -119,32 +120,50 @@ def get_article_by_slug(slug):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@articles_bp.route('/articles', methods=['POST'])
+@articles_bp.route('/id/<int:article_id>', methods=['GET'])
+def get_article_by_id(article_id):
+    try:
+        article = Article.query.get_or_404(article_id)
+        # Non incrementiamo le views qui, perché è una vista da admin
+
+        article_data = article.to_dict()
+
+        # Aggiungiamo i commenti se necessario per l'editor
+        comments = Comment.query.filter_by(article_id=article_id).order_by(Comment.created_at.desc()).all()
+        article_data['comments'] = [comment.to_dict() for comment in comments]
+
+        return jsonify({'article': article_data}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@articles_bp.route('/', methods=['POST'])
 @author_required
 def create_article():
     try:
         data = request.get_json()
         title = data.get('title')
 
+        # Controlli di validazione (invariati)
         if not data.get('title') or not data.get('content'):
             return jsonify({'error': 'Titolo e contenuto sono obbligatori'}), 400
-
         if not data.get('category_id'):
             return jsonify({'error': 'Categoria è obbligatoria'}), 400
-
         if not title:
             return jsonify({'error': 'Il titolo è obbligatorio'}), 400
-
         category = Category.query.get(data['category_id'])
         if not category:
             return jsonify({'error': 'Categoria non trovata'}), 404
 
+        # --- LOGICA DELLO SLUG MIGLIORATA ---
         new_slug = create_slug(title)
-        existing_slug = Article.query.filter(Article.slug.startswith(new_slug)).count()
-        if existing_slug > 0:
+        # Controlla se uno slug identico esiste già
+        if Article.query.filter_by(slug=new_slug).first():
+            # Se esiste, aggiungi un timestamp per renderlo unico
+            timestamp = int(datetime.utcnow().timestamp())
+            new_slug = f"{new_slug}-{timestamp}"
+        # ------------------------------------
 
-            new_slug = f"{new_slug}-{existing_slug + 1}"
-
+        # --- CREAZIONE DELL'ARTICOLO CON TUTTI I CAMPI ---
         article = Article(
             title=title,
             slug=new_slug,
@@ -153,8 +172,12 @@ def create_article():
             image_url=data.get('image_url', None),
             author_id=session['user_id'],
             category_id=data['category_id'],
-            published=data.get('published', False)
+            published=data.get('published', False),
+            featured=data.get('featured', False), # Aggiunto featured
+            show_author_contacts=data.get('show_author_contacts', False)
+
         )
+        # -------------------------------------------------
 
         db.session.add(article)
         db.session.commit()
@@ -169,7 +192,7 @@ def create_article():
         print(f"Errore in create_article: {e}")
         return jsonify({'error': str(e)}), 500
 
-@articles_bp.route('/articles/<int:article_id>', methods=['PUT'])
+@articles_bp.route('/<int:article_id>', methods=['PUT'])
 @author_required
 def update_article(article_id):
     try:
@@ -196,6 +219,8 @@ def update_article(article_id):
             article.category_id = data['category_id']
         if 'published' in data:
             article.published = data['published']
+        if 'show_author_contacts' in data:
+            article.show_author_contacts = data['show_author_contacts']
 
         article.updated_at = datetime.utcnow()
 
@@ -210,7 +235,7 @@ def update_article(article_id):
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
-@articles_bp.route('/articles/<int:article_id>', methods=['DELETE'])
+@articles_bp.route('/<int:article_id>', methods=['DELETE'])
 @author_required
 def delete_article(article_id):
     try:
@@ -229,43 +254,41 @@ def delete_article(article_id):
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
-@articles_bp.route('/articles/<int:article_id>/like', methods=['POST'])
+
+@articles_bp.route('/<int:article_id>/like', methods=['POST'])
 @login_required
 def like_article(article_id):
+    user_id = session['user_id']
+
     try:
-        article = Article.query.get_or_404(article_id)
-        user_id = session['user_id']
-
-        existing_like = ArticleLike.query.filter_by(
-            article_id=article_id,
-            user_id=user_id
-        ).first()
-
-        if existing_like:
-
-            db.session.delete(existing_like)
-            article.likes_count -= 1
-            liked = False
-        else:
-
-            like = ArticleLike(article_id=article_id, user_id=user_id)
-            db.session.add(like)
-            article.likes_count += 1
-            liked = True
-
+        # Tentativo di aggiunta
+        new_like = ArticleLike(user_id=user_id, article_id=article_id)
+        db.session.add(new_like)
         db.session.commit()
 
-        return jsonify({
-            'message': 'Like aggiornato con successo',
-            'liked': liked,
-            'likes_count': article.likes_count
-        }), 200
+        # Aggiornamento contatore
+        Article.query.filter_by(id=article_id).update({'likes_count': Article.likes_count + 1})
+        db.session.commit()
 
-    except Exception as e:
+        article = Article.query.get(article_id)
+        return jsonify({'liked': True, 'likes_count': article.likes_count}), 200
+
+    except IntegrityError:
+        # Gestione errore (rimozione)
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
 
-@articles_bp.route('/articles/<int:article_id>/favorite', methods=['POST'])
+        like_to_delete = ArticleLike.query.filter_by(user_id=user_id, article_id=article_id).first()
+        if like_to_delete:
+            db.session.delete(like_to_delete)
+            Article.query.filter_by(id=article_id).update({'likes_count': Article.likes_count - 1})
+            db.session.commit()
+
+            article = Article.query.get(article_id)
+            return jsonify({'liked': False, 'likes_count': article.likes_count}), 200
+
+        return jsonify({'error': 'Impossibile trovare il like da rimuovere'}), 500
+
+@articles_bp.route('/<int:article_id>/favorite', methods=['POST'])
 @login_required
 def favorite_article(article_id):
     try:
@@ -298,7 +321,7 @@ def favorite_article(article_id):
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
-@articles_bp.route('/articles/<int:article_id>/comments', methods=['POST'])
+@articles_bp.route('/<int:article_id>/comments', methods=['POST'])
 @login_required
 def add_comment(article_id):
     try:

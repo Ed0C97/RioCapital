@@ -18,7 +18,7 @@ import {
   BarChart3,
   MessageSquare,
   FileText,
-  Coffee
+  BadgeEuro
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -29,7 +29,8 @@ import {
 } from './ui/dropdown-menu';
 
 // Importa il tuo logo dalla cartella assets
-import RioCapitalLogo from '../assets/logo_white.svg';
+import RioCapitalLogo from '../assets/litinvestor_logo.webp';
+import UserAvatar from '../components/ui/UserAvatar';
 
 const Header = () => {
   const { user, logout, canWriteArticles, isAdmin } = useAuth();
@@ -75,30 +76,28 @@ const Header = () => {
             <div className="flex items-center gap-10">
               {/* Logo SVG */}
               <Link to="/" className="flex-shrink-0">
-                <img src={RioCapitalLogo} alt="Rio Capital Logo" className="h-5 w-auto" />
+                <img src={RioCapitalLogo} alt="Lit Investor Logo" className="h-5 w-auto" />
               </Link>
 
               {/* Navigazione Desktop (spostata qui) */}
               <nav className="hidden md:flex items-center gap-8">
                 <Link to="/" className="text-sm font-normal text-gray-300 hover:text-white transition-colors duration-200 py-2">Home</Link>
-                <Link to="/archivio" className="text-sm font-normal text-gray-300 hover:text-white transition-colors duration-200 py-2">Archivio</Link>
-                <Link to="/chi-siamo" className="text-sm font-normal text-gray-300 hover:text-white transition-colors duration-200 py-2">Chi Siamo</Link>
-                <Link to="/contatti" className="text-sm font-normal text-gray-300 hover:text-white transition-colors duration-200 py-2">Contatti</Link>
+                <Link to="/archivio" className="text-sm font-normal text-gray-300 hover:text-white transition-colors duration-200 py-2">Archive</Link>
+                <Link to="/chi-siamo" className="text-sm font-normal text-gray-300 hover:text-white transition-colors duration-200 py-2">About me</Link>
+                <Link to="/contatti" className="text-sm font-normal text-gray-300 hover:text-white transition-colors duration-200 py-2">Contacts</Link>
               </nav>
             </div>
 
             {/* --- PARTE DESTRA - IL TUO CODICE ORIGINALE, INVARIATO --- */}
             <div className="flex items-center space-x-10 flex-shrink-0">
                 <Link to="/dona" className="hidden md:flex items-center text-gray-300 hover:text-white transition-colors duration-200">
-                  <Coffee className="w-4 h-4" />
+                  <BadgeEuro className="w-4 h-4" />
                 </Link>
                 {user ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <div className="flex items-center text-gray-300 hover:text-white cursor-pointer transition-colors duration-200">
-                        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-regular cursor-pointer hover:ring-0 hover:ring-blue-400 transition-all duration-200">
-                          {user.first_name?.charAt(0).toUpperCase() || user.username.charAt(0).toUpperCase()}
-                        </div>
+                        <UserAvatar username={user.username} firstName={user.first_name} size={32} />
                       </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-56 bg-white/95 backdrop-blur-md border border-gray-200/50 shadow-lg rounded-lg mt-1">
@@ -179,28 +178,28 @@ const Header = () => {
                 className="block px-3 py-2 text-sm font-normal text-gray-300 hover:text-white hover:bg-gray-600/50 rounded-md transition-colors duration-200"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Archivio
+                Archive
               </Link>
               <Link
                 to="/chi-siamo"
                 className="block px-3 py-2 text-sm font-normal text-gray-300 hover:text-white hover:bg-gray-600/50 rounded-md transition-colors duration-200"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Chi Siamo
+                About me
               </Link>
               <Link
                 to="/contatti"
                 className="block px-3 py-2 text-sm font-normal text-gray-300 hover:text-white hover:bg-gray-600/50 rounded-md transition-colors duration-200"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Contatti
+                Contacts
               </Link>
               <Link
                 to="/dona"
                 className="block px-3 py-2 text-sm font-normal text-gray-300 hover:text-white hover:bg-gray-600/50 rounded-md transition-colors duration-200"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Coffee className="w-4 h-4 inline mr-2" />
+                <BadgeEuro className="w-4 h-4 inline mr-2" />
                 Dona
               </Link>
             </div>
@@ -216,14 +215,14 @@ const Header = () => {
           <div className="flex items-center justify-between h-14">
 
             {/* Titolo a Sinistra */}
-            <h2 className="text-xl font-semibold text-gray-800">Rio Capital Blog</h2>
+            <h2 className="text-xl font-semibold text-gray-800">Lit Investor Blog</h2>
 
             {/* Contenitore per tutti gli elementi di destra */}
             <div className="hidden md:flex items-center gap-8">
               {/* Navigazione Secondaria */}
               <nav className="flex items-center gap-4">
-                <Link to="/categoria/analisi-di-mercato" className="text-sm font-medium text-gray-500 hover:text-gray-900">Analisi di Mercato</Link>
-                <Link to="/categoria/guide" className="text-sm font-medium text-gray-500 hover:text-gray-900">Guide</Link>
+                <Link to="/categoria/analisi-di-mercato" className="text-sm font-medium text-gray-500 hover:text-gray-900">References</Link>
+                <Link to="/categoria/guide" className="text-sm font-medium text-gray-500 hover:text-gray-900">Services</Link>
               </nav>
 
               {/* Barra di Ricerca */}

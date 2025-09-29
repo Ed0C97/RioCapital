@@ -1,20 +1,18 @@
-// RioCapitalBlog-frontend/src/components/Footer.jsx
+// src/components/Footer.jsx
 
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Mail,
-  Heart
-} from 'lucide-react';
+import { Mail } from 'lucide-react';
+
+// Importa il tuo logo (assicurati che il percorso sia corretto)
+// Se vuoi un logo scuro su sfondo bianco, crea un logo.dark.svg
+import RioCapitalLogo from '../assets/litinvestor_logo.webp'; // <-- CAMBIA QUESTO SE NECESSARIO
 
 const Footer = () => {
   const [email, setEmail] = React.useState('');
+
 
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
@@ -42,116 +40,91 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-muted/30 border-t border-border">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 RioCapitalBlog-gradient rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">F</span>
-              </div>
-              <span className="text-xl font-bold RioCapitalBlog-text-gradient">RioCapitalBlog</span>
-            </div>
-            <p className="text-muted-foreground text-sm">
-              Il tuo blog finanziario di fiducia. Notizie, analisi e consigli per navigare
-              nel mondo degli investimenti e della finanza personale.
+    <footer className="bg-white">
+      {/* --- MODIFICA 1: Contenitore con larghezza massima corretta --- */}
+      <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] py-12">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+
+          <div className="space-y-4 md:col-span-2 lg:col-span-1">
+            <Link to="/">
+              <img src={RioCapitalLogo} alt="Lit Investor Logo" className="h-6 w-auto" />
+            </Link>
+            {/* --- MODIFICA 3: Aggiunto margine sotto il logo --- */}
+            <p className="font-semibold text-gray-800 pt-4">
+              Lit Investor
             </p>
-            <div className="flex space-x-4">
-              <Button variant="ghost" size="sm" className="p-2">
-                <Facebook className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="p-2">
-                <Twitter className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="p-2">
-                <Instagram className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="p-2">
-                <Linkedin className="w-4 h-4" />
-              </Button>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="font-semibold text-gray-800">Navigazione</h3>
+            <div className="flex flex-col space-y-2">
+              <Link to="/" className="text-sm text-gray-500 hover:text-blue-600">Home</Link>
+              <Link to="/chi-siamo" className="text-sm text-gray-500 hover:text-blue-600">Chi Siamo</Link>
+              <Link to="/archivio" className="text-sm text-gray-500 hover:text-blue-600">Archivio</Link>
+              <Link to="/contatti" className="text-sm text-gray-500 hover:text-blue-600">Contatti</Link>
             </div>
           </div>
 
-          {}
           <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Link Rapidi</h3>
-            <div className="space-y-2">
-              <Link to="/" className="block text-muted-foreground hover:text-primary transition-colors text-sm">
-                Home
-              </Link>
-              <Link to="/categories" className="block text-muted-foreground hover:text-primary transition-colors text-sm">
-                Categorie
-              </Link>
-              <Link to="/about" className="block text-muted-foreground hover:text-primary transition-colors text-sm">
-                Chi Siamo
-              </Link>
-              <Link to="/contact" className="block text-muted-foreground hover:text-primary transition-colors text-sm">
-                Contatti
-              </Link>
-              <Link to="/privacy" className="block text-muted-foreground hover:text-primary transition-colors text-sm">
-                Privacy Policy
-              </Link>
+            <h3 className="font-semibold text-gray-800">Risorse</h3>
+            <div className="flex flex-col space-y-2">
+              <Link to="/termini-e-condizioni" className="text-sm text-gray-500 hover:text-blue-600">Termini e Condizioni</Link>
+              <Link to="/privacy-policy" className="text-sm text-gray-500 hover:text-blue-600">Privacy Policy</Link>
             </div>
           </div>
 
-          {}
           <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Categorie</h3>
-            <div className="space-y-2">
-              <Link to="/category/investimenti" className="block text-muted-foreground hover:text-primary transition-colors text-sm">
-                Investimenti
-              </Link>
-              <Link to="/category/mercati" className="block text-muted-foreground hover:text-primary transition-colors text-sm">
-                Mercati
-              </Link>
-              <Link to="/category/criptovalute" className="block text-muted-foreground hover:text-primary transition-colors text-sm">
-                Criptovalute
-              </Link>
-              <Link to="/category/economia" className="block text-muted-foreground hover:text-primary transition-colors text-sm">
-                Economia
-              </Link>
-              <Link to="/category/finanza-personale" className="block text-muted-foreground hover:text-primary transition-colors text-sm">
-                Finanza Personale
-              </Link>
-            </div>
-          </div>
-
-          {}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Newsletter</h3>
-            <p className="text-muted-foreground text-sm">
-              Ricevi le ultime notizie finanziarie direttamente nella tua casella di posta.
+            <h3 className="font-semibold text-gray-800">Newsletter</h3>
+            <p className="text-sm text-gray-500">
+              Rimani aggiornato con le nostre analisi settimanali.
             </p>
+            {/* --- MODIFICA 2: Nuovo form per la newsletter --- */}
             <form onSubmit={handleNewsletterSubmit} className="space-y-2">
-              <Input
-                type="email"
-                placeholder="La tua email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <Button type="submit" className="w-full" size="sm">
-                <Mail className="w-4 h-4 mr-2" />
-                Iscriviti
-              </Button>
+              <div className="relative border-b border-gray-300">
+                <Mail className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <input
+                  type="email"
+                  placeholder="La tua email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full bg-transparent border-none pl-6 pr-2 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-0"
+                />
+              </div>
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); handleNewsletterSubmit(e); }}
+                className="text-gray-500 hover:text-blue-600 uppercase text-xs font-semibold tracking-wider transition-colors"
+              >
+                Subscribe
+              </a>
             </form>
           </div>
         </div>
 
-        {}
-        <div className="border-t border-border mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-muted-foreground text-sm">
-              © 2025 RioCapitalBlog. Tutti i diritti riservati.
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link to="/donate" className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors text-sm">
-                <Heart className="w-4 h-4" />
-                <span>Supporta il nostro lavoro</span>
-              </Link>
-            </div>
+        <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-gray-500 text-center md:text-left">
+            © {new Date().getFullYear()} Lit Investor. Tutti i diritti riservati.
+          </p>
+
+          {/* --- MODIFICA 4: Loghi social commentati --- */}
+          {/*
+          <div className="flex space-x-2">
+            <Button variant="ghost" size="icon" asChild>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><Facebook className="w-4 h-4" /></a>
+            </Button>
+            <Button variant="ghost" size="icon" asChild>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><Twitter className="w-4 h-4" /></a>
+            </Button>
+            <Button variant="ghost" size="icon" asChild>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><Instagram className="w-4 h-4" /></a>
+            </Button>
+            <Button variant="ghost" size="icon" asChild>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><Linkedin className="w-4 h-4" /></a>
+            </Button>
           </div>
+          */}
         </div>
       </div>
     </footer>

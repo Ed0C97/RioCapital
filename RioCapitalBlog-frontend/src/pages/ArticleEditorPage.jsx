@@ -55,13 +55,16 @@ const ArticleEditorPage = () => {
 
   useEffect(() => {
   fetchCategories();
+}, []); // <-- Array di dipendenze vuoto
 
+// Effetto per caricare i dati dell'articolo (solo in modalità modifica)
+useEffect(() => {
   if (isEditing && user) {
     fetchArticle();
-  } else if (!isEditing) {
+  } else {
     setLoading(false);
   }
-}, [id, user]);
+}, [id, user, isEditing]);
 
   const fetchCategories = async () => {
     try {
@@ -80,7 +83,7 @@ const ArticleEditorPage = () => {
     try {
       // 'id' qui può essere un numero (dalla modifica) o uno slug (non usato, ma per coerenza)
       // Usiamo l'endpoint che accetta l'ID numerico
-      const response = await fetch(`/api/articles/${id}`, {
+      const response = await fetch(`/api/articles/id/${id}`, {
         credentials: 'include'
       });
 
