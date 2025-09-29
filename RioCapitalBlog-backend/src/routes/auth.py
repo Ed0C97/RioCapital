@@ -101,7 +101,7 @@ def logout():
     session.pop('user_id', None)
     return jsonify({'message': 'Logout effettuato con successo'}), 200
 
-@auth_bp.route('/me', methods=['GET'])
+@auth_bp.route('/me', methods=['GET']) # URL finale: /api/auth/me
 @login_required
 def get_current_user():
     try:
@@ -109,6 +109,7 @@ def get_current_user():
         if user:
             return jsonify({'user': user.to_dict()}), 200
         else:
+            # Questo caso non dovrebbe accadere se @login_required funziona
             return jsonify({'error': 'Utente non trovato'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500

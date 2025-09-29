@@ -4,28 +4,22 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
+import { fileURLToPath } from 'url' // <-- 1. AGGIUNGI QUESTO IMPORT
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      // --- 2. USA QUESTA SINTASSI CORRETTA ---
+      "@": path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'src'),
     },
   },
   server: {
     proxy: {
-
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://127.0.0.1:5000',
         changeOrigin: true,
-        secure: false,
       },
-
-      '/apiauth': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-        secure: false,
-      }
     }
   }
 })

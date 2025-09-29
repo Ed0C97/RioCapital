@@ -79,7 +79,7 @@ const ArticleDetailPage = () => {
           </div>
 
           <footer className="mt-12">
-            <h3 className="text-lg font-semibold text-center mb-4"> {/* Modificato per centrare il testo */}
+            <h3 className="text-lg font-semibold text-left mb-4"> {/* Modificato per centrare il testo */}
               Condividi articolo
             </h3>
             <div className="mb-8">
@@ -99,7 +99,7 @@ const ArticleDetailPage = () => {
 
           <div className="mt-0 is-compact">
             <RelatedArticles
-              title="Altro da Rio Capital Blog"
+              title="Altro da Lit Investor"
               fetchUrl={`/api/articles?category_id=${article.category_id}&exclude_id=${article.id}&per_page=4`}
             />
           </div>

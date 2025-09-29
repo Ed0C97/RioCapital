@@ -45,8 +45,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # --- 2. Inizializzazione delle Estensioni ---
 db.init_app(app)
 migrate = Migrate(app, db)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}, r"/apiauth/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
-
+CORS(
+    app,
+    origins="http://localhost:5173", # Permetti richieste da questo indirizzo
+    supports_credentials=True
+)
 # --- 3. Definizione dei Blueprint (PRIMA di registrarli) ---
 
 # Blueprint per il Frontend
@@ -64,7 +67,7 @@ def serve_frontend(path):
         return send_from_directory(static_folder, 'index.html')
 
 # --- 4. Registrazione di TUTTI i Blueprint ---
-app.register_blueprint(auth_bp, url_prefix='/apiauth')
+app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(user_bp, url_prefix='/api/users')
 app.register_blueprint(articles_bp, url_prefix='/api/articles')
 app.register_blueprint(categories_bp, url_prefix='/api/categories')

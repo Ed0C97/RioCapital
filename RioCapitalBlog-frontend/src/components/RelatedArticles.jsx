@@ -55,30 +55,17 @@ const RelatedArticles = ({ title, fetchUrl }) => {
     }
   }, [fetchUrl]);
 
-  const articlePairs = [];
-  for (let i = 0; i < articles.length; i += 2) {
-    articlePairs.push(articles.slice(i, i + 2));
-  }
-
   if (loading || articles.length === 0) return null;
 
-  return (
-
+ return (
     <section className="related-articles-section">
-      {}
       <div className="related-articles-container">
-        <h2 className="text-4xl font-bold mb-16">{title}</h2>
+        <h2 className="text-3xl font-bold mb-1">{title}</h2>
 
-        <div className="space-y-8">
-          {articlePairs.map((pair, index) => (
-            <div key={index} className="article-pair">
-              <div className="related-articles-grid">
-                {pair.map(article => (
-                  <div className="article-list-item-wrapper" key={article.id}>
-                    <ArticleListItem article={article} />
-                  </div>
-                ))}
-              </div>
+        <div className="related-articles-grid">
+          {articles.map(article => (
+            <div className="article-list-item-wrapper" key={article.id}>
+              <ArticleListItem article={article} />
             </div>
           ))}
         </div>
@@ -88,9 +75,8 @@ const RelatedArticles = ({ title, fetchUrl }) => {
             <Button size="lg" variant="outline">Sfoglia l'archivio</Button>
           </Link>
         </div>
-
-       </div>
-     </section>
+      </div>
+    </section>
   );
 };
 

@@ -21,56 +21,54 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const checkAuthStatus = async () => {
-    try {
-      const response = await fetch('/apiauth/me', {
-        credentials: 'include'
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data.user);
-      }
-    } catch (error) {
-      console.error('Errore nel controllo dello stato di autenticazione:', error);
-    } finally {
-      setLoading(false);
+  try {
+    const response = await fetch('/api/auth/me', { // <-- URL CORRETTO
+      credentials: 'include'
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setUser(data.user);
+    } else {
+      setUser(null); // Se la sessione non è valida, imposta user a null
     }
-  };
+  } catch (error) {
+    console.error('Nessuna sessione valida trovata.');
+    setUser(null); // Assicurati che l'utente sia null anche in caso di errore di rete
+  } finally {
+    setLoading(false);
+  }
+};
 
   const login = async (credentials) => {
-    try {
-      const response = await fetch('/apiauth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-        credentials: 'include'
-      });
+  try {
+    const response = await fetch('/api/auth/login', { // <-- URL CORRETTO
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials),
+      credentials: 'include'
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data.user);
-        return { success: true, user: data.user };
-      } else {
-        const error = await response.json();
-        return { success: false, error: error.message };
-      }
-    } catch (error) {
-      return { success: false, error: 'Errore di connessione' };
+    if (response.ok) {
+      const data = await response.json();
+      setUser(data.user); // Questa riga è già corretta
+      return { success: true, user: data.user };
+    } else {
+      const error = await response.json();
+      return { success: false, error: error.message };
     }
-  };
+  } catch (error) {
+    return { success: false, error: 'Errore di connessione' };
+  }
+};
 
   const register = async (userData) => {
-    try {
-      const response = await fetch('/apiauth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-        credentials: 'include'
-      });
+  try {
+    const response = await fetch('/api/auth/register', { // <-- URL CORRETTO
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData),
+      credentials: 'include'
+    });
 
       if (response.ok) {
         const data = await response.json();
@@ -87,19 +85,17 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch('/apiauth/logout', {
+      await fetch('/api/auth/logout', { // <-- URL CORRETTO
         method: 'POST',
         credentials: 'include'
       });
-
-      if (response.ok) {
-        setUser(null);
-        return { success: true };
-      }
     } catch (error) {
       console.error('Errore durante il logout:', error);
+    } finally {
+      // Esegui il logout dal frontend a prescindere dal risultato del server
+      setUser(null);
     }
-    return { success: false };
+    return { success: true }; // Ritorna sempre successo per garantire il redirect
   };
 
   const updateProfile = async (profileData) => {
@@ -165,6 +161,10 @@ export const AuthProvider = ({ children }) => {
     isAdmin,
     checkAuthStatus
   };
+
+  if (loading) {
+  return null; // O un componente di caricamento a schermo intero
+  }
 
   return (
     <AuthContext.Provider value={value}>

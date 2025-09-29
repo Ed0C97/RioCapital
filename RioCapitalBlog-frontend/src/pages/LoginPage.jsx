@@ -1,28 +1,35 @@
 // RioCapitalBlog-frontend/src/pages/LoginPage.jsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // <-- 1. AGGIUNGI useEffect
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth'; // <-- 2. IMPORTA useAuth
 
-const LoginPage = ({ onLogin }) => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: ''
-  });
+const LoginPage = () => { // Rimuovi onLogin dalle props
+  const [formData, setFormData] = useState({ username: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // --- 3. USA IL CONTESTO useAuth ---
+  const { login, user } = useAuth();
+
+  // --- 4. AGGIUNGI QUESTO useEffect PER IL REDIRECT ---
+  useEffect(() => {
+    // Se lo stato 'user' viene popolato, significa che il login ha avuto successo
+    // e possiamo reindirizzare in sicurezza.
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
   };
 
@@ -31,29 +38,15 @@ const LoginPage = ({ onLogin }) => {
     setLoading(true);
     setError('');
 
-    try {
-      const response = await fetch('/apiauth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(formData),
-      });
+    // --- 5. USA LA FUNZIONE login DAL CONTESTO ---
+    const result = await login(formData);
 
-      const data = await response.json();
-
-      if (response.ok) {
-        onLogin(data.user);
-        navigate('/');
-      } else {
-        setError(data.error || 'Errore durante il login');
-      }
-    } catch (error) {
-      setError('Errore di connessione');
-    } finally {
-      setLoading(false);
+    if (!result.success) {
+      setError(result.error || 'Errore durante il login');
     }
+    // Non c'è più bisogno di chiamare onLogin o navigate qui
+
+    setLoading(false);
   };
 
   return (
@@ -120,20 +113,12 @@ const LoginPage = ({ onLogin }) => {
                     className="absolute right-0 top-0 h-full px-3"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </Button>
                 </div>
               </div>
 
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={loading}
-              >
+              <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? 'Accesso in corso...' : 'Accedi'}
               </Button>
             </form>
