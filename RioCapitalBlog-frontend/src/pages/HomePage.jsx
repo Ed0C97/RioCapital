@@ -174,7 +174,7 @@ const HomePage = () => {
       </div>
 
       {/* === Blocco 2: I Più Popolari (con sfondo a larghezza piena) === */}
-      <div className="mt-8">
+      <div className="mt-16">
         <RelatedArticles
           title="I più popolari"
           fetchUrl="/api/articles?per_page=4"

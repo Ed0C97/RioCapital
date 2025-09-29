@@ -155,7 +155,7 @@ const AboutPage = () => {
       {/* -------------------------------------------------------------------- */}
 
       {/* Sezione "I più popolari" (già a larghezza piena) */}
-      <div className="mt-16">
+      <div className="mt-1">
         <RelatedArticles
           title="I più popolari"
           fetchUrl="/api/articles?per_page=4"

@@ -7,6 +7,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
 import { Send, User, Mail, FileText } from 'lucide-react';
 import { toast } from 'sonner';
+import RelatedArticles from "@/components/RelatedArticles.jsx";
 
 const ContactPage = () => {
   const [loading, setLoading] = useState(false);
@@ -125,7 +126,6 @@ const ContactPage = () => {
                 rows={18}
                 required
                 className="pl-9 !bg-white shadow-none border-none"
-
               />
             </div>
 
@@ -146,6 +146,14 @@ const ContactPage = () => {
             </div>
           </form>
         </div>
+      </div>
+
+      {/* Sezione "I più popolari" (larghezza piena, come in AboutPage) */}
+      <div className="mt-1">
+        <RelatedArticles
+          title="I più popolari"
+          fetchUrl="/api/articles?per_page=4"
+        />
       </div>
     </div>
   );

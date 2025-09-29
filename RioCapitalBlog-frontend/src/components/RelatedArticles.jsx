@@ -1,10 +1,10 @@
-// RioCapitalBlog-frontend/src/components/RelatedArticles.jsx
+// src/components/RelatedArticles.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
-import { Button } from './ui/button'; // <-- AGGIUNGI QUESTA RIGA
+import { Button } from './ui/button';
 
 const ArticleListItem = ({ article }) => {
   const placeholderImage = 'https://images.unsplash.com/photo-1518186225043-963158e70a41?q=80&w=1974&auto=format&fit=crop';
@@ -31,7 +31,7 @@ const ArticleListItem = ({ article }) => {
   );
 };
 
-const RelatedArticles = ({ title, fetchUrl }) => {
+const RelatedArticles = ({ title, fetchUrl, variant = 'grid' }) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -50,31 +50,46 @@ const RelatedArticles = ({ title, fetchUrl }) => {
         setLoading(false);
       }
     };
-    if (fetchUrl) {
-      loadArticles();
-    }
+    if (fetchUrl) loadArticles();
   }, [fetchUrl]);
 
   if (loading || articles.length === 0) return null;
 
- return (
-    <section className="related-articles-section">
+  // Dividiamo gli articoli in righe da 2 per il desktop
+  const firstRow = articles.slice(0, 2);
+  const secondRow = articles.slice(2);
+
+  return (
+    <section className={variant === 'list' ? 'is-compact' : 'related-articles-section'}>
       <div className="related-articles-container">
-        <h2 className="text-3xl font-bold mb-1">{title}</h2>
+        <h2 className="text-3xl font-bold mb-8">{title}</h2>
 
         <div className="related-articles-grid">
-          {articles.map(article => (
+          {/* PRIMA RIGA */}
+          {firstRow.map(article => (
+            <div className="article-list-item-wrapper" key={article.id}>
+              <ArticleListItem article={article} />
+            </div>
+          ))}
+
+          {/* SEPARATORE tra le righe (desktop) o tra gli articoli (mobile) */}
+          {secondRow.length > 0 && <div className="row-separator"></div>}
+
+          {/* SECONDA RIGA */}
+          {secondRow.map(article => (
             <div className="article-list-item-wrapper" key={article.id}>
               <ArticleListItem article={article} />
             </div>
           ))}
         </div>
 
-        <div className="archive-button-container">
-          <Link to="/archivio">
-            <Button size="lg" variant="outline">Sfoglia l'archivio</Button>
-          </Link>
-        </div>
+        {variant === 'grid' && (
+          <div className="archive-button-container mt-8">
+            <Link to="/archivio">
+              <Button size="lg" variant="outline">Sfoglia l'archivio</Button>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

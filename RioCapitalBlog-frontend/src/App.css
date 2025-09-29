@@ -685,16 +685,14 @@ Contenuti:
 }
 
 /* ==============================================================================
-   11. SEZIONE ARTICOLI CORRELATI
-   ==============================================================================
-   Descrizione: Stili per la sezione che mostra gli articoli correlati.
+   11. SEZIONE ARTICOLI CORRELATI (Layout Griglia per Homepage, etc.)
    ============================================================================== */
 
 .related-articles-section {
   background-color: var(--color-background-white);
   width: 100%;
-  padding-top: 1rem;
-  padding-bottom: 4rem;
+  padding-top: 4rem;
+  padding-bottom: 5rem;
 }
 
 .related-articles-container {
@@ -703,25 +701,52 @@ Contenuti:
   padding: 0 1rem;
 }
 
+/* Griglia articoli */
 .related-articles-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  position: relative;
-  row-gap: 3rem;
+  grid-template-columns: 1fr; /* 1 colonna su mobile */
+  row-gap: 5rem; /* spazio verticale tra gli articoli */
 }
 
-@media (min-width: 768px) {
-  .related-articles-grid {
-    grid-template-columns: 1fr 1fr;
-    column-gap: 5rem;
-  }
-  .article-list-item-wrapper:not(:last-child)::after {
-    left: -1rem; right: -1rem;
-  }
-  .related-articles-grid > .article-list-item-wrapper:nth-last-child(-n+2)::after {
-    display: none;
+/* ------------------------------
+   MOBILE: linea tra ogni articolo
+--------------------------------*/
+@media (max-width: 767px) {
+  .related-articles-grid > .article-list-item-wrapper:not(:last-child) {
+    border-bottom: 1px solid var(--color-border-separator);
+    padding-bottom: 2.5rem; /* metà del row-gap */
+    margin-bottom: -2.3rem;
   }
 }
+
+/* ------------------------------
+   DESKTOP: 2 colonne
+--------------------------------*/
+@media (min-width: 768px) {
+  .related-articles-grid {
+    grid-template-columns: 1fr 1fr; /* 2 colonne */
+    column-gap: 5rem;
+    padding-bottom: 4rem; /* metà del row-gap */
+    position: relative;
+  }
+
+  /* Rimuove le linee sotto i singoli articoli */
+  .related-articles-grid > .article-list-item-wrapper {
+    border-bottom: none;
+    margin-bottom: -5rem;
+  }
+
+  /* Linea tra le righe della griglia (una sola linea tra la prima e seconda riga) */
+  .related-articles-section .row-separator {
+  grid-column: 1 / -1;
+  height: 1px;
+  background-color: var(--color-border-separator);
+  margin-top: 2.5rem;
+  margin-bottom: -2.3rem; /* regola qui lo spazio sotto la linea */
+}
+}
+
+
 
 /* ==============================================================================
    12. COMPONENTE: ARTICLE LIST ITEM
@@ -1038,47 +1063,60 @@ button:hover,
 }
 
 /* ==============================================================================
-   18. VARIANTE COMPATTA ARTICOLI CORRELATI (Colonna Singola Responsiva)
-   ==============================================================================
-   Descrizione: Stili per una visualizzazione compatta degli articoli correlati,
-                adattabile a diverse dimensioni dello schermo.
+   18. VARIANTE COMPATTA ARTICOLI CORRELATI (Layout Lista per Pagina Articolo)
    ============================================================================== */
+.is-compact .row-separator {
+  display: none;
+}
+
+.is-compact .archive-button-container {
+  margin-bottom: -2.4rem; /* spazio sotto il bottone (tra bottone e contenitore successivo) */
+}
+
+/* Applica questi stili solo quando il contenitore ha la classe .is-compact */
+
+.is-compact .related-articles-container > h2 {
+  /* PARAMETRO: Controlla lo spazio SOPRA il titolo "Altro da..." */
+  margin-top: -3rem;
+}
+/* ------------------------------------ */
 
 .is-compact .related-articles-container {
   padding: 0;
 }
 
+/* Forza la griglia a colonna singola e rimuove il gap */
 .is-compact .related-articles-grid {
   grid-template-columns: 1fr;
   gap: 0;
+  position: static; /* Resetta la posizione per evitare conflitti con ::after */
 }
 
-.is-compact .article-pair:not(:last-child) {
-  border-bottom: none;
-  padding-bottom: 0;
-  margin-bottom: 0;
+/* Disattiva la linea continua della Sezione 11 */
+.is-compact .article-list-item-wrapper::after {
+  display: none;
 }
 
+/* Aggiunge un bordo inferiore a ogni elemento, tranne l'ultimo */
+.is-compact .article-list-item-wrapper:not(:last-child) {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border-separator);
+}
+
+/* Stili per l'elemento interno della lista */
 .is-compact .article-list-item {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: 1.5px solid var(--color-border-separator);
   align-items: center;
-}
-
-.is-compact .related-articles-grid > *:last-child .article-list-item {
-  border-bottom: none;
-  padding-bottom: 0;
 }
 
 .is-compact .article-list-item-image {
   width: 100%;
   height: auto;
   border-radius: 18px;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 1; /* Immagine quadrata su mobile */
 }
 
 .is-compact .article-list-item-content {
@@ -1089,6 +1127,7 @@ button:hover,
   font-size: 1.125rem;
 }
 
+/* Stile per schermi più grandi nella versione compatta */
 @media (min-width: 500px) {
   .is-compact .article-list-item {
     grid-template-columns: 180px 1fr;
@@ -1096,7 +1135,7 @@ button:hover,
   }
 
   .is-compact .article-list-item-image {
-    aspect-ratio: 295 / 167;
+    aspect-ratio: 295 / 167; /* Immagine rettangolare */
   }
 }
 
