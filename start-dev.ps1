@@ -44,7 +44,7 @@ if ($Reset) {
 
     Write-Host "Creo l'utente admin (admin / test@test.com / password)..."
     Set-Location $backendPath
-    $env:FLASK_APP = $flaskAppName
+    $env:FLASK_APP = "wsgi:app"
 
     "admin`ntest@test.com`npassword`npassword" | flask create-admin
     Set-Location $scriptPath
@@ -53,7 +53,7 @@ if ($Reset) {
 Write-Host "`n--- AVVIO DEI SERVER ---`n" -ForegroundColor Cyan
 
 Write-Host "Avvio del server Backend (Flask)..."
-$backendCommand = "Set-Location '$backendPath'; `$env:FLASK_APP = '$flaskAppName'; flask run"
+$backendCommand = "Set-Location '$backendPath'; `$env:FLASK_APP = 'wsgi:app'; flask run"
 Start-Process powershell -ArgumentList "-NoExit", "-Command", $backendCommand
 
 Write-Host "Avvio del server Frontend (Vite)..."

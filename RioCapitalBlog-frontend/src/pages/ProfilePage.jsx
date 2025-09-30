@@ -21,7 +21,7 @@ const ProfilePage = () => {
       case 'collaborator':
         return 'bg-blue-100 text-blue-800 border-blue-200';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-green-100 text-green-800 border-green-200';
     }
   };
   const getRoleLabel = (role) => {
@@ -130,7 +130,7 @@ const ProfilePage = () => {
                 {/* Data Registrazione */}
                 {user.created_at && (
                   <div className="flex items-center space-x-2 text-xs text-gray-500">
-                    <span>Membro dal {new Date(user.created_at).toLocaleDateString('it-IT')}</span>
+                    <span>Memebro dal {new Date(user.created_at).toLocaleDateString('it-IT')}</span>
                   </div>
                 )}
               </div>
@@ -163,7 +163,7 @@ const ProfilePage = () => {
               <div className="space-y-2">
                 <Label htmlFor="linkedin_url">Profilo LinkedIn</Label>
                 <div className="relative">
-                  <Linkedin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Linkedin className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 w-4 h-4" />
                   <Input id="linkedin_url" name="linkedin_url" type="url" value={formData.linkedin_url} onChange={handleInputChange} className="pl-9 !bg-white" />
                 </div>
               </div>

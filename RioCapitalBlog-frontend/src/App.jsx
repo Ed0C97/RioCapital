@@ -24,6 +24,7 @@ import './App.css';
 import ArticleDetailPage from './pages/ArticleDetailPage';
 import ArticlesByCategoryPage from './pages/ArticlesByCategoryPage';
 import ArchivePage from './pages/ArchivePage'; // <-- LA NUOVA PAGINA
+import CompleteProfilePage from './pages/CompleteProfilePage';
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
               
               {/* --- Rotta 404 --- */}
               <Route path="*" element={<NotFoundPage />} />
+              <Route path="/complete-profile" element={<CompleteProfilePage />} />
             </Routes>
           </main>
           <Footer />
