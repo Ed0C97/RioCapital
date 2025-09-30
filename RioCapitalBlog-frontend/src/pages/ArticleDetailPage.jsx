@@ -73,7 +73,19 @@ const ArticleDetailPage = () => {
           </header> {/* <-- LA CHIUSURA DELL'HEADER VA QUI */}
 
           <div className="article-content">
-            <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+            <ReactMarkdown
+              remarkPlugins={[remarkMath]}
+              rehypePlugins={[rehypeKatex]}
+              components={{
+                // Questa funzione sovrascrive il rendering di default delle immagini
+                img: ({ node, ...props }) => (
+                  <figure>
+                    <img {...props} />
+                    {props.alt && <figcaption>{props.alt}</figcaption>}
+                  </figure>
+                ),
+              }}
+            >
               {article.content}
             </ReactMarkdown>
           </div>

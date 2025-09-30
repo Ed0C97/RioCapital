@@ -9,7 +9,7 @@ content_bp = Blueprint('content', __name__)
 
 
 # --- ROTTA PER OTTENERE IL CONTENUTO DI UNA PAGINA ---
-@content_bp.route('/content/<string:page_key>', methods=['GET'])
+@content_bp.route('/<string:page_key>', methods=['GET'])
 def get_content(page_key):
     content_entry = Content.query.filter_by(page_key=page_key).first()
 
@@ -21,8 +21,8 @@ def get_content(page_key):
 
 
 # --- ROTTA PER AGGIORNARE IL CONTENUTO DI UNA PAGINA ---
-@content_bp.route('/content/<string:page_key>', methods=['PUT'])
-@admin_required  # Solo gli admin possono modificare
+@content_bp.route('/<string:page_key>', methods=['PUT'])
+@admin_required
 def update_content(page_key):
     data = request.get_json()
     if 'body' not in data:

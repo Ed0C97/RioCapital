@@ -523,11 +523,32 @@ Contenuti:
 
 .article-content img {
   display: block;
-  margin: 2.5rem auto; /* Aumenta lo spazio verticale */
-  width: 100%;
-  max-width: 100%; /* L'immagine si adatta al contenitore del testo */
+  width: 127%;      /* Larghezza totale (100% + 10% a sx + 10% a dx) */
+  margin-left: -13%;  /* Margine negativo per "tirare" a sinistra */
+  margin-right: -13%; /* Margine negativo per "tirare" a destra */
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  max-width: 127%; /* Assicura che la larghezza non venga limitata */
   height: auto;
-  border-radius: 18px; /* Bordi arrotondati come su Apple */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+
+}
+
+/* Stile per il contenitore dell'immagine e della didascalia */
+.article-content figure {
+  /* Rimuove il margine di default del browser */
+  margin: 0;
+}
+
+/* Stile per la didascalia */
+.article-content figcaption {
+  font-size: 0.8rem; /* Testo leggermente più piccolo */
+  color: var(--color-text-muted); /* Colore grigio secondario */
+  text-align: left; /* Testo centrato */
+  margin-top: -3rem; /* Spazio tra l'immagine e la didascalia */
+  line-height: 5;
+  font-weight: 600;
 }
 
 /* ==============================================================================
@@ -1285,4 +1306,81 @@ button:hover,
   border-top: 1px solid #e0e0e0;
   line-height: 0.1em;
   margin: 20px 0;
+}
+
+/* ==============================================================================
+   21. VARIANTI BOTTONI OUTLINE (Stile Editor)
+   ============================================================================== */
+
+/* Stile base per tutti i bottoni outline */
+.btn-outline {
+  /* Dimensioni e Spaziatura (più piccoli) */
+  height: auto; /* Altezza automatica */
+  padding: 0.5rem 1rem; /* Padding per controllare la dimensione */
+  aspect-ratio: initial; /* Rimuove l'aspect-ratio fisso */
+
+  /* Stile del testo */
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500; /* Medium */
+
+  /* Stile del bottone */
+  background-color: transparent;
+  border-radius: 9999px;
+  border-width: 1px !important; /* !important per forzare la visibilità del bordo */
+  border-style: solid;
+  transition: all 0.2s ease-in-out;
+}
+.btn-outline:hover {
+  color: var(--color-background-white);
+  transform: scale(1.05);
+  box-shadow: none;
+}
+
+/* Variante Grigia (Anteprima) */
+.btn-outline-gray {
+  border-color: var(--color-border-light);
+  color: var(--color-text-secondary);
+}
+.btn-outline-gray:hover {
+  background-color: var(--color-text-secondary);
+}
+
+/* Variante Blu (Salva Bozza) */
+.btn-outline-blue {
+  border-color: var(--color-blue-accent);
+  color: var(--color-blue-accent);
+}
+.btn-outline-blue:hover {
+  background-color: var(--color-blue-accent);
+}
+
+/* Variante Verde (Pubblica) */
+.btn-outline-green {
+  border-color: #28a745;
+  color: #28a745;
+}
+.btn-outline-green:hover {
+  background-color: #28a745;
+}
+
+/* Mobile (default) */
+.btn-outline {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem; /* 12px */
+}
+
+/* Tablet */
+@media (min-width: 640px) {
+  .btn-outline {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8125rem; /* 13px */
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .btn-outline {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem; /* 14px */
+  }
 }

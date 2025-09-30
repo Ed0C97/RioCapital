@@ -9,30 +9,26 @@ import ImageUploader from '../components/ImageUploader';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Label } from '../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Switch } from '../components/ui/switch';
 import { Badge } from '../components/ui/badge';
-import { marked } from 'marked';
-import katex from 'katex';
-import 'katex/dist/katex.min.css';
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import {
-  Save,
-  Eye,
-  ArrowLeft,
-  FileText,
-  Image as ImageIcon,
-  Settings,
-  Calendar,
-  Tag,
-  AlertCircle,
-  CheckCircle
+  Save, Eye, ArrowLeft, CheckCircle, FileText, Image as ImageIcon,
+  Settings, Tag, Link as LinkIcon, Type, BookText, Info
 } from 'lucide-react';
 import { toast } from 'sonner';
+import ReactDOMServer from 'react-dom/server';
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import katex from 'katex';
+import { marked } from 'marked';
+
 
 const ArticleEditorPage = () => {
-  const { user, canWriteArticles, isAdmin } = useAuth();
+  const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
   const { id } = useParams();
   const isEditing = Boolean(id);
@@ -138,7 +134,7 @@ useEffect(() => {
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .trim('-');
+      .replace(/^-+|-+$/g, '');
   };
 
   const handleInputChange = (field, value) => {
@@ -227,12 +223,23 @@ useEffect(() => {
       return;
     }
 
+    const markdownComponent = (
+      <div className="article-content">
+        <ReactMarkdown
+          remarkPlugins={[remarkMath]}
+          rehypePlugins={[rehypeKatex]}
+        >
+          {article.content}
+        </ReactMarkdown>
+      </div>
+    );
+
     const contentWithLatex = (article.content || '').replace(/\$\$([^$]+)\$\$/g, (match, latex) => {
         try { return katex.renderToString(latex, { throwOnError: false, displayMode: true }); }
         catch (e) { return match; }
     });
 
-    const htmlContent = marked(contentWithLatex);
+    const htmlContent = ReactDOMServer.renderToString(markdownComponent);
     const htmlExcerpt = marked(article.excerpt || '');
 
     previewWindow.document.write(`
@@ -240,19 +247,20 @@ useEffect(() => {
         <head>
           <title>Anteprima: ${article.title}</title>
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+          
+          {/* Includi un link al tuo CSS per uno stile accurato */}
+          <link rel="stylesheet" href="/src/App.css"> 
+          
           <style>
-            body { font-family: system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.7; }
-            .content h1, .content h2 { margin-top: 1.5em; margin-bottom: 0.5em; }
-            .content ul, .content ol { padding-left: 2em; }
-            .content blockquote { border-left: 3px solid #ddd; padding-left: 1em; }
-            .excerpt { font-style: italic; color: #555; border-left: 3px solid #eee; padding-left: 1em; }
+            body { padding: 2rem; }
           </style>
         </head>
         <body>
-          <h1>${article.title}</h1>
-          <div class="excerpt">${htmlExcerpt}</div>
-          <hr/>
-          <div class="content">${htmlContent}</div>
+          <article class="max-w-3xl mx-auto">
+            <h1>${article.title}</h1>
+            <hr/>
+            ${htmlContent}
+          </article>
         </body>
       </html>
     `);
@@ -263,316 +271,139 @@ useEffect(() => {
         return <div className="text-center p-8">Caricamento...</div>;
   }
 
-  return (
+ return (
     <RoleGuard user={user} requiredRoles={['collaborator', 'admin']}>
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/admin/articles')}
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Torna agli articoli
-            </Button>
-            <div>
-              <h1 className="text-3xl font-bold">
-                {isEditing ? 'Modifica Articolo' : 'Nuovo Articolo'}
-              </h1>
-              <p className="text-muted-foreground">
-                {isEditing ? 'Modifica il tuo articolo esistente' : 'Crea un nuovo articolo per il blog'}
-              </p>
+      <div className="bg-[#f5f5f7]">
+        {/* Header di Pagina */}
+        <div className="w-full mb-12">
+          <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
+            <h1 className="text-3xl font-semibold text-gray-800">
+              {isEditing ? 'Modifica Articolo' : 'Nuovo Articolo'}
+            </h1>
+            <div className="border-b border-[#d2d2d7] my-4"></div>
+            <div className="flex items-center justify-between">
+              <a
+                href="/admin/articoli" // <-- 1. URL CORRETTO
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/admin/articoli'); // <-- 2. NAVIGAZIONE CORRETTA
+                }}
+                className="flex items-center text-sm text-gray-500 font-medium hover:font-semibold transition-all" // <-- 3. NUOVO STILE
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Articles
+              </a>
+              <div className="flex items-center space-x-6">
+                <Button onClick={handlePreview} disabled={!article.title || !article.content} className="btn-outline btn-outline-blue">
+                  <Eye className="w-4 h-4 mr-2" /> Anteprima
+                </Button>
+                <Button onClick={() => handleSave(false)} disabled={saving} className="btn-outline btn-outline-gray">
+                  <Save className="w-4 h-4 mr-2" /> {saving ? 'Salvando...' : 'Salva Bozza'}
+                </Button>
+                <Button onClick={() => handleSave(true)} disabled={saving} className="btn-outline btn-outline-green">
+                  <CheckCircle className="w-4 h-4 mr-2" /> {saving ? 'Pubblicando...' : 'Pubblica'}
+                </Button>
+              </div>
             </div>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              onClick={handlePreview}
-              disabled={!article.title || !article.content}
-            >
-              <Eye className="w-4 h-4 mr-2" />
-              Anteprima
-            </Button>
-            <Button
-              onClick={() => handleSave(false)}
-              disabled={saving}
-              variant="outline"
-            >
-              <Save className="w-4 h-4 mr-2" />
-              {saving ? 'Salvando...' : 'Salva Bozza'}
-            </Button>
-            <Button
-              onClick={() => handleSave(true)}
-              disabled={saving}
-            >
-              <CheckCircle className="w-4 h-4 mr-2" />
-              {saving ? 'Pubblicando...' : 'Pubblica'}
-            </Button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {}
-          <div className="lg:col-span-2 space-y-6">
-            {}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <FileText className="w-5 h-5" />
-                  <span>Informazioni Articolo</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="title">Titolo *</Label>
-                  <Input
-                    id="title"
-                    value={article.title}
-                    onChange={(e) => handleInputChange('title', e.target.value)}
-                    placeholder="Inserisci il titolo dell'articolo"
-                    maxLength={200}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    {article.title.length}/200 caratteri
-                  </p>
-                </div>
+        {/* Contenitore Principale */}
+        <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                <div className="space-y-2">
-                  <Label htmlFor="slug">Slug URL *</Label>
-                  <Input
-                    id="slug"
-                    value={article.slug}
-                    onChange={(e) => handleInputChange('slug', e.target.value)}
-                    placeholder="url-articolo"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    URL finale: /articolo/{article.slug}
-                  </p>
-                </div>
+            {/* Colonna Principale (Editor) */}
+            <div className="lg:col-span-2 space-y-6">
+              <Card className="shadow-none border-none">
+                <CardHeader>
+                  <CardTitle className="text-xl">Titolo</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="title">Titolo <span className="text-red-500">*</span></Label>
+                    <div className="relative">
+                      <Type className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <Input id="title" value={article.title} onChange={(e) => handleInputChange('title', e.target.value)} required className="pl-9" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="excerpt">Riassunto <span className="text-red-500">*</span></Label>
+                    <Textarea id="excerpt" value={article.excerpt} onChange={(e) => handleInputChange('excerpt', e.target.value)} rows={3} required />
+                  </div>
+                </CardContent>
+              </Card>
 
-                <div className="space-y-2">
-                  <Label htmlFor="excerpt">Riassunto *</Label>
-                  <Textarea
-                    id="excerpt"
-                    value={article.excerpt}
-                    onChange={(e) => handleInputChange('excerpt', e.target.value)}
-                    placeholder="Breve descrizione dell'articolo"
-                    rows={3}
-                    maxLength={500}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    {article.excerpt.length}/500 caratteri
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+              <Card className="shadow-none border-none">
+                <CardHeader>
+                  <CardTitle className="text-xl">Immagine di Copertina</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ImageUploader currentImage={article.image_url} onImageUploaded={(url) => handleInputChange('image_url', url)} />
+                </CardContent>
+              </Card>
+            </div>
 
-            {}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <ImageIcon className="w-5 h-5" />
-                  <span>Immagine di Copertina</span>
-                </CardTitle>
-                <CardDescription>
-                  Carica un'immagine che rappresenti il tuo articolo
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ImageUploader
-                  currentImage={article.image_url}
-                  onImageUploaded={(url) => handleInputChange('image_url', url)}
-                />
-              </CardContent>
-            </Card>
+            {/* Colonna Laterale (Impostazioni) */}
+            <div className="lg:col-span-1 space-y-6">
+              <Card className="shadow-none border-none">
+                <CardHeader>
+                  <CardTitle className="text-xl">Impostazioni</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-10">
+                  <div className="space-y-2">
+                    <Label htmlFor="slug">Slug URL <span className="text-red-500">*</span></Label>
+                    <div className="relative">
+                      <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <Input id="slug" value={article.slug} onChange={(e) => handleInputChange('slug', e.target.value)} required className="pl-9" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="category">Categoria <span className="text-red-500">*</span></Label>
+                    <Select value={article.category_id.toString()} onValueChange={(value) => handleInputChange('category_id', parseInt(value))}>
+                      <SelectTrigger><SelectValue placeholder="Seleziona categoria" /></SelectTrigger>
+                      <SelectContent>{categories.map((category) => (<SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>))}</SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="tags">Tag</Label>
+                    <div className="relative">
+                      <Tag className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <Input id="tags" value={article.tags} onChange={(e) => handleInputChange('tags', e.target.value)} placeholder="tag1, tag2" className="pl-9" />
+                    </div>
+                  </div>
+                  <div className="space-y-4 pt-4 border-t">
+                    <div className="flex items-center justify-between"><Label htmlFor="published">Pubblicato</Label><div className="switch-container"><Switch id="published" checked={article.published} onCheckedChange={(checked) => handleInputChange('published', checked)} /></div></div>
+                    {isAdmin() && (<div className="flex items-center justify-between"><Label htmlFor="featured">In evidenza</Label><div className="switch-container"><Switch id="featured" checked={article.featured} onCheckedChange={(checked) => handleInputChange('featured', checked)} /></div></div>)}
+                    <div className="flex items-center justify-between"><Label htmlFor="show-contacts">Mostra Contatti</Label><div className="switch-container"><Switch id="show-contacts" checked={article.show_author_contacts} onCheckedChange={(checked) => handleInputChange('show_author_contacts', checked)} /></div></div>
+                  </div>
+                </CardContent>
+              </Card>
 
-            {/* Editor contenuto */}
-            <RichTextEditor
-              value={article.content}
-              onChange={(content) => handleInputChange('content', content)}
-              placeholder="Scrivi il contenuto del tuo articolo..."
-              height="500px"
-            />
+              <Card className="shadow-none border-none">
+                <CardHeader>
+                  <CardTitle className="text-xl">Stato</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6 text-sm">
+                  <div className="flex items-center justify-between"><span className="text-muted-foreground">Stato:</span><span className={article.published ? 'font-semibold text-green-600' : 'font-semibold text-gray-500'}>{article.published ? 'Pubblicato' : 'Bozza'}</span></div>
+                  <div className="flex items-center justify-between"><span className="text-muted-foreground">In evidenza:</span><span className={article.featured ? 'font-semibold text-yellow-600' : 'text-gray-400'}>{article.featured ? 'Sì' : 'No'}</span></div>
+                  <div className="flex items-center justify-between"><span className="text-muted-foreground">Contatti Autore:</span><span className={article.show_author_contacts ? 'font-semibold text-blue-600' : 'text-gray-400'}>{article.show_author_contacts ? 'Visibili' : 'Nascosti'}</span></div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Impostazioni pubblicazione */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Settings className="w-5 h-5" />
-                  <span>Pubblicazione</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <Label htmlFor="published">Pubblicato</Label>
-                    <p className="text-sm text-muted-foreground">
-                      Rendi l'articolo visibile pubblicamente
-                    </p>
-                  </div>
-                  <div className="switch-container">
-                    <Switch
-                      id="published"
-                      checked={article.published}
-                      onCheckedChange={(checked) => handleInputChange('published', checked)}
-                    />
-                  </div>
-                </div>
-
-                {isAdmin() && (
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label htmlFor="featured">In evidenza</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Mostra in homepage
-                      </p>
-                    </div>
-                    <div className="switch-container">
-                      <Switch
-                        id="featured"
-                        checked={article.featured}
-                        onCheckedChange={(checked) => handleInputChange('featured', checked)}
-                      />
-                    </div>
-                  </div>
-                )}
-
-                <div className="flex items-center justify-between pt-4 border-t">
-                  <div>
-                    <Label htmlFor="show-contacts">Mostra Contatti Autore</Label>
-                    <p className="text-sm text-muted-foreground">
-                      Mostra firma e contatti alla fine dell'articolo.
-                    </p>
-                  </div>
-                  <div className="switch-container">
-                    <Switch
-                      id="show-contacts"
-                      checked={article.show_author_contacts}
-                      onCheckedChange={(checked) => handleInputChange('show_author_contacts', checked)}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="category">Categoria *</Label>
-                  <Select
-                    value={article.category_id.toString()}
-                    onValueChange={(value) => handleInputChange('category_id', parseInt(value))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Seleziona categoria" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category.id} value={category.id.toString()}>
-                          <div className="flex items-center space-x-2">
-                            <div
-                              className="w-3 h-3 rounded-full"
-                              style={{ backgroundColor: category.color }}
-                            />
-                            <span>{category.name}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="tags">Tag</Label>
-                  <Input
-                    id="tags"
-                    value={article.tags}
-                    onChange={(e) => handleInputChange('tags', e.target.value)}
-                    placeholder="tag1, tag2, tag3"
+          <Card className="shadow-none border-none w-full mt-6 mb-8">
+                <CardHeader>
+                  <CardTitle className="text-xl">Contenuto Articolo <span className="text-red-500">*</span></CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <RichTextEditor
+                    value={article.content}
+                    onChange={(content) => handleInputChange('content', content)}
+                    height="600px"
                   />
-                  <p className="text-xs text-muted-foreground">
-                    Separa i tag con virgole
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {}
-            <Card>
-              <CardHeader>
-                <CardTitle>Stato</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Stato:</span>
-                    <Badge variant={article.published ? 'default' : 'secondary'}>
-                      {article.published ? 'Pubblicato' : 'Bozza'}
-                    </Badge>
-                  </div>
-                  {article.featured && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">Evidenza:</span>
-                      <Badge variant="outline">In evidenza</Badge>
-                    </div>
-                  )}
-                  {article.show_author_contacts && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">Contatti Autore:</span>
-                      <Badge variant="outline" className="border-green-500 text-green-600">
-                        Attivi
-                      </Badge>
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Parole:</span>
-                    <span className="text-sm text-muted-foreground">
-                      ~{article.content.replace(/(\*\*|__|#|`|\[|\]|\(|\)|!|\$)/g, '').split(' ').filter(word => word.length > 0).length}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                  <span className="text-sm">Caratteri:</span>
-                  <span className="text-sm text-muted-foreground">
-                    {article.content.replace(/(\*\*|__|#|`|\[|\]|\(|\)|!|\$)/g, '').length}
-                  </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <AlertCircle className="w-5 h-5" />
-                  <span>Suggerimenti</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm space-y-3">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="secondary">**grassetto**</Badge>
-                  <Badge variant="secondary">*corsivo*</Badge>
-                  <Badge variant="secondary">`codice`</Badge>
-                  <Badge variant="secondary">[link](url)</Badge>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="secondary"># Titolo</Badge>
-                  <Badge variant="secondary">- Lista</Badge>
-                  <Badge variant="secondary">&gt; Citazione</Badge>
-                </div>
-                <div>
-                  <p className="font-medium mt-2">Formule Matematiche:</p>
-                  <div className="p-2 bg-blue-50 border border-blue-200 rounded-md text-blue-800">
-                    <code>$$E=mc^2$$</code>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Le formule LaTeX verranno renderizzate correttamente.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                </CardContent>
+              </Card>
         </div>
       </div>
     </RoleGuard>

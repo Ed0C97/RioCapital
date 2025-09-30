@@ -250,98 +250,83 @@ const RichTextEditor = ({
       </CardHeader>
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="edit" className="flex items-center space-x-2">
-              <Edit className="w-4 h-4" />
+          <TabsList className="bg-transparent p-0 w-auto space-x-4 mb-4">
+            <TabsTrigger
+              value="edit"
+              className="text-muted-foreground data-[state=active]:text-blue-600 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-2 pb-1"
+            >
+              <Edit className="w-4 h-4 mr-2" />
               <span>Modifica</span>
             </TabsTrigger>
-            <TabsTrigger value="preview" className="flex items-center space-x-2">
-              <Eye className="w-4 h-4" />
+            <TabsTrigger
+              value="preview"
+              className="text-muted-foreground data-[state=active]:text-blue-600 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-2 pb-1"
+            >
+              <Eye className="w-4 h-4 mr-2" />
               <span>Anteprima</span>
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="edit" className="space-y-4">
-            {}
-            <div className="border rounded-lg p-2">
-              <div className="flex flex-wrap gap-1 mb-2">
-                {toolbarButtons.map((button, index) => (
+          {/* Toolbar + Template LaTeX senza box */}
+          <div>
+            {/* Toolbar */}
+            <div className="flex flex-wrap gap-6 mb-3">
+              {toolbarButtons.map((button, index) => (
+                <Button
+                  key={index}
+                  variant="ghost"
+                  size="sm"
+                  onClick={button.action}
+                  title={button.label}
+                  className="h-8 w-8 p-0"
+                >
+                  <button.icon className="w-4 h-4" />
+                </Button>
+              ))}
+            </div>
+
+            {/* Template LaTeX */}
+            <div className="pt-2">
+              <div className="flex items-center space-x-2 mb-2">
+                <Calculator className="w-4 h-4" />
+                <span className="text-sm font-medium">Template LaTeX:</span>
+              </div>
+              <div className="flex flex-wrap gap-3 mb-3">
+                {[
+                  { key: 'fraction', label: 'Frazione' },
+                  { key: 'sqrt', label: 'Radice' },
+                  { key: 'integral', label: 'Integrale' },
+                  { key: 'sum', label: 'Sommatoria' },
+                  { key: 'limit', label: 'Limite' },
+                  { key: 'matrix', label: 'Matrice' },
+                  { key: 'derivative', label: 'Derivata' },
+                  { key: 'partial', label: 'Parziale' }
+                ].map((template) => (
                   <Button
-                    key={index}
-                    variant="ghost"
+                    key={template.key}
+                    variant="outline"
                     size="sm"
-                    onClick={button.action}
-                    title={button.label}
-                    className="h-8 w-8 p-0"
+                    onClick={() => insertLatexTemplate(template.key)}
+                    className="text-xs h-7 px-3"
                   >
-                    <button.icon className="w-4 h-4" />
+                    {template.label}
                   </Button>
                 ))}
               </div>
-
-              {}
-              <div className="border-t pt-2">
-                <div className="flex items-center space-x-2 mb-2">
-                  <Calculator className="w-4 h-4" />
-                  <span className="text-sm font-medium">Template LaTeX:</span>
-                </div>
-                <div className="flex flex-wrap gap-1">
-                  {[
-                    { key: 'fraction', label: 'Frazione' },
-                    { key: 'sqrt', label: 'Radice' },
-                    { key: 'integral', label: 'Integrale' },
-                    { key: 'sum', label: 'Sommatoria' },
-                    { key: 'limit', label: 'Limite' },
-                    { key: 'matrix', label: 'Matrice' },
-                    { key: 'derivative', label: 'Derivata' },
-                    { key: 'partial', label: 'Parziale' }
-                  ].map((template) => (
-                    <Button
-                      key={template.key}
-                      variant="outline"
-                      size="sm"
-                      onClick={() => insertLatexTemplate(template.key)}
-                      className="text-xs h-6"
-                    >
-                      {template.label}
-                    </Button>
-                  ))}
-                </div>
-              </div>
             </div>
+          </div>
 
-            {}
-            <Textarea
-              ref={textareaRef}
-              value={content}
-              onChange={(e) => handleContentChange(e.target.value)}
-              placeholder={placeholder}
-              className="font-mono resize-none"
-              style={{ height }}
-            />
-
-            {}
-            <div className="text-xs text-muted-foreground space-y-2 pt-2">
-              <div className="flex flex-wrap items-center gap-1">
-                <Badge variant="secondary">**grassetto**</Badge>
-                <Badge variant="secondary">*corsivo*</Badge>
-                <Badge variant="secondary">`codice`</Badge>
-                <Badge variant="secondary">[link](url)</Badge>
-                <Badge variant="secondary">![img](url)</Badge>
-              </div>
-              <div className="flex flex-wrap items-center gap-1">
-                <Badge variant="secondary"># Titolo</Badge>
-                <Badge variant="secondary">- Lista</Badge>
-                <Badge variant="secondary">&gt; Citazione</Badge>
-              </div>
-              <div className="p-2 bg-blue-50 border border-blue-200 rounded-md">
-                <code className="text-blue-800">$$E=mc^2$$</code>
-                <p className="text-xs text-blue-700 mt-1">
-                  Le formule LaTeX verranno renderizzate correttamente nell'anteprima e nella pagina pubblicata.
-                </p>
-              </div>
-            </div>
-          </TabsContent>
+          {/* Textarea */}
+          <Textarea
+            ref={textareaRef}
+            value={content}
+            onChange={(e) => handleContentChange(e.target.value)}
+            placeholder={placeholder}
+            className="font-mono resize-none shadow-none focus-visible:ring-0"
+            style={{ height }}
+          />
+        </TabsContent>
 
           <TabsContent value="preview">
             <style>
