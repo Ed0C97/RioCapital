@@ -271,33 +271,34 @@ useEffect(() => {
         return <div className="text-center p-8">Caricamento...</div>;
   }
 
- return (
+// src/pages/ArticleEditorPage.jsx
+
+  // src/pages/ArticleEditorPage.jsx
+
+  return (
     <RoleGuard user={user} requiredRoles={['collaborator', 'admin']}>
       <div className="bg-[#f5f5f7]">
-        {/* Header di Pagina */}
         <div className="w-full mb-12">
           <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
-            <h1 className="text-3xl font-semibold text-gray-800">
-              {isEditing ? 'Modifica Articolo' : 'Nuovo Articolo'}
-            </h1>
-            <div className="border-b border-[#d2d2d7] my-4"></div>
+            {/* Titolo e Linea */}
+            <div className="mb-8">
+              <div className="border-b border-[#d2d2d7] my-2"></div>
+              <h2 className="text-2xl font-regular text-gray-500">
+                {isEditing ? 'Modifica Articolo' : 'Nuovo Articolo'}
+              </h2>
+            </div>
+
+            {/* Controlli (Back e Pulsanti Azione) */}
             <div className="flex items-center justify-between">
-              <a
-                href="/admin/articoli" // <-- 1. URL CORRETTO
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate('/admin/articoli'); // <-- 2. NAVIGAZIONE CORRETTA
-                }}
-                className="flex items-center text-sm text-gray-500 font-medium hover:font-semibold transition-all" // <-- 3. NUOVO STILE
-              >
+              <a href="/admin/my-articles" onClick={(e) => { e.preventDefault(); navigate('/admin/my-articles'); }} className="flex items-center text-sm text-gray-500 font-medium hover:font-semibold transition-all">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Articles
               </a>
-              <div className="flex items-center space-x-6">
-                <Button onClick={handlePreview} disabled={!article.title || !article.content} className="btn-outline btn-outline-blue">
+              <div className="flex items-center space-x-4">
+                <Button onClick={handlePreview} disabled={!article.title || !article.content} className="btn-outline btn-outline-gray">
                   <Eye className="w-4 h-4 mr-2" /> Anteprima
                 </Button>
-                <Button onClick={() => handleSave(false)} disabled={saving} className="btn-outline btn-outline-gray">
+                <Button onClick={() => handleSave(false)} disabled={saving} className="btn-outline btn-outline-blue">
                   <Save className="w-4 h-4 mr-2" /> {saving ? 'Salvando...' : 'Salva Bozza'}
                 </Button>
                 <Button onClick={() => handleSave(true)} disabled={saving} className="btn-outline btn-outline-green">
@@ -309,101 +310,97 @@ useEffect(() => {
         </div>
 
         {/* Contenitore Principale */}
-        <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16 space-y-8">
 
-            {/* Colonna Principale (Editor) */}
-            <div className="lg:col-span-2 space-y-6">
-              <Card className="shadow-none border-none">
-                <CardHeader>
-                  <CardTitle className="text-xl">Titolo</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="title">Titolo <span className="text-red-500">*</span></Label>
-                    <div className="relative">
-                      <Type className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <Input id="title" value={article.title} onChange={(e) => handleInputChange('title', e.target.value)} required className="pl-9" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="excerpt">Riassunto <span className="text-red-500">*</span></Label>
-                    <Textarea id="excerpt" value={article.excerpt} onChange={(e) => handleInputChange('excerpt', e.target.value)} rows={3} required />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="shadow-none border-none">
-                <CardHeader>
-                  <CardTitle className="text-xl">Immagine di Copertina</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ImageUploader currentImage={article.image_url} onImageUploaded={(url) => handleInputChange('image_url', url)} />
-                </CardContent>
-              </Card>
+          {/* Sezione Slug e Stato (fuori dalle card) */}
+          <div className="text-sm text-muted-foreground space-y-2">
+            <div className="flex items-center gap-2">
+              <LinkIcon size={14} />
+              <span>Slug: <code className="text-xs bg-gray-200 p-1 rounded">{article.slug || 'verrà-generato-dal-titolo'}</code></span>
             </div>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <span>Stato:</span>
+                <span className="font-semibold">{article.published ? 'Pubblicato' : 'Bozza'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span>Evidenza:</span>
+                <span className="font-semibold">{article.featured ? 'Sì' : 'No'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span>Contatti:</span>
+                <span className="font-semibold">{article.show_author_contacts ? 'Visibili' : 'Nascosti'}</span>
+              </div>
+            </div>
+          </div>
 
-            {/* Colonna Laterale (Impostazioni) */}
-            <div className="lg:col-span-1 space-y-6">
-              <Card className="shadow-none border-none">
-                <CardHeader>
-                  <CardTitle className="text-xl">Impostazioni</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-10">
-                  <div className="space-y-2">
-                    <Label htmlFor="slug">Slug URL <span className="text-red-500">*</span></Label>
-                    <div className="relative">
-                      <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <Input id="slug" value={article.slug} onChange={(e) => handleInputChange('slug', e.target.value)} required className="pl-9" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="category">Categoria <span className="text-red-500">*</span></Label>
-                    <Select value={article.category_id.toString()} onValueChange={(value) => handleInputChange('category_id', parseInt(value))}>
-                      <SelectTrigger><SelectValue placeholder="Seleziona categoria" /></SelectTrigger>
-                      <SelectContent>{categories.map((category) => (<SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>))}</SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
+          {/* Card Unica per le Impostazioni */}
+          <Card className="shadow-none border-none">
+            <CardContent className="p-6 space-y-6">
+              {/* Titolo e Riassunto */}
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="title">Titolo <span className="text-red-500">*</span></Label>
+                  <div className="relative"><Type className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" /><Input id="title" value={article.title} onChange={(e) => handleInputChange('title', e.target.value)} required className="pl-9" /></div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="excerpt">Riassunto <span className="text-red-500">*</span></Label>
+                  <Textarea id="excerpt" value={article.excerpt} onChange={(e) => handleInputChange('excerpt', e.target.value)} rows={3} required />
+                </div>
+              </div>
+
+              {/* Categoria e Tag */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2 w-full max-w-xl">
+                {/* Colonna Categoria (rimane invariata) */}
+                <div className="space-y-2">
+                  <Label htmlFor="category">Categoria <span className="text-red-500">*</span></Label>
+                  <Select value={article.category_id.toString()} onValueChange={(value) => handleInputChange('category_id', parseInt(value))}>
+                    <SelectTrigger><SelectValue placeholder="Seleziona categoria" /></SelectTrigger>
+                    <SelectContent>{categories.map((category) => (<SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>))}</SelectContent>
+                  </Select>
+                </div>
+                </div>
+
+                {/* --- MODIFICA QUI --- */}
+                {/* Colonna Tag con allineamento a destra */}
+                <div className="flex flex-col items-start md:items-end">
+                  <div className="space-y-2 w-full max-w-5xl"> {/* Controlla la larghezza qui */}
                     <Label htmlFor="tags">Tag</Label>
                     <div className="relative">
                       <Tag className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
                       <Input id="tags" value={article.tags} onChange={(e) => handleInputChange('tags', e.target.value)} placeholder="tag1, tag2" className="pl-9" />
                     </div>
                   </div>
-                  <div className="space-y-4 pt-4 border-t">
-                    <div className="flex items-center justify-between"><Label htmlFor="published">Pubblicato</Label><div className="switch-container"><Switch id="published" checked={article.published} onCheckedChange={(checked) => handleInputChange('published', checked)} /></div></div>
-                    {isAdmin() && (<div className="flex items-center justify-between"><Label htmlFor="featured">In evidenza</Label><div className="switch-container"><Switch id="featured" checked={article.featured} onCheckedChange={(checked) => handleInputChange('featured', checked)} /></div></div>)}
-                    <div className="flex items-center justify-between"><Label htmlFor="show-contacts">Mostra Contatti</Label><div className="switch-container"><Switch id="show-contacts" checked={article.show_author_contacts} onCheckedChange={(checked) => handleInputChange('show_author_contacts', checked)} /></div></div>
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+                {/* -------------------- */}
+              </div>
 
-              <Card className="shadow-none border-none">
-                <CardHeader>
-                  <CardTitle className="text-xl">Stato</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6 text-sm">
-                  <div className="flex items-center justify-between"><span className="text-muted-foreground">Stato:</span><span className={article.published ? 'font-semibold text-green-600' : 'font-semibold text-gray-500'}>{article.published ? 'Pubblicato' : 'Bozza'}</span></div>
-                  <div className="flex items-center justify-between"><span className="text-muted-foreground">In evidenza:</span><span className={article.featured ? 'font-semibold text-yellow-600' : 'text-gray-400'}>{article.featured ? 'Sì' : 'No'}</span></div>
-                  <div className="flex items-center justify-between"><span className="text-muted-foreground">Contatti Autore:</span><span className={article.show_author_contacts ? 'font-semibold text-blue-600' : 'text-gray-400'}>{article.show_author_contacts ? 'Visibili' : 'Nascosti'}</span></div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+              {/* Switches */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between"><Label htmlFor="published">Pubblicato</Label><div className="switch-container"><Switch id="published" checked={article.published} onCheckedChange={(checked) => handleInputChange('published', checked)} /></div></div>
+                {isAdmin() && (<div className="flex items-center justify-between"><Label htmlFor="featured">In evidenza</Label><div className="switch-container"><Switch id="featured" checked={article.featured} onCheckedChange={(checked) => handleInputChange('featured', checked)} /></div></div>)}
+                <div className="flex items-center justify-between"><Label htmlFor="show-contacts">Mostra Contatti</Label><div className="switch-container"><Switch id="show-contacts" checked={article.show_author_contacts} onCheckedChange={(checked) => handleInputChange('show_author_contacts', checked)} /></div></div>
+              </div>
+            </CardContent>
+          </Card>
 
-          <Card className="shadow-none border-none w-full mt-6 mb-8">
-                <CardHeader>
-                  <CardTitle className="text-xl">Contenuto Articolo <span className="text-red-500">*</span></CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <RichTextEditor
-                    value={article.content}
-                    onChange={(content) => handleInputChange('content', content)}
-                    height="600px"
-                  />
-                </CardContent>
-              </Card>
+          {/* Card Immagine di Copertina */}
+          <Card className="shadow-none border-none">
+            <CardHeader><CardTitle className="text-xl">Immagine di Copertina</CardTitle></CardHeader>
+            <CardContent>
+              <ImageUploader currentImage={article.image_url} onImageUploaded={(url) => handleInputChange('image_url', url)} />
+            </CardContent>
+          </Card>
+
+          {/* Card Contenuto Articolo */}
+          <Card className="shadow-none border-none">
+            <CardHeader><CardTitle className="text-xl">Contenuto Articolo <span className="text-red-500">*</span></CardTitle></CardHeader>
+            <CardContent>
+              <RichTextEditor value={article.content} onChange={(content) => handleInputChange('content', content)} height="600px" />
+            </CardContent>
+          </Card>
+
         </div>
       </div>
     </RoleGuard>

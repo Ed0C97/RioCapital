@@ -22,7 +22,7 @@ def cerca_stringa_in_file(directory_radice, stringa_da_cercare):
 
 if __name__ == "__main__":
     directory_di_partenza = '.'  # '.' indica la directory corrente
-    stringa_obiettivo = "res.status"
+    stringa_obiettivo = "{/* Includi un link al tuo CSS per uno stile accurato */}"
 
     print(
         f"Ricerca della stringa '{stringa_obiettivo}' nella directory '{os.path.abspath(directory_di_partenza)}' e sottodirectory...")
