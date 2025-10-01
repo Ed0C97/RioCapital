@@ -281,7 +281,7 @@ Contenuti:
    ============================================================================== */
 
 :root {
-  --radius: 0.625rem; /* 10px */
+  --radius: 1rem; /* 10px */
 
   /* Colori di base */
   --background: var(--color-background-light);

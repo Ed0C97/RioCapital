@@ -183,7 +183,7 @@ const ImageUploader = ({
         </Card>
       ) : (
         <Card
-          className={`border-2 border-dashed transition-colors cursor-pointer ${
+          className={`transition-colors cursor-pointer ${
             dragOver
               ? 'border-primary bg-primary/5'
               : 'border-muted-foreground/25 hover:border-primary/50'

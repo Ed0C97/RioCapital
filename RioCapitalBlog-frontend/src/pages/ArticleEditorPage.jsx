@@ -121,6 +121,25 @@ useEffect(() => {
     }
   };
 
+  const handleCopySlug = async (slugToCopy) => {
+  // 1. Controlla se c'è uno slug valido da copiare
+    if (!slugToCopy || slugToCopy === 'verrà-generato-dal-titolo') {
+      toast.info("Lo slug non è ancora stato generato.");
+      return;
+    }
+
+    // 2. Usa l'API del browser per copiare il testo
+    try {
+      await navigator.clipboard.writeText(slugToCopy);
+      // 3. Dai un feedback positivo all'utente
+      toast.success("Slug copiato negli appunti!");
+    } catch (err) {
+      // 4. Gestisci eventuali errori
+      console.error("Errore durante la copia dello slug:", err);
+      toast.error("Impossibile copiare lo slug.");
+    }
+  };
+
   const generateSlug = (title) => {
     return title
       .toLowerCase()
@@ -313,29 +332,39 @@ useEffect(() => {
         <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16 space-y-8">
 
           {/* Sezione Slug e Stato (fuori dalle card) */}
-          <div className="text-sm text-muted-foreground space-y-2">
-            <div className="flex items-center gap-2">
-              <LinkIcon size={14} />
-              <span>Slug: <code className="text-xs bg-gray-200 p-1 rounded">{article.slug || 'verrà-generato-dal-titolo'}</code></span>
+          <div className="text-sm text-muted-foreground space-y-4">
+            <div
+              className="flex items-center gap-2 cursor-pointer group" // Aggiunto cursor-pointer e group
+              onClick={() => handleCopySlug(article.slug)}
+              title="Copia slug"
+            >
+              <LinkIcon size={16} className="text-gray-400 group-hover:text-blue-600 transition-colors" />
+              <span>
+                Slug:
+                <code className="font-semibold p-2 bg-gray-100 text-gray-600 group-hover:text-blue-700 transition-colors">
+                  {article.slug || 'verrà-generato-dal-titolo'}
+                </code>
+              </span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-10">
               <div className="flex items-center gap-2">
                 <span>Stato:</span>
-                <span className="font-semibold">{article.published ? 'Pubblicato' : 'Bozza'}</span>
+                <span className="font-semibold text-[#0071e3]">{article.published ? 'Pubblicato' : 'Bozza'}</span>
               </div>
               <div className="flex items-center gap-2">
                 <span>Evidenza:</span>
-                <span className="font-semibold">{article.featured ? 'Sì' : 'No'}</span>
+                <span className="font-semibold text-[#E18528FF]">{article.featured ? 'Sì' : 'No'}</span>
               </div>
               <div className="flex items-center gap-2">
                 <span>Contatti:</span>
-                <span className="font-semibold">{article.show_author_contacts ? 'Visibili' : 'Nascosti'}</span>
+                <span className="font-semibold text-[#499537FF]">{article.show_author_contacts ? 'Visibili' : 'Nascosti'}</span>
               </div>
             </div>
           </div>
 
           {/* Card Unica per le Impostazioni */}
           <Card className="shadow-none border-none">
+            <CardHeader><CardTitle className="text-xl">Titolo <span className="text-red-500">*</span></CardTitle></CardHeader>
             <CardContent className="p-6 space-y-6">
               {/* Titolo e Riassunto */}
               <div className="space-y-6">

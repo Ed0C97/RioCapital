@@ -106,15 +106,12 @@ const Header = () => {
                       {canWriteArticles() && (
                         <>
                           <DropdownMenuSeparator className="bg-gray-200/50" />
-                          <DropdownMenuItem asChild><Link to="/admin/articoli" className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"><FileText className="w-4 h-4" /><span>I Miei Articoli</span></Link></DropdownMenuItem>
                           <DropdownMenuItem asChild><Link to="/admin/articoli/nuovo" className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"><PenTool className="w-4 h-4" /><span>Nuovo Articolo</span></Link></DropdownMenuItem>
                         </>
                       )}
                       {isAdmin() && (
                         <>
-                          <DropdownMenuSeparator className="bg-gray-200/50" />
                           <DropdownMenuItem asChild><Link to="/admin/dashboard" className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"><Settings className="w-4 h-4" /><span>Dashboard Admin</span></Link></DropdownMenuItem>
-                          <DropdownMenuItem asChild><Link to="/admin/analytics" className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"><BarChart3 className="w-4 h-4" /><span>Analytics</span></Link></DropdownMenuItem>
                           <DropdownMenuItem asChild><Link to="/admin/commenti" className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"><MessageSquare className="w-4 h-4" /><span>Moderazione</span></Link></DropdownMenuItem>
                           <DropdownMenuItem asChild><Link to="/admin/donazioni" className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"><DollarSign className="w-4 h-4" /><span>Donazioni</span></Link></DropdownMenuItem>
                         </>

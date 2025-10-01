@@ -9,12 +9,9 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import FavoritesPage from './pages/FavoritesPage';
 import DonatePage from './pages/DonatePage';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminAnalyticsPage from './pages/AdminAnalyticsPage';
 import CommentModerationPage from './pages/CommentModerationPage';
 import DonationsPage from './pages/DonationsPage';
 import ArticleEditorPage from './pages/ArticleEditorPage';
-import MyArticlesPage from './pages/MyArticlesPage';
 // import CategoriesPage from './pages/CategoriesPage'; // <-- NON CI SERVE PIÙ
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
@@ -25,6 +22,7 @@ import ArticleDetailPage from './pages/ArticleDetailPage';
 import ArticlesByCategoryPage from './pages/ArticlesByCategoryPage';
 import ArchivePage from './pages/ArchivePage'; // <-- LA NUOVA PAGINA
 import CompleteProfilePage from './pages/CompleteProfilePage';
+import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
@@ -56,13 +54,13 @@ function App() {
               <Route path="/preferiti" element={<FavoritesPage />} />
               
               {/* --- Area Admin/Collaboratore --- */}
-              <Route path="/admin/articoli" element={<MyArticlesPage />} />
               <Route path="/admin/articoli/nuovo" element={<ArticleEditorPage />} />
               <Route path="/admin/articoli/modifica/:id" element={<ArticleEditorPage />} />
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
-              <Route path="/admin/commenti" element={<CommentModerationPage />} />
+              <Route path="/admin/moderazione" element={<CommentModerationPage />} />
               <Route path="/admin/donazioni" element={<DonationsPage />} />
+              {/* --- Nuova rotta unificata per l'area admin --- */}
+              <Route path="/admin/dashboard" element={<AdminPage />} />
+
               
               {/* --- Rotta 404 --- */}
               <Route path="*" element={<NotFoundPage />} />

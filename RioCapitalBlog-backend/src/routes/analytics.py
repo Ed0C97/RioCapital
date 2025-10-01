@@ -132,8 +132,8 @@ def get_dashboard_analytics():
         while current_date <= end_date:
             next_date = current_date + timedelta(days=1)
 
-            likes = Like.query.filter(
-                and_(Like.created_at >= current_date, Like.created_at < next_date)
+            likes = ArticleLike.query.filter(
+                and_(ArticleLike.created_at >= current_date, ArticleLike.created_at < next_date)
             ).count()
 
             comments = Comment.query.filter(
