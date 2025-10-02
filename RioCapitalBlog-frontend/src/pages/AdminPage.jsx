@@ -28,7 +28,7 @@ import {
 import {
   BarChart3, Users, FileText, MessageSquare, Heart, DollarSign, TrendingUp,
   TrendingDown, Download, RefreshCw, Calendar, Eye, Share2, Plus, Search,
-  Edit, Trash2, MoreVertical, ArrowLeft
+  Edit, Trash2, MoreVertical, ArrowLeft, Shield, LayoutDashboard // <-- Aggiungi questa
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
@@ -294,30 +294,34 @@ const SlidingTabsNav = ({ activeTab, onTabChange, tabs }) => {
   const getActiveIndex = () => tabs.findIndex(tab => tab.value === activeTab);
 
   return (
-    <div className="relative border bg-[#ffffff] p-1 rounded-full h-12 grid grid-cols-4">
+    <div className="relative border bg-[#ffffff] p-1 rounded-full h-12 grid grid-cols-5">
       {/* Capsula scorrevole */}
       <div
         className="absolute top-1 bottom-1 bg-[#0071e3] rounded-full shadow-none border-none transition-all duration-300 ease-in-out"
         style={{
-        left: `calc(${getActiveIndex() * 25}% + 4px)`,
-        width: 'calc(25% - 8px)'
+        left: `calc(${getActiveIndex() * 20}% + 4px)`,
+        width: 'calc(20% - 8px)'
       }}
       />
 
       {/* Pulsanti delle schede */}
-      {tabs.map((tab) => (
+      {tabs.map((tab) => {
+        const Icon = tab.icon; // Assegna l'icona a una variabile con la maiuscola
+        return (
           <span
             key={tab.value}
             onClick={() => onTabChange(tab.value)}
-            className={`relative z-10 cursor-pointer transition-all duration-300 ease-in-out font-medium flex items-center justify-center ${
-              activeTab === tab.value 
-                ? 'text-white' 
-                : 'text-gray-400 hover:text-gray-800'
+            className={`relative z-10 cursor-pointer transition-all duration-300 ease-in-out font-medium flex items-center justify-center text-sm md:text-base ${
+              activeTab === tab.value
+                ? 'text-white'
+                : 'text-gray-500 hover:text-gray-800'
             }`}
           >
+            <Icon className="w-4 h-4 mr-2" />
             {tab.label}
           </span>
-        ))}
+        );
+      })}
     </div>
   );
 };
@@ -346,10 +350,11 @@ const AdminPage = () => {
 
   // Definizione delle schede
   const tabs = [
-    { value: 'overview', label: 'Panoramica' },
-    { value: 'articles', label: 'I Miei Articoli' },
-    { value: 'analytics', label: 'Analytics' },
-    { value: 'moderazione', label: 'Moderation' }
+    { value: 'overview', label: 'Overview', icon: LayoutDashboard },
+    { value: 'articles', label: 'Articols', icon: FileText },
+    { value: 'analytics', label: 'Analytics', icon: TrendingUp },
+    { value: 'donations', label: 'Donations', icon: DollarSign },
+    { value: 'moderazione', label: 'Moderation', icon: Shield }
   ];
 
   const goToPage = (num) => {
@@ -643,6 +648,16 @@ const AdminPage = () => {
                 </Card>
               </div>
             )}
+
+            {/* Tab Donazioni (Placeholder) */}
+            {activeTab === 'donations' && (
+              <div className="text-center py-20 bg-white border rounded-lg">
+                <DollarSign className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-xl font-semibold">Sezione Donazioni</h3>
+                <p className="text-muted-foreground mt-2">Questa sezione è in costruzione.</p>
+              </div>
+            )}
+
           </div>
         </div>
       </div>

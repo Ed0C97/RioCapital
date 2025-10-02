@@ -18,7 +18,8 @@ import {
   BarChart3,
   MessageSquare,
   FileText,
-  BadgeEuro
+  BadgeEuro,
+  LayoutDashboard
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -111,9 +112,7 @@ const Header = () => {
                       )}
                       {isAdmin() && (
                         <>
-                          <DropdownMenuItem asChild><Link to="/admin/dashboard" className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"><Settings className="w-4 h-4" /><span>Dashboard Admin</span></Link></DropdownMenuItem>
-                          <DropdownMenuItem asChild><Link to="/admin/commenti" className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"><MessageSquare className="w-4 h-4" /><span>Moderazione</span></Link></DropdownMenuItem>
-                          <DropdownMenuItem asChild><Link to="/admin/donazioni" className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"><DollarSign className="w-4 h-4" /><span>Donazioni</span></Link></DropdownMenuItem>
+                          <DropdownMenuItem asChild><Link to="/admin/dashboard" className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"><LayoutDashboard className="w-4 h-4" /><span>Dashboard</span></Link></DropdownMenuItem>
                         </>
                       )}
                       <DropdownMenuSeparator className="bg-gray-200/50" />

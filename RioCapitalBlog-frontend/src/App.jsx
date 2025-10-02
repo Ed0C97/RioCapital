@@ -10,7 +10,6 @@ import ProfilePage from './pages/ProfilePage';
 import FavoritesPage from './pages/FavoritesPage';
 import DonatePage from './pages/DonatePage';
 import CommentModerationPage from './pages/CommentModerationPage';
-import DonationsPage from './pages/DonationsPage';
 import ArticleEditorPage from './pages/ArticleEditorPage';
 // import CategoriesPage from './pages/CategoriesPage'; // <-- NON CI SERVE PIÙ
 import AboutPage from './pages/AboutPage';
@@ -57,7 +56,6 @@ function App() {
               <Route path="/admin/articoli/nuovo" element={<ArticleEditorPage />} />
               <Route path="/admin/articoli/modifica/:id" element={<ArticleEditorPage />} />
               <Route path="/admin/moderazione" element={<CommentModerationPage />} />
-              <Route path="/admin/donazioni" element={<DonationsPage />} />
               {/* --- Nuova rotta unificata per l'area admin --- */}
               <Route path="/admin/dashboard" element={<AdminPage />} />
 

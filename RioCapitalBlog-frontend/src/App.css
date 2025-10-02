@@ -889,42 +889,6 @@ button:hover,
 }
 
 /* ==============================================================================
-   15. COMPONENTE: PULSANTE ARCHIVIO
-   ==============================================================================
-   Descrizione: Stili per il pulsante 'Archivio' nella sezione correlata.
-   ============================================================================== */
-
-.archive-button-container {
-  text-align: center;
-  padding-top: 3rem;
-  margin-top: 3rem;
-}
-
-.archive-button-container button {
-  font-size: 1rem;
-  font-weight: 400;
-  background-color: transparent;        /* sfondo trasparente */
-  color: var(--color-blue-highlight);      /* testo blu */
-  border-radius: 9999px;
-  border: 1px solid var(--color-blue-highlight); /* bordo blu */
-  transition: all 0.3s ease;
-  height: 48px;
-  width: auto;
-  aspect-ratio: 4.5 / 1.2;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.archive-button-container button:hover {
-  background-color: var(--color-blue-highlight); /* Blu Apple */
-  color: var(--color-background-white); /* Testo bianco */
-  transform: scale(1.05);
-  box-shadow: none;
-}
-
-/* ==============================================================================
    16. STILI PER LA PAGINA ARCHIVIO (STILE APPLE NEWSROOM)
    ==============================================================================
    Descrizione: Stili specifici per la pagina dell'archivio, ispirati al layout
@@ -1384,3 +1348,199 @@ button:hover,
     font-size: 0.875rem; /* 14px */
   }
 }
+
+/*
+  ==============================================================
+  CSS DEFINITIVO - Riscritto con Misure Personalizzate
+  ==============================================================
+*/
+
+.payment-page-background {
+  background: linear-gradient(-70deg, #202020, #000000);
+  border-radius: 20px;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center; /* Mantiene il blocco in alto */
+  align-items: center;
+
+  /* --- INIZIO MODIFICA CHIAVE --- */
+
+  /* RIMUOVI la vecchia riga 'padding' */
+  /* padding: 6rem 1rem; */
+
+  /* AGGIUNGI queste 4 righe per il controllo individuale */
+  padding-top: 2rem;     /* << MODIFICA QUI per spostare su/giù */
+  padding-bottom: 6rem;  /* << MODIFICA QUI per dare spazio sotto */
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  /* --- FINE MODIFICA CHIAVE --- */
+}
+
+.payment-form-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Modulo di Pagamento (Contenitore di Titolo + Card) --- */
+.payment-module {
+  width: 480px; /* Larghezza allineata alla card per una centratura perfetta */
+  position: relative;
+  z-index: 2;
+  /* Dispone titolo e card in colonna e li centra */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem; /* Spazio verticale tra il titolo e la card */
+}
+
+/* --- Titolo --- */
+.payment-module .title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: #ffffff;
+  line-height: 1.5em;
+  text-align: center; /* Assicura che il testo sia centrato */
+  /* Rimosse le vecchie proprietà che forzavano l'allineamento a sinistra */
+}
+
+/* --- Animazioni Sfondo --- */
+.payment-module .circles {
+  position: absolute;
+  height: 270px;
+  width: 450px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Sta dietro a tutto */
+}
+
+.payment-module .circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(120deg, #1D976C, #2c3e50);
+  animation: float 6s cubic-bezier(0.54, 0.085, 0.5, 0.92) infinite alternate;
+}
+
+.payment-module .circle-1 {
+  height: 300px; width: 300px; top: 100px; left: -50px; opacity: 0.8; animation-delay: 3.5s;
+}
+.payment-module .circle-2 {
+  height: 240px; width: 240px; bottom: 40px; right: -100px; opacity: 0.8; animation-delay: 2s;
+}
+
+@keyframes float {
+  50% { transform: translateY(10px) translateX(5px); }
+}
+
+/* --- Card di Vetro --- */
+.payment-module .card {
+  height: 325px; /* TUA MISURA */
+  width: 480px;  /* TUA MISURA */
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(35px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding-top: 125px;
+  padding-bottom: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
+  justify-content: space-between;
+}
+
+/* --- Logo --- */
+.payment-module .logo {
+  position: absolute;
+  top: 40px;    /* Allineato al padding */
+  left: 30px;   /* Allineato al padding */
+  height: 48px;
+  width: 48px;
+  opacity: 0.9;
+  z-index: 3;
+}
+
+/* --- Stili Generali Form --- */
+.payment-module .form-group {
+  position: relative;
+  overflow: hidden;
+}
+.payment-module .form-group label {
+  color: white; font-size: 12px; font-weight: normal; font-family: 'Space Mono', monospace; display: block; padding-bottom: 2px;
+}
+.payment-module .form-group input {
+  font-family: 'Space Mono', monospace; border: none; background: none; color: white; width: 100%; outline: none; padding: 0;
+}
+.payment-module .form-group input::placeholder {
+  color: #b5b5b5; font-family: 'Space Mono', monospace;
+}
+.payment-module .underline {
+  transition: all 0.3s; display: block; position: absolute; bottom: 0; left: -100%; width: 100%; height: 2px; background-color: #ffffff;
+}
+.payment-module .form-group input:focus + .underline,
+.payment-module .form-group input:hover + .underline {
+  left: 0;
+}
+
+/* --- Campi Specifici --- */
+.payment-module .card-number input {
+  font-size: 30px; height: 50px;
+}
+.payment-module .card-number input::placeholder {
+  font-size: 30px;
+}
+.payment-module .group input {
+  font-size: 16px; height: 26px;
+}
+
+/*
+  ==============================================================
+  CONTROLLO INDIVIDUALE PER TITOLARE, SCADENZA, CCV
+  ==============================================================
+*/
+.payment-module .group {
+  display: flex;
+  align-items: flex-end; /* Allinea i campi alla base se hanno altezze diverse */
+}
+
+/* --- CONTROLLO LARGHEZZA --- */
+/* Modifica i valori 'width' per cambiare la larghezza di ogni campo */
+.payment-module .group .form-group:nth-child(1) { /* Titolare */
+  width: 54%;
+}
+.payment-module .group .form-group:nth-child(2) { /* Scadenza */
+  width: 23%;
+}
+.payment-module .group .form-group:nth-child(3) { /* CCV */
+  width: 23%;
+}
+
+/* --- CONTROLLO DISTANZA --- */
+/* Modifica i valori 'margin-right' per cambiare lo spazio TRA i campi */
+.payment-module .group .form-group:nth-child(1) { /* Spazio a destra di Titolare */
+  margin-right: 60px;
+}
+.payment-module .group .form-group:nth-child(2) { /* Spazio a destra di Scadenza */
+  margin-right: 30px;
+}
+
+/* --- Stili per Pagamenti Alternativi (PayPal, etc.) --- */
+.payment-module .simplified-view {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
+}
+.payment-module .simplified-view .pay-button {
+  width: 80%; padding: 15px; border: none; border-radius: 8px; background-color: var(--color-blue-highlight, #007bff); color: white; font-family: 'Poppins', sans-serif; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.payment-module .simplified-view .pay-button:hover {
+  opacity: 0.9; transform: scale(1.02);
+}
+
