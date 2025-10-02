@@ -1251,7 +1251,7 @@ button:hover,
   margin: 10px 0;
   background-color: #151717;
   border: none;
-  color: #000000;
+  color: #ffffff;
   font-size: 15px;
   font-weight: 500;
   border-radius: 10px;
@@ -1356,7 +1356,7 @@ button:hover,
 */
 
 .payment-page-background {
-  background: #ffffff;
+  background: transparent;
   border-radius: 20px;
   margin-top: 2rem;
   position: relative;
@@ -1402,7 +1402,7 @@ button:hover,
   font-family: 'Poppins', sans-serif;
   font-size: 20px;
   font-weight: 300;
-  color: #313132;
+  color: #ffffff;
   line-height: 1.5em;
   text-align: center; /* Assicura che il testo sia centrato */
   /* Rimosse le vecchie proprietà che forzavano l'allineamento a sinistra */
@@ -1476,16 +1476,16 @@ button:hover,
   overflow: hidden;
 }
 .payment-module .form-group label {
-  color: #000000; font-size: 12px; font-weight: normal; font-family: 'Space Mono', monospace; display: block; padding-bottom: 2px;
+  color: #ffffff; font-size: 12px; font-weight: normal; font-family: 'Space Mono', monospace; display: block; padding-bottom: 2px;
 }
 .payment-module .form-group input {
-  font-family: 'Space Mono', monospace; border: none; background: none; color: #000000; width: 100%; outline: none; padding: 0;
+  font-family: 'Space Mono', monospace; border: none; background: none; color: #ffffff; width: 100%; outline: none; padding: 0;
 }
 .payment-module .form-group input::placeholder {
-  color: #313132; font-family: 'Space Mono', monospace;
+  color: rgba(255, 255, 255, 0.6); font-family: 'Space Mono', monospace;
 }
 .payment-module .underline {
-  transition: all 0.3s; display: block; position: absolute; bottom: 0; left: -100%; width: 100%; height: 2px; background-color: #000000;
+  transition: all 0.3s; display: block; position: absolute; bottom: 0; left: -100%; width: 100%; height: 2px; background-color: #ffffff;
 }
 .payment-module .form-group input:focus + .underline,
 .payment-module .form-group input:hover + .underline {
@@ -1539,7 +1539,7 @@ button:hover,
   display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
 }
 .payment-module .simplified-view .pay-button {
-  width: 80%; padding: 15px; border: none; border-radius: 8px; background-color: var(--color-blue-highlight, #007bff); color: #000000; font-family: 'Poppins', sans-serif; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  width: 80%; padding: 15px; border: none; border-radius: 8px; background-color: var(--color-blue-highlight, #007bff); color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
 }
 .payment-module .simplified-view .pay-button:hover {
   opacity: 0.9; transform: scale(1.02);
@@ -1587,7 +1587,7 @@ textarea.underline-input:focus {
 /* Stile per il placeholder - ora grigio scuro */
 input.underline-input::placeholder,
 textarea.underline-input::placeholder {
-  color: #888;
+  color: #f5f5f7;
 }
 
 @keyframes fadeInLogo {

@@ -26,7 +26,7 @@ const DonatePage = () => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState('');
-  const [customAmount, setCustomAmount] = useState('');
+  const [customAmount, setCustomAmount] = useState('10');
   const [donorInfo, setDonorInfo] = useState({
     name: '',
     email: '',
@@ -82,16 +82,15 @@ const DonatePage = () => {
 ];
 
   const handleAmountSelect = (amount) => {
-    // Converte il valore in un numero con due decimali (es. "5" -> "5.00")
-    const formattedAmount = parseFloat(amount).toFixed(2);
-    setCustomAmount(formattedAmount); // Imposta l'importo nel campo personalizzato
-    setSelectedAmount(''); // Pulisce il vecchio stato (non più necessario)
+    // Ora imposta semplicemente il valore intero, senza decimali
+    setCustomAmount(amount);
+    setSelectedAmount('');
   };
 
   const handleCustomAmountChange = (e) => {
     const value = e.target.value;
-    // Questa regex previene l'uso della virgola e limita a 2 decimali
-    if (/^\d*\.?\d{0,2}$/.test(value)) {
+    // MODIFICA: La nuova regex accetta solo cifre (niente punti o virgole)
+    if (/^\d*$/.test(value)) {
       setCustomAmount(value);
       setSelectedAmount('');
     }
@@ -112,15 +111,6 @@ const DonatePage = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-  };
-
-  const handleCustomAmountBlur = (e) => {
-    const value = e.target.value;
-    // Se l'utente ha scritto qualcosa (es. "10"), lo formatta in "10.00"
-    if (value) {
-      const formattedValue = parseFloat(value).toFixed(2);
-      setCustomAmount(formattedValue);
-    }
   };
 
   const handleCardInputChange = (e) => {
@@ -270,9 +260,10 @@ const DonatePage = () => {
       <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16">
         <div>
           {/* Donation Form Card */}
-          <Card className="shadow-none border-none">
+          <Card className="shadow-none border-none bg-transparent">
+
             <CardHeader>
-              <CardTitle className="text-xl flex items-center space-x-2">
+              <CardTitle className="text-xl flex items-center space-x-2 text-white">
                 <Gift className="w-5 h-5" />
                 <span>Fai una Donazione</span>
               </CardTitle>
@@ -315,86 +306,53 @@ const DonatePage = () => {
                     );
                   })}
                 </div>
-                  <div>
-                    <Label
-                      htmlFor="custom-amount"
-                      className="text-sm text-muted-foreground"
-                    >
-                      Oppure inserisci un importo personalizzato
-                    </Label>
+                </div>
+                {/* --- SEZIONE METODO DI PAGAMENTO CON SOVRAPPOSIZIONE --- */}
+                {/* --- SEZIONE METODO DI PAGAMENTO CON STRUTTURA CORRETTA --- */}
+                <div className="space-y-4">
+                  <Label className="font-medium text-white">1. Scegli il metodo di pagamento</Label>
+                  <div className="relative min-h-[450px]">
 
-                    <div className="relative mt-2 w-1/3">
-                      <span
-                        className={cn(
-                          "absolute left-3 top-1/2 transform -translate-y-1/2 font-bold text-xl transition-colors",
-                          customAmount ? "text-[#0071e3]" : "text-muted-foreground"
-                        )}
-                      >
-                        €
-                      </span>
-
-                      <Input
-                        id="custom-amount"
-                        type="text"
-                        inputMode="decimal"
-                        min="1"
-                        value={customAmount}
-                        onChange={handleCustomAmountChange}
-                        onBlur={handleCustomAmountBlur}
-                        placeholder="0.00"
-                        className="!pl-10 underline-input text-left !text-xl font-bold !text-[#0071e3]"
+                    {/* Elemento 1: La Card Animata (a destra) */}
+                    <div className="absolute top-0 left-95 w-[72%] z-10 -translate-y-10">
+                      <GlassCardForm
+                        selectedMethod={paymentMethod}
+                        paymentButtons={paymentButtons}
+                        cardDetails={cardDetails}
+                        onCardDetailsChange={handleCardInputChange}
+                        cardType={cardType}
+                        // Props aggiunte per l'importo
+                        customAmount={customAmount}
+                        onCustomAmountChange={handleCustomAmountChange}
                       />
                     </div>
+
+                    {/* Elemento 2: La Lista dei Metodi (a sinistra, sopra la card) */}
+                    <div className="absolute top-14 left-0 h-full w-[45%] z-10 flex flex-col justify-center pl-4 ">
+                      <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-2">
+                        {paymentButtons.map((method) => {
+                          const isSelected = paymentMethod === method.value;
+                          return (
+                            <Label
+                              key={method.value}
+                              htmlFor={method.value}
+                              className={`flex items-center space-x-4 p-2 cursor-pointer rounded-md transition-colors duration-200 ${isSelected ? 'text-[#0071e3] font-bold' : 'text-gray-500 hover:text-gray-300'}`}
+                            >
+                              <RadioGroupItem value={method.value} id={method.value} className="sr-only" />
+                              <div className="w-6 h-6 flex items-center justify-center">
+                                {isSelected && <Check className="h-5 w-5 text-[#0071e3]" />}
+                              </div>
+                              <method.icon className={`w-6 h-6 transition-colors ${isSelected ? 'text-[#0071e3]' : 'text-gray-500'}`} />
+                              <span>{method.label}</span>
+                            </Label>
+                          );
+                        })}
+                      </RadioGroup>
+                    </div>
+
                   </div>
-                  {/* --- FINE BLOCCO INPUT MANUALE --- */}
-                </div>
-                {/* --- SEZIONE METODO DI PAGAMENTO CORRETTA --- */}
-                <div className="space-y-6">
-                  <Label className="font-medium">1. Scegli il metodo di pagamento</Label>
-
-                  {/* Selettore Classico (RIPRISTINATO) */}
-                  <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-2">
-                    {paymentButtons.map((method) => {
-                      const isSelected = paymentMethod === method.value;
-                      return (
-                        <Label
-                          key={method.value}
-                          htmlFor={method.value}
-                          className={`
-                            flex items-center space-x-4 p-2 cursor-pointer rounded-md transition-all
-                            hover:bg-white/10
-                            ${isSelected ? 'text-primary font-bold' : 'text-gray-400'}
-                          `}
-                        >
-                          {/* 1. Nascondiamo il radio button originale, ma lo teniamo per la funzionalità */}
-                          <RadioGroupItem value={method.value} id={method.value} className="sr-only" />
-
-                          {/* 2. Creiamo il nostro selettore personalizzato (un checkmark) */}
-                          <div className="w-6 h-6 flex items-center justify-center">
-                            {isSelected && <Check className="h-5 w-5 text-primary" />}
-                          </div>
-
-                          {/* 3. Icona del metodo di pagamento */}
-                          <method.icon className={`w-6 h-6 transition-colors ${isSelected ? 'text-primary' : 'text-gray-500'}`} />
-
-                          {/* 4. Nome del metodo di pagamento */}
-                          <span>{method.label}</span>
-                        </Label>
-                      );
-                    })}
-                  </RadioGroup>
-
-                  {/* Il componente del form viene chiamato DOPO il selettore */}
-                  <GlassCardForm
-                    selectedMethod={paymentMethod}
-                    paymentButtons={paymentButtons}
-                    cardDetails={cardDetails}
-                    onCardDetailsChange={handleCardInputChange}
-                    cardType={cardType} // <-- RIGA DA AGGIUNGERE
-                  />
                 </div>
                 {/* --- FINE SEZIONE --- */}
-
                 {/* Donor Info */}
                 <div className="space-y-4">
                     <Label className="font-medium flex items-center gap-2"> {/* Testo etichetta nero/default */}

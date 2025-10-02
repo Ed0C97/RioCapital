@@ -43,7 +43,15 @@ const DefaultCardLogo = () => (
 /**
  * Componente che renderizza il form di pagamento "glassmorphism".
  */
-const GlassCardForm = ({ selectedMethod, paymentButtons, cardDetails, onCardDetailsChange, cardType }) => {
+const GlassCardForm = ({
+  selectedMethod,
+  paymentButtons,
+  cardDetails,
+  onCardDetailsChange,
+  cardType,
+  customAmount,
+  onCustomAmountChange
+}) => {
   const isCard = selectedMethod === 'card';
   const currentMethodDetails = paymentButtons.find(p => p.value === selectedMethod);
   const Icon = currentMethodDetails ? currentMethodDetails.icon : null;
@@ -74,6 +82,48 @@ const GlassCardForm = ({ selectedMethod, paymentButtons, cardDetails, onCardDeta
                 ? logos[cardType]
                 : (Icon ? <Icon style={{ color: '#313132', width: '48px', height: '48px' }} /> : <DefaultCardLogo />)
               }
+            </div>
+
+            <div className="absolute top-8 right-8">
+              <div className="flex items-baseline justify-end">
+                {customAmount.length < 7 ? (
+                  <> {/* Usiamo un Fragment (<>) per raggruppare i due elementi */}
+                    {/* 1. Simbolo Euro (ora è DENTRO la condizione) */}
+                    <span
+                      className={`
+                        text-xl font-mono transition-colors duration-300
+                        ${customAmount && parseFloat(customAmount) > 0 ? 'text-white' : 'text-white/50'}
+                      `}
+                    >
+                      €
+                    </span>
+
+                    {/* 2. Input */}
+                    <input
+                      id="card-custom-amount"
+                      type="text"
+                      value={customAmount}
+                      onChange={onCustomAmountChange}
+                      placeholder="0"
+                      className="bg-transparent border-none outline-none p-0 text-right
+                                 font-mono text-5xl font-bold text-white ml-1 w-auto"
+                      style={{
+                        width: `${customAmount.length + 1}ch`,
+                        minWidth: '2ch' // Imposta una larghezza minima per il placeholder
+                      }}
+                    />
+                  </>
+                ) : (
+                  // La Gag ora è l'unica cosa mostrata quando la condizione è falsa
+                  <div
+                    key={customAmount}
+                    className="font-mono text-3xl font-bold text-white ml-2 animate-pulse cursor-pointer"
+                    onClick={() => onCustomAmountChange({ target: { value: '' } })}
+                  >
+                    Se vabbè...
+                  </div>
+                )}
+              </div>
             </div>
 
             {isCard ? (
