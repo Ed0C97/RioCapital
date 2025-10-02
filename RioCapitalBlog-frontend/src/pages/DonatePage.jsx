@@ -1,7 +1,8 @@
 // RioCapitalBlog-frontend/src/pages/DonatePage.jsx
-
+import { cn } from "@/lib/utils"
 import GlassCardForm from '../components/GlassCardForm';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../hooks/useAuth';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -14,11 +15,15 @@ import {
   Gift,
   Star,
   Info,
+  Beer,
+  GraduationCap,
+  Check // <-- AGGIUNGI QUESTA
 } from 'lucide-react';
 import { SiApplepay, SiGooglepay, SiPaypal, SiSamsungpay } from 'react-icons/si';
 import { FaCreditCard } from 'react-icons/fa';
 
 const DonatePage = () => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
@@ -30,6 +35,7 @@ const DonatePage = () => {
   });
   // --- STATO INIZIALE AGGIORNATO ---
   const [paymentMethod, setPaymentMethod] = useState('card'); // Default su 'card'
+  const [cardType, setCardType] = useState('default');
 
   // Nuovo stato per i dati della carta
   const [cardDetails, setCardDetails] = useState({
@@ -40,11 +46,31 @@ const DonatePage = () => {
   });
 
   const predefinedAmounts = [
-    { value: '5', label: '5€', description: 'Un caffè', icon: Coffee },
-    { value: '10', label: '10€', description: 'Supporto', icon: Heart },
-    { value: '25', label: '25€', description: 'Sostenitore', icon: Gift },
-    { value: '50', label: '50€', description: 'Sponsor', icon: Star }
+    { value: '5', icon: Coffee, title: 'Un caffè', subtitle: '(a Venezia)' },
+    { value: '10', icon: Beer, title: 'Una birretta', subtitle: 'Offro io!' },
+    { value: '20', icon: Gift, title: 'Compleanno', subtitle: 'Un regalo per me' },
+    { value: '50', icon: GraduationCap, title: 'Laurea', subtitle: 'Finalmente Dottore' }
   ];
+
+  const getCardType = (cardNumber) => {
+    const cleaned = cardNumber.replace(/\s/g, '');
+
+    if (cleaned.startsWith('4')) {
+      return 'visa';
+    }
+
+    const mastercardPrefixes = ['51', '52', '53', '54', '55'];
+    if (mastercardPrefixes.some(prefix => cleaned.startsWith(prefix))) {
+      return 'mastercard';
+    }
+
+    const mcRangePrefix = parseInt(cleaned.substring(0, 4));
+    if (mcRangePrefix >= 2221 && mcRangePrefix <= 2720) {
+      return 'mastercard';
+    }
+
+    return 'default';
+  };
 
   // --- NUOVA LISTA DI METODI DI PAGAMENTO ---
   const paymentButtons = [
@@ -56,19 +82,29 @@ const DonatePage = () => {
 ];
 
   const handleAmountSelect = (amount) => {
-    setSelectedAmount(amount);
-    setCustomAmount('');
+    // Converte il valore in un numero con due decimali (es. "5" -> "5.00")
+    const formattedAmount = parseFloat(amount).toFixed(2);
+    setCustomAmount(formattedAmount); // Imposta l'importo nel campo personalizzato
+    setSelectedAmount(''); // Pulisce il vecchio stato (non più necessario)
   };
 
   const handleCustomAmountChange = (e) => {
     const value = e.target.value;
+    // Questa regex previene l'uso della virgola e limita a 2 decimali
     if (/^\d*\.?\d{0,2}$/.test(value)) {
       setCustomAmount(value);
-      if (value) {
-        setSelectedAmount('');
-      }
+      setSelectedAmount('');
     }
   };
+
+  useEffect(() => {
+  if (user && user.email) {
+    setDonorInfo(prevInfo => ({
+      ...prevInfo,
+      email: user.email
+    }));
+  }
+}, [user]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -76,6 +112,15 @@ const DonatePage = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+  };
+
+  const handleCustomAmountBlur = (e) => {
+    const value = e.target.value;
+    // Se l'utente ha scritto qualcosa (es. "10"), lo formatta in "10.00"
+    if (value) {
+      const formattedValue = parseFloat(value).toFixed(2);
+      setCustomAmount(formattedValue);
+    }
   };
 
   const handleCardInputChange = (e) => {
@@ -87,8 +132,11 @@ const DonatePage = () => {
     // Applica la formattazione specifica per ogni campo
     switch (key) {
       case 'number':
-        // Permette solo numeri e aggiunge uno spazio ogni 4 cifre
         processedValue = value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ').trim();
+        // --- RIGHE DA AGGIUNGERE ---
+        const detectedType = getCardType(processedValue);
+        setCardType(detectedType);
+        // -------------------------
         break;
       case 'exp':
         // Permette solo numeri e aggiunge uno slash dopo il mese
@@ -125,6 +173,11 @@ const DonatePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const amount = getFinalAmount();
+
+    if (!donorInfo.email || !/\S+@\S+\.\S+/.test(donorInfo.email)) {
+    toast.error('Inserisci un indirizzo email valido per la ricevuta.');
+    return; // Blocca l'invio del form se l'email non è valida
+  }
 
     if (!paymentMethod) {
       toast.error('Seleziona un metodo di pagamento');
@@ -182,18 +235,33 @@ const DonatePage = () => {
   };
 
   return (
-    <div className="bg-[#f5f5f7]">
+    <div
+      style={{
+        background: 'linear-gradient(-70deg, #202020, #000000)'
+      }}
+    >
       {/* Header Section */}
       <div className="w-full mb-12">
         <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
           <div className="mb-8">
             <div className="border-b border-[#d2d2d7] my-2"></div>
-            <h2 className="text-2xl font-regular text-gray-500">
+            {/* CORREZIONE #3: Cambiato il colore del titolo in bianco per leggibilità */}
+            <h2 className="text-2xl font-regular text-white"> {/* <-- da text-gray-500 a text-white */}
               Sostieni RioCapitalBlog
             </h2>
           </div>
-          <p className="text-muted-foreground max-w-3xl">
-            Le tue donazioni ci aiutano a mantenere RioCapitalBlog gratuito, senza pubblicità e ricco di contenuti di qualità. Ogni contributo fa la differenza.
+          {/* CORREZIONE #4: Cambiato il colore del paragrafo in grigio chiaro */}
+          <p className="text-gray-300 text-center space-y-2">
+            Le tue donazioni ci permettono di mantenere <strong>Lit Investor Blog</strong> completamente gratuito, senza pubblicità invasive e sempre ricco di contenuti di qualità.
+            Grazie al tuo contributo, possiamo continuare a offrirti <strong>analisi approfondite, guide pratiche e aggiornamenti costanti</strong> sul mondo degli investimenti.
+            <strong>Ogni piccolo gesto conta:</strong> ogni donazione fa davvero la differenza!
+
+            <br /><br />
+
+            <strong>Disclaimer sulla privacy dei pagamenti:</strong>
+            Ti assicuriamo che tutte le donazioni sono <strong>completamente anonime</strong>.
+            Non raccoglieremo né conserveremo mai i tuoi dati di pagamento.
+            Il tuo supporto ci aiuta a crescere, ma <strong>la tua privacy è sempre al primo posto</strong>.
           </p>
         </div>
       </div>
@@ -218,29 +286,53 @@ const DonatePage = () => {
                 <div className="space-y-4">
                   <Label className="font-medium">Scegli l'importo</Label>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {predefinedAmounts.map((amount) => {
-                      const Icon = amount.icon;
-                      return (
-                        <Button
-                          key={amount.value}
-                          type="button"
-                          variant={selectedAmount === amount.value ? "default" : "outline"}
-                          className="h-auto p-4 flex flex-col items-center space-y-2"
-                          onClick={() => handleAmountSelect(amount.value)}
-                        >
-                          <Icon className="w-5 h-5" />
-                          <div className="text-center">
-                            <div className="font-bold">{amount.label}</div>
-                            <div className="text-xs opacity-70">{amount.description}</div>
-                          </div>
-                        </Button>
-                      );
-                    })}
-                  </div>
+                  {predefinedAmounts.map((amount) => {
+                    const Icon = amount.icon;
+                    // Controlliamo se questa opzione è quella attualmente selezionata
+                    const isSelected = parseFloat(customAmount) === parseFloat(amount.value);
+
+                    return (
+                      // Usiamo un div al posto del Button per un look pulito
+                      <div
+                        key={amount.value}
+                        onClick={() => handleAmountSelect(amount.value)}
+                        role="button" // Importante per l'accessibilità
+                        tabIndex="0"  // Permette la navigazione con la tastiera
+                        className={`
+                          flex flex-col items-center justify-center p-4 
+                          cursor-pointer transition-transform duration-200 hover:scale-105
+                          ${isSelected ? 'text-primary' : 'text-gray-500'}
+                        `}
+                      >
+                        {/* 1. Icona grande */}
+                        <Icon className="w-12 h-12" />
+
+                        {/* 2. Scritta in stampatello attaccata sotto */}
+                        <div className="mt-2 uppercase font-semibold text-xs tracking-wider">
+                          {amount.title}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
                   <div>
-                    <Label htmlFor="custom-amount" className="text-sm text-muted-foreground">Oppure inserisci un importo personalizzato</Label>
-                    <div className="relative mt-2">
-                      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">€</span>
+                    <Label
+                      htmlFor="custom-amount"
+                      className="text-sm text-muted-foreground"
+                    >
+                      Oppure inserisci un importo personalizzato
+                    </Label>
+
+                    <div className="relative mt-2 w-1/3">
+                      <span
+                        className={cn(
+                          "absolute left-3 top-1/2 transform -translate-y-1/2 font-bold text-xl transition-colors",
+                          customAmount ? "text-[#0071e3]" : "text-muted-foreground"
+                        )}
+                      >
+                        €
+                      </span>
+
                       <Input
                         id="custom-amount"
                         type="text"
@@ -248,26 +340,48 @@ const DonatePage = () => {
                         min="1"
                         value={customAmount}
                         onChange={handleCustomAmountChange}
+                        onBlur={handleCustomAmountBlur}
                         placeholder="0.00"
-                        className="pl-8"
+                        className="!pl-10 underline-input text-left !text-xl font-bold !text-[#0071e3]"
                       />
                     </div>
                   </div>
+                  {/* --- FINE BLOCCO INPUT MANUALE --- */}
                 </div>
-
                 {/* --- SEZIONE METODO DI PAGAMENTO CORRETTA --- */}
                 <div className="space-y-6">
                   <Label className="font-medium">1. Scegli il metodo di pagamento</Label>
 
                   {/* Selettore Classico (RIPRISTINATO) */}
                   <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-2">
-                    {paymentButtons.map((method) => (
-                      <Label key={method.value} htmlFor={method.value} className="flex items-center space-x-3 p-3 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-muted has-[:checked]:border-primary transition-colors">
-                        <RadioGroupItem value={method.value} id={method.value} />
-                        <method.icon className="w-5 h-5 text-muted-foreground" />
-                        <span>{method.label}</span>
-                      </Label>
-                    ))}
+                    {paymentButtons.map((method) => {
+                      const isSelected = paymentMethod === method.value;
+                      return (
+                        <Label
+                          key={method.value}
+                          htmlFor={method.value}
+                          className={`
+                            flex items-center space-x-4 p-2 cursor-pointer rounded-md transition-all
+                            hover:bg-white/10
+                            ${isSelected ? 'text-primary font-bold' : 'text-gray-400'}
+                          `}
+                        >
+                          {/* 1. Nascondiamo il radio button originale, ma lo teniamo per la funzionalità */}
+                          <RadioGroupItem value={method.value} id={method.value} className="sr-only" />
+
+                          {/* 2. Creiamo il nostro selettore personalizzato (un checkmark) */}
+                          <div className="w-6 h-6 flex items-center justify-center">
+                            {isSelected && <Check className="h-5 w-5 text-primary" />}
+                          </div>
+
+                          {/* 3. Icona del metodo di pagamento */}
+                          <method.icon className={`w-6 h-6 transition-colors ${isSelected ? 'text-primary' : 'text-gray-500'}`} />
+
+                          {/* 4. Nome del metodo di pagamento */}
+                          <span>{method.label}</span>
+                        </Label>
+                      );
+                    })}
                   </RadioGroup>
 
                   {/* Il componente del form viene chiamato DOPO il selettore */}
@@ -276,34 +390,38 @@ const DonatePage = () => {
                     paymentButtons={paymentButtons}
                     cardDetails={cardDetails}
                     onCardDetailsChange={handleCardInputChange}
+                    cardType={cardType} // <-- RIGA DA AGGIUNGERE
                   />
                 </div>
                 {/* --- FINE SEZIONE --- */}
 
                 {/* Donor Info */}
                 <div className="space-y-4">
-                   <Label className="font-medium flex items-center gap-2">
-                      <Info size={16} />
-                      Informazioni (opzionali)
-                   </Label>
-                  <div className="grid gap-4 md:grid-cols-2">
+                    <Label className="font-medium flex items-center gap-2"> {/* Testo etichetta nero/default */}
+                        <Info size={16} />
+                        Informazioni (opzionali)
+                    </Label>
+                    <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Nome</Label>
-                      <Input id="name" name="name" value={donorInfo.name} onChange={handleInputChange} placeholder="Il tuo nome" disabled={donorInfo.anonymous} />
+                        <Label htmlFor="name">Nome</Label>
+                        {/* Assicurati che la classe sia qui */}
+                        <Input id="name" name="name" value={donorInfo.name} onChange={handleInputChange} placeholder="Il tuo nome" disabled={donorInfo.anonymous} className="underline-input" />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email <span className="text-muted-foreground">(per la ricevuta)</span></Label>
-                      <Input id="email" name="email" type="email" value={donorInfo.email} onChange={handleInputChange} placeholder="la-tua-email@esempio.com" />
+                        <Label htmlFor="email">Email <span className="text-muted-foreground">(per la ricevuta)</span></Label>
+                        {/* Assicurati che la classe sia qui */}
+                        <Input id="email" name="email" type="email" value={donorInfo.email} onChange={handleInputChange} placeholder="la-tua-email@esempio.com" className="underline-input" disabled={!!user} />
                     </div>
-                  </div>
-                  <div className="space-y-2">
+                    </div>
+                    <div className="space-y-2 mt-10">
                     <Label htmlFor="message">Messaggio</Label>
-                    <Textarea id="message" name="message" value={donorInfo.message} onChange={handleInputChange} placeholder="Lascia un messaggio di supporto..." rows={3} />
-                  </div>
-                  <div className="flex items-center space-x-2">
+                    {/* Assicurati che la classe sia qui */}
+                    <Textarea id="message" name="message" value={donorInfo.message} onChange={handleInputChange} placeholder="Lascia un messaggio di supporto..." rows={3} className="underline-input" />
+                    </div>
+                    <div className="flex items-center space-x-2">
                     <input type="checkbox" id="anonymous" name="anonymous" checked={donorInfo.anonymous} onChange={handleInputChange} className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
                     <Label htmlFor="anonymous" className="cursor-pointer">Voglio fare una donazione anonima</Label>
-                  </div>
+                    </div>
                 </div>
 
                 {/* Summary & Submit */}
@@ -311,7 +429,7 @@ const DonatePage = () => {
                   <div className="p-4 rounded-lg bg-muted/50 border border-muted">
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-lg">Importo Totale:</span>
-                      <span className="text-3xl font-bold RioCapitalBlog-text-gradient">€{getFinalAmount()}</span>
+                      <span className="text-3xl font-bold text-[#0071e3]">€ {getFinalAmount()}</span>
                     </div>
                   </div>
                 )}
