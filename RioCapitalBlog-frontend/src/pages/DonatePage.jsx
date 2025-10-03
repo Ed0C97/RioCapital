@@ -1,5 +1,7 @@
 // RioCapitalBlog-frontend/src/pages/DonatePage.jsx
+
 import { cn } from "@/lib/utils"
+import SlidingTabsNav from '../components/SlidingTabsNav';
 import GlassCardForm from '../components/GlassCardForm';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
@@ -12,11 +14,11 @@ import { Textarea } from '../components/ui/textarea';
 import {
   Heart,
   Coffee,
-  Gift,
+  Hamburger,
   Star,
   Info,
   Beer,
-  GraduationCap,
+  UtensilsCrossed,
   Check // <-- AGGIUNGI QUESTA
 } from 'lucide-react';
 import { SiApplepay, SiGooglepay, SiPaypal, SiSamsungpay } from 'react-icons/si';
@@ -46,10 +48,10 @@ const DonatePage = () => {
   });
 
   const predefinedAmounts = [
-    { value: '5', icon: Coffee, title: 'Un caffè', subtitle: '(a Venezia)' },
-    { value: '10', icon: Beer, title: 'Una birretta', subtitle: 'Offro io!' },
-    { value: '20', icon: Gift, title: 'Compleanno', subtitle: 'Un regalo per me' },
-    { value: '50', icon: GraduationCap, title: 'Laurea', subtitle: 'Finalmente Dottore' }
+    { value: '5', icon: Coffee, title: 'Un caffè'},
+    { value: '10', icon: Beer, title: 'Una birretta'},
+    { value: '20', icon: Hamburger, title: 'Aperitivo'},
+    { value: '50', icon: UtensilsCrossed, title: 'Cena'}
   ];
 
   const getCardType = (cardNumber) => {
@@ -237,11 +239,11 @@ const DonatePage = () => {
             <div className="border-b border-[#d2d2d7] my-2"></div>
             {/* CORREZIONE #3: Cambiato il colore del titolo in bianco per leggibilità */}
             <h2 className="text-2xl font-regular text-white"> {/* <-- da text-gray-500 a text-white */}
-              Sostieni RioCapitalBlog
+              Buy me ... something
             </h2>
           </div>
           {/* CORREZIONE #4: Cambiato il colore del paragrafo in grigio chiaro */}
-          <p className="text-gray-300 text-center space-y-2">
+          <p className="text-gray-300 text-center space-y-2 my-24">
             Le tue donazioni ci permettono di mantenere <strong>Lit Investor Blog</strong> completamente gratuito, senza pubblicità invasive e sempre ricco di contenuti di qualità.
             Grazie al tuo contributo, possiamo continuare a offrirti <strong>analisi approfondite, guide pratiche e aggiornamenti costanti</strong> sul mondo degli investimenti.
             <strong>Ogni piccolo gesto conta:</strong> ogni donazione fa davvero la differenza!
@@ -253,6 +255,7 @@ const DonatePage = () => {
             Non raccoglieremo né conserveremo mai i tuoi dati di pagamento.
             Il tuo supporto ci aiuta a crescere, ma <strong>la tua privacy è sempre al primo posto</strong>.
           </p>
+
         </div>
       </div>
 
@@ -262,59 +265,33 @@ const DonatePage = () => {
           {/* Donation Form Card */}
           <Card className="shadow-none border-none bg-transparent">
 
-            <CardHeader>
-              <CardTitle className="text-xl flex items-center space-x-2 text-white">
-                <Gift className="w-5 h-5" />
-                <span>Fai una Donazione</span>
-              </CardTitle>
-              <CardDescription>
-                Scegli l'importo e il metodo di pagamento che preferisci.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+            <CardContent className="p-0">
               <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Amount Selection */}
                 <div className="space-y-4">
-                  <Label className="font-medium">Scegli l'importo</Label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {predefinedAmounts.map((amount) => {
-                    const Icon = amount.icon;
-                    // Controlliamo se questa opzione è quella attualmente selezionata
-                    const isSelected = parseFloat(customAmount) === parseFloat(amount.value);
+                  {/* Titolo uniformato */}
+                  <div className="flex items-center gap-3 text-white font-bold text-2xl">
+                    Scegli l'importo
+                  </div>
 
-                    return (
-                      // Usiamo un div al posto del Button per un look pulito
-                      <div
-                        key={amount.value}
-                        onClick={() => handleAmountSelect(amount.value)}
-                        role="button" // Importante per l'accessibilità
-                        tabIndex="0"  // Permette la navigazione con la tastiera
-                        className={`
-                          flex flex-col items-center justify-center p-4 
-                          cursor-pointer transition-transform duration-200 hover:scale-105
-                          ${isSelected ? 'text-primary' : 'text-gray-500'}
-                        `}
-                      >
-                        {/* 1. Icona grande */}
-                        <Icon className="w-12 h-12" />
-
-                        {/* 2. Scritta in stampatello attaccata sotto */}
-                        <div className="mt-2 uppercase font-semibold text-xs tracking-wider">
-                          {amount.title}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                  {/* MODIFICA: Aggiunto un div contenitore con margine verticale (my-6) */}
+                  <div className="my-18">
+                    <SlidingTabsNav
+                      tabs={predefinedAmounts}
+                      activeTab={customAmount}
+                      onTabChange={handleAmountSelect}
+                    />
+                  </div>
                 </div>
                 {/* --- SEZIONE METODO DI PAGAMENTO CON SOVRAPPOSIZIONE --- */}
-                {/* --- SEZIONE METODO DI PAGAMENTO CON STRUTTURA CORRETTA --- */}
-                <div className="space-y-4">
-                  <Label className="font-medium text-white">1. Scegli il metodo di pagamento</Label>
+                <div className="space-y-16">
+                  <div className="flex items-center gap-3 text-white font-bold text-2xl">
+                    Scegli il metodo di pagamento
+                  </div>
                   <div className="relative min-h-[450px]">
 
                     {/* Elemento 1: La Card Animata (a destra) */}
-                    <div className="absolute top-0 left-95 w-[72%] z-10 -translate-y-10">
+                    <div className="absolute top-0 left-95 w-[73%] z-10 -translate-y-10">
                       <GlassCardForm
                         selectedMethod={paymentMethod}
                         paymentButtons={paymentButtons}
@@ -336,13 +313,16 @@ const DonatePage = () => {
                             <Label
                               key={method.value}
                               htmlFor={method.value}
-                              className={`flex items-center space-x-4 p-2 cursor-pointer rounded-md transition-colors duration-200 ${isSelected ? 'text-[#0071e3] font-bold' : 'text-gray-500 hover:text-gray-300'}`}
+                              className={`
+                                flex items-center space-x-4 p-2 cursor-pointer rounded-md transition-colors duration-200
+                                ${isSelected ? 'text-[#FBBC05] font-bold' : 'text-white hover:text-[#FBBC05] hover:font-bold'}
+                              `}
                             >
                               <RadioGroupItem value={method.value} id={method.value} className="sr-only" />
                               <div className="w-6 h-6 flex items-center justify-center">
-                                {isSelected && <Check className="h-5 w-5 text-[#0071e3]" />}
+                                {isSelected && <Check className="h-5 w-5 text-[#FBBC05]" />}
                               </div>
-                              <method.icon className={`w-6 h-6 transition-colors ${isSelected ? 'text-[#0071e3]' : 'text-gray-500'}`} />
+                              <method.icon className="w-6 h-6" />
                               <span>{method.label}</span>
                             </Label>
                           );
@@ -352,51 +332,47 @@ const DonatePage = () => {
 
                   </div>
                 </div>
-                {/* --- FINE SEZIONE --- */}
-                {/* Donor Info */}
-                <div className="space-y-4">
-                    <Label className="font-medium flex items-center gap-2"> {/* Testo etichetta nero/default */}
-                        <Info size={16} />
+
+                <div className="space-y-14 mt-36">
+                    {/* MODIFICA #2: Trasformato in un titolo più grande */}
+                    <div className="flex items-center gap-3 text-white font-bold text-2xl">
+                        <Info size={20} /> {/* Icona leggermente più grande per abbinarsi al testo */}
                         Informazioni (opzionali)
-                    </Label>
+                    </div>
+
+                    {/* Il resto della sezione rimane invariato */}
                     <div className="grid gap-4 md:grid-cols-2">
-                    <div className="space-y-2">
-                        <Label htmlFor="name">Nome</Label>
-                        {/* Assicurati che la classe sia qui */}
+                    <div className="space-y-4">
+                        <Label htmlFor="name" className="text-white font-bold">Nome</Label>
                         <Input id="name" name="name" value={donorInfo.name} onChange={handleInputChange} placeholder="Il tuo nome" disabled={donorInfo.anonymous} className="underline-input" />
                     </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="email">Email <span className="text-muted-foreground">(per la ricevuta)</span></Label>
-                        {/* Assicurati che la classe sia qui */}
+                    <div className="space-y-4">
+                        <Label htmlFor="email" className="text-white font-bold">Email</Label>
                         <Input id="email" name="email" type="email" value={donorInfo.email} onChange={handleInputChange} placeholder="la-tua-email@esempio.com" className="underline-input" disabled={!!user} />
                     </div>
                     </div>
-                    <div className="space-y-2 mt-10">
-                    <Label htmlFor="message">Messaggio</Label>
-                    {/* Assicurati che la classe sia qui */}
+                    <div className="space-y-4 mt-10">
+                    <Label htmlFor="message" className="text-white font-bold">Messaggio</Label>
                     <Textarea id="message" name="message" value={donorInfo.message} onChange={handleInputChange} placeholder="Lascia un messaggio di supporto..." rows={3} className="underline-input" />
                     </div>
                     <div className="flex items-center space-x-2">
                     <input type="checkbox" id="anonymous" name="anonymous" checked={donorInfo.anonymous} onChange={handleInputChange} className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
-                    <Label htmlFor="anonymous" className="cursor-pointer">Voglio fare una donazione anonima</Label>
+                    <Label htmlFor="anonymous" className="text-white font-bold cursor-pointer">Voglio fare una donazione anonima</Label>
                     </div>
                 </div>
 
                 {/* Summary & Submit */}
-                {getFinalAmount() && (
-                  <div className="p-4 rounded-lg bg-muted/50 border border-muted">
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium text-lg">Importo Totale:</span>
-                      <span className="text-3xl font-bold text-[#0071e3]">€ {getFinalAmount()}</span>
-                    </div>
-                  </div>
-                )}
-                <div className="flex justify-end pt-4">
-                  <Button type="submit" disabled={loading || !getFinalAmount()} className="w-full md:w-auto" size="lg">
-                    <Heart className="w-4 h-4 mr-2" />
-                    <span>{loading ? 'Elaborazione...' : `Dona Ora €${getFinalAmount() || '0'}`}</span>
-                  </Button>
-                </div>
+                <div className="flex justify-center pt-8 pb-32">
+                <Button
+                  type="submit"
+                  disabled={loading || !getFinalAmount()}
+                  className="btn-outline btn-outline-yellow !px-8 !py-3 !text-base"
+                  size="lg"
+                >
+                  <Heart className="w-4 h-4 mr-2" />
+                  <span>{loading ? 'Elaborazione...' : `Dona Ora €${getFinalAmount() || '0'}`}</span>
+                </Button>
+              </div>
               </form>
             </CardContent>
           </Card>

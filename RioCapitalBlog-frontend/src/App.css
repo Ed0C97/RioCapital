@@ -1309,6 +1309,18 @@ button:hover,
   background-color: var(--color-text-secondary);
 }
 
+/* --- AGGIUNGI QUESTO NUOVO BLOCCO --- */
+
+/* Variante Gialla (Dona Ora) */
+.btn-outline-yellow {
+  border-color: #FBBC05;
+  color: #FBBC05;
+}
+.btn-outline-yellow:hover {
+  background-color: #FBBC05;
+  color: black; /* <-- RIGA AGGIUNTA */
+}
+
 /* Variante Blu (Salva Bozza) */
 .btn-outline-blue {
   border-color: var(--color-blue-accent);
@@ -1551,43 +1563,42 @@ button:hover,
   ==============================================================
 */
 
-/*
-  Usiamo selettori più specifici (input.underline-input, textarea.underline-input)
-  per garantire che questi stili sovrascrivano quelli di default della libreria.
-*/
 input.underline-input,
 textarea.underline-input {
-  /* Rimuove lo stile predefinito "capsula" */
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  outline: none;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
 
-  /* Aggiunge la linea inferiore - ora grigia scura */
-  border-bottom: 2px solid #ccc; /* Linea grigia chiara */
+  /* Linea grigio chiaro semi-trasparente */
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3) !important;
 
-  /* Colore del testo NERO */
-  color: black;
+  /* Colore del testo BIANCO */
+  color: white !important;
 
-  padding: 8px 0;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+
   transition: border-color 0.3s ease-in-out;
 }
 
-/* Stile quando il campo è in focus */
 input.underline-input:focus,
 textarea.underline-input:focus {
-  border-bottom-color: #1D976C; /* La linea diventa verde */
-  box-shadow: none;
-  outline: none;
-  ring: 0;
-  ring-offset-width: 0;
+  /* La linea diventa blu quando in focus */
+  border-bottom-color: #0071e3 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  ring: 0 !important;
+  ring-offset-width: 0 !important;
 }
 
-/* Stile per il placeholder - ora grigio scuro */
 input.underline-input::placeholder,
 textarea.underline-input::placeholder {
-  color: #f5f5f7;
+  /* Placeholder bianco semi-trasparente */
+  color: rgba(255, 255, 255, 0.5) !important;
 }
 
 @keyframes fadeInLogo {

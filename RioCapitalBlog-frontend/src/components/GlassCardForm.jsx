@@ -30,7 +30,7 @@ const MastercardLogo = () => (
 const DefaultCardLogo = () => (
   <svg width="48px" height="48px" viewBox="0 0 64 64">
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g fill="#313132">
+      <g fill="#ffffff">
         <circle cx="16" cy="16" r="16"></circle>
         <circle cx="16" cy="48" r="16"></circle>
         <circle cx="48" cy="16" r="16"></circle>
@@ -80,7 +80,7 @@ const GlassCardForm = ({
             <div className="logo" key={cardType + selectedMethod}>
               {isCard
                 ? logos[cardType]
-                : (Icon ? <Icon style={{ color: '#313132', width: '48px', height: '48px' }} /> : <DefaultCardLogo />)
+                : (Icon ? <Icon style={{ color: 'white', width: '48px', height: '48px' }} /> : <DefaultCardLogo />)
               }
             </div>
 

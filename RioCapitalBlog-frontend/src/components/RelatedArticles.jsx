@@ -84,11 +84,17 @@ const RelatedArticles = ({ title, fetchUrl, variant = 'grid' }) => {
         </div>
 
         {variant === 'grid' && (
-          <div className="archive-button-container mt-8">
-            <Link to="/archivio">
-              <Button size="lg" variant="outline">Sfoglia l'archivio</Button>
-            </Link>
-          </div>
+        <div className="archive-button-container mt-22 flex justify-center">
+          <Link to="/archivio">
+          <Button
+            size="lg"
+            variant="outline"
+            className="btn-outline btn-outline-blue !px-8 !py-3 !text-base"
+          >
+            Sfoglia l'archivio
+          </Button>
+          </Link>
+        </div>
         )}
       </div>
     </section>

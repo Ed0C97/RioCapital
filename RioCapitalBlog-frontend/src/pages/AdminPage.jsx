@@ -1,5 +1,6 @@
 
 import { DropdownMenuSeparator } from '../components/ui/dropdown-menu';
+import SlidingTabsNav from '../components/SlidingTabsNav'; // Adatta il percorso se necessario
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
