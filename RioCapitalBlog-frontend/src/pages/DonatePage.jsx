@@ -12,14 +12,16 @@ import { Label } from '../components/ui/label';
 import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group'; // <-- RIGA AGGIUNTA/MODIFICATA
 import { Textarea } from '../components/ui/textarea';
 import {
-  Heart,
-  Coffee,
-  Hamburger,
-  Star,
-  Info,
-  Beer,
-  UtensilsCrossed,
-  Check // <-- AGGIUNGI QUESTA
+    Heart,
+    Coffee,
+    Hamburger,
+    Star,
+    BadgeInfo,
+    Beer,
+    UtensilsCrossed,
+    Check,
+    Coins,
+    WalletCards
 } from 'lucide-react';
 import { SiApplepay, SiGooglepay, SiPaypal, SiSamsungpay } from 'react-icons/si';
 import { FaCreditCard } from 'react-icons/fa';
@@ -38,6 +40,7 @@ const DonatePage = () => {
   // --- STATO INIZIALE AGGIORNATO ---
   const [paymentMethod, setPaymentMethod] = useState('card'); // Default su 'card'
   const [cardType, setCardType] = useState('default');
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   // Nuovo stato per i dati della carta
   const [cardDetails, setCardDetails] = useState({
@@ -48,10 +51,10 @@ const DonatePage = () => {
   });
 
   const predefinedAmounts = [
-    { value: '5', icon: Coffee, title: 'Un caffè'},
-    { value: '10', icon: Beer, title: 'Una birretta'},
-    { value: '20', icon: Hamburger, title: 'Aperitivo'},
-    { value: '50', icon: UtensilsCrossed, title: 'Cena'}
+    { value: '5', icon: Coffee, title: 'Coffee'},
+    { value: '10', icon: Beer, title: 'Beer'},
+    { value: '20', icon: Hamburger, title: 'Aperitif'},
+    { value: '50', icon: UtensilsCrossed, title: 'Dinner'}
   ];
 
   const getCardType = (cardNumber) => {
@@ -180,6 +183,11 @@ const DonatePage = () => {
       return;
     }
 
+    if (!termsAccepted) {
+      toast.error('Devi accettare i termini e le condizioni per procedere.');
+      return; // Blocca l'invio del form
+    }
+
     setLoading(true);
 
     try {
@@ -239,23 +247,13 @@ const DonatePage = () => {
             <div className="border-b border-[#d2d2d7] my-2"></div>
             {/* CORREZIONE #3: Cambiato il colore del titolo in bianco per leggibilità */}
             <h2 className="text-2xl font-regular text-white"> {/* <-- da text-gray-500 a text-white */}
-              Buy me ... something
+              Support with a ...
             </h2>
           </div>
           {/* CORREZIONE #4: Cambiato il colore del paragrafo in grigio chiaro */}
-          <p className="text-gray-300 text-center space-y-2 my-24">
-            Le tue donazioni ci permettono di mantenere <strong>Lit Investor Blog</strong> completamente gratuito, senza pubblicità invasive e sempre ricco di contenuti di qualità.
-            Grazie al tuo contributo, possiamo continuare a offrirti <strong>analisi approfondite, guide pratiche e aggiornamenti costanti</strong> sul mondo degli investimenti.
-            <strong>Ogni piccolo gesto conta:</strong> ogni donazione fa davvero la differenza!
-
-            <br /><br />
-
-            <strong>Disclaimer sulla privacy dei pagamenti:</strong>
-            Ti assicuriamo che tutte le donazioni sono <strong>completamente anonime</strong>.
-            Non raccoglieremo né conserveremo mai i tuoi dati di pagamento.
-            Il tuo supporto ci aiuta a crescere, ma <strong>la tua privacy è sempre al primo posto</strong>.
+          <p className="text-gray-300 space-y-2 my-12 text-justify">
+            Your support helps us keep Lit Investor Blog free from intrusive ads and focused on delivering high-quality investment insights. With your help, we can continue to publish clear analysis, practical guides, and timely updates. Every contribution truly makes a difference.
           </p>
-
         </div>
       </div>
 
@@ -270,12 +268,19 @@ const DonatePage = () => {
                 {/* Amount Selection */}
                 <div className="space-y-4">
                   {/* Titolo uniformato */}
-                  <div className="flex items-center gap-3 text-white font-bold text-2xl">
-                    Scegli l'importo
+                  <div>
+                    {/* Main Title */}
+                    <div className="flex items-center gap-3 text-white font-bold text-2xl">
+                      <Coins size={24} />
+                      Select an amount
+                    </div>
+                    <p className="text-sm text-gray-400 mt-1 uppercase">
+                      or select an amount manually in the field on the card
+                    </p>
                   </div>
 
                   {/* MODIFICA: Aggiunto un div contenitore con margine verticale (my-6) */}
-                  <div className="my-18">
+                  <div className="mt-10 mb-24">
                     <SlidingTabsNav
                       tabs={predefinedAmounts}
                       activeTab={customAmount}
@@ -284,9 +289,10 @@ const DonatePage = () => {
                   </div>
                 </div>
                 {/* --- SEZIONE METODO DI PAGAMENTO CON SOVRAPPOSIZIONE --- */}
-                <div className="space-y-16">
+                <div className="space-y-6 ">
                   <div className="flex items-center gap-3 text-white font-bold text-2xl">
-                    Scegli il metodo di pagamento
+                    <WalletCards size={24} />
+                    Select payment method
                   </div>
                   <div className="relative min-h-[450px]">
 
@@ -333,32 +339,120 @@ const DonatePage = () => {
                   </div>
                 </div>
 
-                <div className="space-y-14 mt-36">
+                <div className="space-y-0 mt-36">
                     {/* MODIFICA #2: Trasformato in un titolo più grande */}
                     <div className="flex items-center gap-3 text-white font-bold text-2xl">
-                        <Info size={20} /> {/* Icona leggermente più grande per abbinarsi al testo */}
-                        Informazioni (opzionali)
+                        <BadgeInfo size={24} />
+                        Informazioni
                     </div>
 
                     {/* Il resto della sezione rimane invariato */}
-                    <div className="grid gap-4 md:grid-cols-2">
-                    <div className="space-y-4">
+                    {/* MODIFICA: Sostituite le classi 'grid' con 'flex' */}
+                    <div className="flex justify-between items-end mt-12">
+                      <div className="space-y-4 w-5/12"> {/* Assegniamo una larghezza per evitare che si espanda troppo */}
                         <Label htmlFor="name" className="text-white font-bold">Nome</Label>
-                        <Input id="name" name="name" value={donorInfo.name} onChange={handleInputChange} placeholder="Il tuo nome" disabled={donorInfo.anonymous} className="underline-input" />
-                    </div>
-                    <div className="space-y-4">
+                        <Input id="name" name="name" value={donorInfo.name} onChange={handleInputChange} placeholder="Il tuo nome" disabled={donorInfo.anonymous} className="underline-input w-full" />
+                      </div>
+
+                      {/* Blocco Email (verrà spinto a destra) */}
+                      <div className="space-y-4 w-5/12"> {/* Assegniamo una larghezza per evitare che si espanda troppo */}
                         <Label htmlFor="email" className="text-white font-bold">Email</Label>
-                        <Input id="email" name="email" type="email" value={donorInfo.email} onChange={handleInputChange} placeholder="la-tua-email@esempio.com" className="underline-input" disabled={!!user} />
+                        <Input id="email" name="email" type="email" value={donorInfo.email} onChange={handleInputChange} placeholder="la-tua-email@esempio.com" className="underline-input w-full" disabled={!!user} />
+                      </div>
                     </div>
+
+                   <div className="space-y-4 mt-12">
+                      <Label htmlFor="message" className="text-white font-bold">Messaggio</Label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        value={donorInfo.message}
+                        onChange={handleInputChange}
+                        placeholder="Lascia un messaggio di supporto..."
+                        rows={3}
+                        className="underline-input"
+                      />
                     </div>
-                    <div className="space-y-4 mt-10">
-                    <Label htmlFor="message" className="text-white font-bold">Messaggio</Label>
-                    <Textarea id="message" name="message" value={donorInfo.message} onChange={handleInputChange} placeholder="Lascia un messaggio di supporto..." rows={3} className="underline-input" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                    <input type="checkbox" id="anonymous" name="anonymous" checked={donorInfo.anonymous} onChange={handleInputChange} className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
-                    <Label htmlFor="anonymous" className="text-white font-bold cursor-pointer">Voglio fare una donazione anonima</Label>
-                    </div>
+
+                    <div className="space-y-6 mt-10">
+                    <label htmlFor="anonymous" className="flex items-start cursor-pointer group">
+                      <div className="relative flex items-center justify-center h-5">
+                        {/* Input invisibile che gestisce lo stato */}
+                        <input
+                          id="anonymous"
+                          name="anonymous"
+                          type="checkbox"
+                          checked={donorInfo.anonymous}
+                          onChange={handleInputChange}
+                          className="absolute opacity-0 w-full h-full cursor-pointer peer"
+                        />
+                        {/* Box visibile con effetto ring al focus */}
+                        <div
+                          className="w-4 h-4 bg-gray-700 border-gray-600 rounded transition-colors
+                                     peer-checked:bg-[#0071e3]
+                                     group-focus-within:ring-2 group-focus-within:ring-offset-2 group-focus-within:ring-offset-black group-focus-within:ring-[#0071e3]"
+                        ></div>
+                        {/* Spunta SVG con transizione e stile corretto */}
+                        <svg
+                          className="absolute w-3 h-3 text-white opacity-0 transition-opacity duration-200 ease-in-out peer-checked:opacity-100"
+                          viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M3 8l3 3 7-7" />
+                        </svg>
+                      </div>
+                      {/* Testo a destra */}
+                      <div className="ms-3 text-sm">
+                        <span className="font-medium text-gray-300">I want to make an anonymous donation</span>
+                        <p className="text-xs font-normal text-gray-400">
+                          If selected, your name will not appear publicly. Your email is never stored.
+                        </p>
+                      </div>
+                    </label>
+
+                    {/* Checkbox #2: Termini e Condizioni */}
+                    <label htmlFor="terms" className="flex items-start cursor-pointer group">
+                      <div className="relative flex items-center justify-center h-5">
+                        {/* Input invisibile */}
+                        <input
+                          id="terms"
+                          name="terms"
+                          type="checkbox"
+                          checked={termsAccepted}
+                          onChange={(e) => setTermsAccepted(e.target.checked)}
+                          className="absolute opacity-0 w-full h-full cursor-pointer peer"
+                        />
+                        {/* Box visibile */}
+                        <div
+                          className="w-4 h-4 bg-gray-700 border-gray-600 rounded transition-colors
+                                     peer-checked:bg-[#0071e3]
+                                     group-focus-within:ring-2 group-focus-within:ring-offset-2 group-focus-within:ring-offset-black group-focus-within:ring-[#0071e3]"
+                        ></div>
+                        {/* Spunta SVG */}
+                        <svg
+                          className="absolute w-3 h-3 text-white opacity-0 transition-opacity duration-200 ease-in-out peer-checked:opacity-100"
+                          viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M3 8l3 3 7-7" />
+                        </svg>
+                      </div>
+                      {/* Testo a destra */}
+                      <div className="ms-3 text-sm">
+                        <span className="font-medium text-gray-300">
+                          I accept the <a href="/termini-e-condizioni" target="_blank" className="underline hover:text-white">Terms and Conditions</a>
+                        </span>
+                        <p className="text-xs font-normal text-gray-400">
+                          By clicking, you confirm that you have read and accepted our terms of service.
+                        </p>
+                      </div>
+                    </label>
+
+                  </div>
                 </div>
 
                 {/* Summary & Submit */}
