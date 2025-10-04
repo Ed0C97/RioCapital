@@ -22,6 +22,8 @@ import ArticlesByCategoryPage from './pages/ArticlesByCategoryPage';
 import ArchivePage from './pages/ArchivePage'; // <-- LA NUOVA PAGINA
 import CompleteProfilePage from './pages/CompleteProfilePage';
 import AdminPage from './pages/AdminPage';
+import SuccessPage from './pages/SuccessPage'; // <-- AGGIUNGI
+import CancelPage from './pages/CancelPage';
 
 function App() {
   return (

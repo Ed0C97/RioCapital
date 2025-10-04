@@ -25,10 +25,76 @@ import {
 } from 'lucide-react';
 import { SiApplepay, SiGooglepay, SiPaypal, SiSamsungpay } from 'react-icons/si';
 import { FaCreditCard } from 'react-icons/fa';
+import { toast } from 'sonner'; // Assicurati che toast sia importato
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, useStripe } from '@stripe/react-stripe-js';
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+const DonationFormWrapper = ({ amount, donorInfo, termsAccepted, children }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    toast.info('Stiamo preparando il pagamento sicuro...');
+    try {
+      const response = await fetch('http://localhost:5000/api/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: parseFloat(amount) }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error.message || 'Errore server.');
+      }
+
+      // 1. Prendiamo l'URL completo dal backend
+      const session = await response.json();
+
+      // 2. Eseguiamo un semplice redirect del browser
+      if (session.url) {
+        window.location.href = session.url;
+      } else {
+        throw new Error("URL di pagamento non ricevuto.");
+      }
+
+    } catch (error) {
+      toast.error(error.message || 'Errore di connessione.');
+      setLoading(false); // Riattiva il pulsante solo se c'è un errore
+    }
+  };
+
+  console.log({
+  isAmountValid: !!amount,
+  areTermsAccepted: termsAccepted,
+  isEmailValid: !!donorInfo.email,
+  isButtonDisabled: !amount || !termsAccepted || !donorInfo.email
+});
+// --- FINE BLOCCO DIAGNOSI ---
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-8">
+      {children}
+      <div className="flex justify-center pt-8 pb-32">
+        <Button
+          type="submit"
+          disabled={loading || !amount || !termsAccepted || !donorInfo.email}
+          className="btn-outline btn-outline-yellow !px-8 !py-3 !text-base"
+          size="lg"
+        >
+          <Heart className="w-4 h-4 mr-2" />
+          <span>{loading ? 'Elaborazione...' : `Dona Ora €${amount || '0'}`}</span>
+        </Button>
+      </div>
+    </form>
+  );
+};
 
 const DonatePage = () => {
   const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('10');
   const [donorInfo, setDonorInfo] = useState({
@@ -165,76 +231,7 @@ const DonatePage = () => {
     return customAmount || selectedAmount;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const amount = getFinalAmount();
-
-    if (!donorInfo.email || !/\S+@\S+\.\S+/.test(donorInfo.email)) {
-    toast.error('Inserisci un indirizzo email valido per la ricevuta.');
-    return; // Blocca l'invio del form se l'email non è valida
-  }
-
-    if (!paymentMethod) {
-      toast.error('Seleziona un metodo di pagamento');
-      return;
-    }
-    if (!amount || parseFloat(amount) < 1) {
-      toast.error('Inserisci un importo valido (minimo 1€)');
-      return;
-    }
-
-    if (!termsAccepted) {
-      toast.error('Devi accettare i termini e le condizioni per procedere.');
-      return; // Blocca l'invio del form
-    }
-
-    setLoading(true);
-
-    try {
-      const donationData = {
-        amount: parseFloat(amount),
-        donor_name: donorInfo.anonymous ? 'Donatore Anonimo' : donorInfo.name,
-        donor_email: donorInfo.email,
-        message: donorInfo.message,
-        payment_method: paymentMethod,
-        anonymous: donorInfo.anonymous
-      };
-
-      const response = await fetch('/api/donations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(donationData),
-      });
-
-      if (response.ok) {
-        toast.success('Grazie per la tua donazione! Stai per essere reindirizzato al pagamento.');
-        setTimeout(() => {
-          toast.info('Funzionalità di pagamento in fase di implementazione.');
-        }, 1500);
-
-        setSelectedAmount('');
-        setCustomAmount('');
-        setDonorInfo({
-          name: '',
-          email: '',
-          message: '',
-          anonymous: false
-        });
-      } else {
-        const error = await response.json();
-        toast.error(error.message || 'Errore durante l\'elaborazione della donazione.');
-      }
-    } catch (error) {
-      console.error('Errore:', error);
-      toast.error('Errore di connessione. Riprova più tardi.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
+    return (
     <div
       style={{
         background: 'linear-gradient(-70deg, #202020, #000000)'
@@ -264,210 +261,72 @@ const DonatePage = () => {
           <Card className="shadow-none border-none bg-transparent">
 
             <CardContent className="p-0">
-              <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Amount Selection */}
-                <div className="space-y-4">
-                  {/* Titolo uniformato */}
-                  <div>
-                    {/* Main Title */}
-                    <div className="flex items-center gap-3 text-white font-bold text-2xl">
-                      <Coins size={24} />
-                      Select an amount
-                    </div>
-                    <p className="text-sm text-gray-400 mt-1 uppercase">
-                      or select an amount manually in the field on the card
-                    </p>
-                  </div>
-
-                  {/* MODIFICA: Aggiunto un div contenitore con margine verticale (my-6) */}
-                  <div className="mt-10 mb-24">
-                    <SlidingTabsNav
-                      tabs={predefinedAmounts}
-                      activeTab={customAmount}
-                      onTabChange={handleAmountSelect}
-                    />
-                  </div>
-                </div>
-                {/* --- SEZIONE METODO DI PAGAMENTO CON SOVRAPPOSIZIONE --- */}
-                <div className="space-y-6 ">
-                  <div className="flex items-center gap-3 text-white font-bold text-2xl">
-                    <WalletCards size={24} />
-                    Select payment method
-                  </div>
-                  <div className="relative min-h-[450px]">
-
-                    {/* Elemento 1: La Card Animata (a destra) */}
-                    <div className="absolute top-0 left-95 w-[73%] z-10 -translate-y-10">
-                      <GlassCardForm
-                        selectedMethod={paymentMethod}
-                        paymentButtons={paymentButtons}
-                        cardDetails={cardDetails}
-                        onCardDetailsChange={handleCardInputChange}
-                        cardType={cardType}
-                        // Props aggiunte per l'importo
-                        customAmount={customAmount}
-                        onCustomAmountChange={handleCustomAmountChange}
-                      />
-                    </div>
-
-                    {/* Elemento 2: La Lista dei Metodi (a sinistra, sopra la card) */}
-                    <div className="absolute top-14 left-0 h-full w-[45%] z-10 flex flex-col justify-center pl-4 ">
-                      <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-2">
-                        {paymentButtons.map((method) => {
-                          const isSelected = paymentMethod === method.value;
-                          return (
-                            <Label
-                              key={method.value}
-                              htmlFor={method.value}
-                              className={`
-                                flex items-center space-x-4 p-2 cursor-pointer rounded-md transition-colors duration-200
-                                ${isSelected ? 'text-[#FBBC05] font-bold' : 'text-white hover:text-[#FBBC05] hover:font-bold'}
-                              `}
-                            >
-                              <RadioGroupItem value={method.value} id={method.value} className="sr-only" />
-                              <div className="w-6 h-6 flex items-center justify-center">
-                                {isSelected && <Check className="h-5 w-5 text-[#FBBC05]" />}
-                              </div>
-                              <method.icon className="w-6 h-6" />
-                              <span>{method.label}</span>
-                            </Label>
-                          );
-                        })}
-                      </RadioGroup>
-                    </div>
-
-                  </div>
-                </div>
-
-                <div className="space-y-0 mt-36">
-                    {/* MODIFICA #2: Trasformato in un titolo più grande */}
-                    <div className="flex items-center gap-3 text-white font-bold text-2xl">
-                        <BadgeInfo size={24} />
-                        Informazioni
-                    </div>
-
-                    {/* Il resto della sezione rimane invariato */}
-                    {/* MODIFICA: Sostituite le classi 'grid' con 'flex' */}
-                    <div className="flex justify-between items-end mt-12">
-                      <div className="space-y-4 w-5/12"> {/* Assegniamo una larghezza per evitare che si espanda troppo */}
-                        <Label htmlFor="name" className="text-white font-bold">Nome</Label>
-                        <Input id="name" name="name" value={donorInfo.name} onChange={handleInputChange} placeholder="Il tuo nome" disabled={donorInfo.anonymous} className="underline-input w-full" />
-                      </div>
-
-                      {/* Blocco Email (verrà spinto a destra) */}
-                      <div className="space-y-4 w-5/12"> {/* Assegniamo una larghezza per evitare che si espanda troppo */}
-                        <Label htmlFor="email" className="text-white font-bold">Email</Label>
-                        <Input id="email" name="email" type="email" value={donorInfo.email} onChange={handleInputChange} placeholder="la-tua-email@esempio.com" className="underline-input w-full" disabled={!!user} />
-                      </div>
-                    </div>
-
-                   <div className="space-y-4 mt-12">
-                      <Label htmlFor="message" className="text-white font-bold">Messaggio</Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        value={donorInfo.message}
-                        onChange={handleInputChange}
-                        placeholder="Lascia un messaggio di supporto..."
-                        rows={3}
-                        className="underline-input"
-                      />
-                    </div>
-
-                    <div className="space-y-6 mt-10">
-                    <label htmlFor="anonymous" className="flex items-start cursor-pointer group">
-                      <div className="relative flex items-center justify-center h-5">
-                        {/* Input invisibile che gestisce lo stato */}
-                        <input
-                          id="anonymous"
-                          name="anonymous"
-                          type="checkbox"
-                          checked={donorInfo.anonymous}
-                          onChange={handleInputChange}
-                          className="absolute opacity-0 w-full h-full cursor-pointer peer"
-                        />
-                        {/* Box visibile con effetto ring al focus */}
-                        <div
-                          className="w-4 h-4 bg-gray-700 border-gray-600 rounded transition-colors
-                                     peer-checked:bg-[#0071e3]
-                                     group-focus-within:ring-2 group-focus-within:ring-offset-2 group-focus-within:ring-offset-black group-focus-within:ring-[#0071e3]"
-                        ></div>
-                        {/* Spunta SVG con transizione e stile corretto */}
-                        <svg
-                          className="absolute w-3 h-3 text-white opacity-0 transition-opacity duration-200 ease-in-out peer-checked:opacity-100"
-                          viewBox="0 0 16 16" fill="none" stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M3 8l3 3 7-7" />
-                        </svg>
-                      </div>
-                      {/* Testo a destra */}
-                      <div className="ms-3 text-sm">
-                        <span className="font-medium text-gray-300">I want to make an anonymous donation</span>
-                        <p className="text-xs font-normal text-gray-400">
-                          If selected, your name will not appear publicly. Your email is never stored.
-                        </p>
-                      </div>
-                    </label>
-
-                    {/* Checkbox #2: Termini e Condizioni */}
-                    <label htmlFor="terms" className="flex items-start cursor-pointer group">
-                      <div className="relative flex items-center justify-center h-5">
-                        {/* Input invisibile */}
-                        <input
-                          id="terms"
-                          name="terms"
-                          type="checkbox"
-                          checked={termsAccepted}
-                          onChange={(e) => setTermsAccepted(e.target.checked)}
-                          className="absolute opacity-0 w-full h-full cursor-pointer peer"
-                        />
-                        {/* Box visibile */}
-                        <div
-                          className="w-4 h-4 bg-gray-700 border-gray-600 rounded transition-colors
-                                     peer-checked:bg-[#0071e3]
-                                     group-focus-within:ring-2 group-focus-within:ring-offset-2 group-focus-within:ring-offset-black group-focus-within:ring-[#0071e3]"
-                        ></div>
-                        {/* Spunta SVG */}
-                        <svg
-                          className="absolute w-3 h-3 text-white opacity-0 transition-opacity duration-200 ease-in-out peer-checked:opacity-100"
-                          viewBox="0 0 16 16" fill="none" stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M3 8l3 3 7-7" />
-                        </svg>
-                      </div>
-                      {/* Testo a destra */}
-                      <div className="ms-3 text-sm">
-                        <span className="font-medium text-gray-300">
-                          I accept the <a href="/termini-e-condizioni" target="_blank" className="underline hover:text-white">Terms and Conditions</a>
-                        </span>
-                        <p className="text-xs font-normal text-gray-400">
-                          By clicking, you confirm that you have read and accepted our terms of service.
-                        </p>
-                      </div>
-                    </label>
-
-                  </div>
-                </div>
-
-                {/* Summary & Submit */}
-                <div className="flex justify-center pt-8 pb-32">
-                <Button
-                  type="submit"
-                  disabled={loading || !getFinalAmount()}
-                  className="btn-outline btn-outline-yellow !px-8 !py-3 !text-base"
-                  size="lg"
+              <Elements stripe={stripePromise}>
+                <DonationFormWrapper
+                  amount={getFinalAmount()}
+                  donorInfo={donorInfo}
+                  termsAccepted={termsAccepted}
                 >
-                  <Heart className="w-4 h-4 mr-2" />
-                  <span>{loading ? 'Elaborazione...' : `Dona Ora €${getFinalAmount() || '0'}`}</span>
-                </Button>
-              </div>
-              </form>
+                  {/* Qui dentro ora ci sono solo i campi del form, senza <form> e senza pulsante */}
+
+                  {/* Amount Selection */}
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex items-center gap-3 text-white font-bold text-2xl"><Coins size={24} />Select an amount</div>
+                      <p className="text-sm text-gray-400 mt-1 uppercase">or select an amount manually in the field on the card</p>
+                    </div>
+                    <div className="mt-10 mb-24">
+                      <SlidingTabsNav tabs={predefinedAmounts} activeTab={customAmount} onTabChange={handleAmountSelect} />
+                    </div>
+                  </div>
+
+                  {/* Payment Method Section */}
+                  <div className="space-y-6 ">
+                    <div className="flex items-center gap-3 text-white font-bold text-2xl"><WalletCards size={24} />Select payment method</div>
+                    <div className="relative min-h-[450px]">
+                      <div className="absolute top-0 left-95 w-[73%] z-10 -translate-y-10">
+                        <GlassCardForm selectedMethod={paymentMethod} paymentButtons={paymentButtons} cardDetails={cardDetails} onCardDetailsChange={handleCardInputChange} cardType={cardType} customAmount={customAmount} onCustomAmountChange={handleCustomAmountChange} />
+                      </div>
+                      <div className="absolute top-14 left-0 h-full w-[45%] z-10 flex flex-col justify-center pl-4 ">
+                        <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-2">
+                          {paymentButtons.map((method) => {
+                            const isSelected = paymentMethod === method.value;
+                            return (
+                              <Label key={method.value} htmlFor={method.value} className={`flex items-center space-x-4 p-2 cursor-pointer rounded-md transition-colors duration-200 ${isSelected ? 'text-[#FBBC05] font-bold' : 'text-white hover:text-[#FBBC05] hover:font-bold'}`}>
+                                <RadioGroupItem value={method.value} id={method.value} className="sr-only" />
+                                <div className="w-6 h-6 flex items-center justify-center">{isSelected && <Check className="h-5 w-5 text-[#FBBC05]" />}</div>
+                                <method.icon className="w-6 h-6" />
+                                <span>{method.label}</span>
+                              </Label>
+                            );
+                          })}
+                        </RadioGroup>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Information Section */}
+                  <div className="space-y-0 mt-36">
+                    <div className="flex items-center gap-3 text-white font-bold text-2xl"><BadgeInfo size={24} />Informazioni</div>
+                    <div className="flex justify-between items-end mt-12">
+                      <div className="space-y-4 w-5/12"><Label htmlFor="name" className="text-white font-bold">Nome</Label><Input id="name" name="name" value={donorInfo.name} onChange={handleInputChange} placeholder="Il tuo nome" disabled={donorInfo.anonymous} className="underline-input w-full" /></div>
+                      <div className="space-y-4 w-5/12"><Label htmlFor="email" className="text-white font-bold">Email</Label><Input id="email" name="email" type="email" value={donorInfo.email} onChange={handleInputChange} placeholder="la-tua-email@esempio.com" className="underline-input w-full" disabled={!!user} /></div>
+                    </div>
+                    <div className="space-y-4 mt-12"><Label htmlFor="message" className="text-white font-bold">Messaggio</Label><Textarea id="message" name="message" value={donorInfo.message} onChange={handleInputChange} placeholder="Lascia un messaggio di supporto..." rows={3} className="underline-input" /></div>
+                    <div className="space-y-6 mt-10">
+                      <label htmlFor="anonymous" className="flex items-start cursor-pointer group">
+                        <div className="relative flex items-center justify-center h-5"><input id="anonymous" name="anonymous" type="checkbox" checked={donorInfo.anonymous} onChange={handleInputChange} className="absolute opacity-0 w-full h-full cursor-pointer peer" /><div className="w-4 h-4 bg-gray-700 border-gray-600 rounded transition-colors peer-checked:bg-[#0071e3] group-focus-within:ring-2 group-focus-within:ring-offset-2 group-focus-within:ring-offset-black group-focus-within:ring-[#0071e3]"></div><svg className="absolute w-3 h-3 text-white opacity-0 transition-opacity duration-200 ease-in-out peer-checked:opacity-100" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8l3 3 7-7" /></svg></div>
+                        <div className="ms-3 text-sm"><span className="font-medium text-gray-300">I want to make an anonymous donation</span><p className="text-xs font-normal text-gray-400">If selected, your name will not appear publicly. Your email is never stored.</p></div>
+                      </label>
+                      <label htmlFor="terms" className="flex items-start cursor-pointer group">
+                        <div className="relative flex items-center justify-center h-5"><input id="terms" name="terms" type="checkbox" checked={termsAccepted} onChange={(e) => setTermsAccepted(e.target.checked)} className="absolute opacity-0 w-full h-full cursor-pointer peer" /><div className="w-4 h-4 bg-gray-700 border-gray-600 rounded transition-colors peer-checked:bg-[#0071e3] group-focus-within:ring-2 group-focus-within:ring-offset-2 group-focus-within:ring-offset-black group-focus-within:ring-[#0071e3]"></div><svg className="absolute w-3 h-3 text-white opacity-0 transition-opacity duration-200 ease-in-out peer-checked:opacity-100" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8l3 3 7-7" /></svg></div>
+                        <div className="ms-3 text-sm"><span className="font-medium text-gray-300">I accept the <a href="/termini-e-condizioni" target="_blank" className="underline hover:text-white">Terms and Conditions</a></span><p className="text-xs font-normal text-gray-400">By clicking, you confirm that you have read and accepted our terms of service.</p></div>
+                      </label>
+                    </div>
+                  </div>
+
+                </DonationFormWrapper>
+              </Elements>
             </CardContent>
           </Card>
         </div>

@@ -35,6 +35,7 @@ from src.routes.analytics import analytics_bp
 from src.routes.upload import upload_bp
 from src.routes.filters import filters_bp
 from src.routes.content import content_bp
+from src.routes.stripe import stripe_bp
 
 
 def create_app():
@@ -96,6 +97,7 @@ def create_app():
     app.register_blueprint(newsletter_bp, url_prefix='/api/newsletter')
     app.register_blueprint(contact_bp, url_prefix='/api/contact')
     app.register_blueprint(content_bp, url_prefix='/api/content')
+    app.register_blueprint(stripe_bp, url_prefix='/api/stripe')
 
     # --- Registrazione Comandi CLI ---
     app.cli.add_command(create_admin)
