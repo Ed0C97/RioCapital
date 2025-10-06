@@ -1,8 +1,9 @@
 // src/components/ShareLinks.jsx
 
 import React, { useState } from 'react';
-import { Facebook, Twitter, Instagram, Mail, Link, Check } from 'lucide-react';
+import { Facebook, Instagram, Mail, Link, Check } from 'lucide-react';
 import { toast } from 'sonner';
+import { SiX } from 'react-icons/si'; // icona ufficiale di X
 
 const ShareLinks = ({ articleTitle }) => {
   const [copied, setCopied] = useState(false);
@@ -12,10 +13,26 @@ const ShareLinks = ({ articleTitle }) => {
   const encodedUrl = encodeURIComponent(pageUrl);
 
   const shareOptions = [
-    { name: 'Facebook', icon: Facebook, url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}` },
-    { name: 'X', icon: Twitter, url: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}` },
-    { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com' },
-    { name: 'Mail', icon: Mail, url: `mailto:?subject=${encodedTitle}&body=Leggi questo articolo: ${encodedUrl}` },
+    {
+      name: 'Facebook',
+      icon: Facebook,
+      url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`
+    },
+    {
+      name: 'X',
+      icon: SiX, // qui usiamo l’icona di X
+      url: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`
+    },
+    {
+      name: 'Instagram',
+      icon: Instagram,
+      url: 'https://www.instagram.com'
+    },
+    {
+      name: 'Mail',
+      icon: Mail,
+      url: `mailto:?subject=${encodedTitle}&body=Read this article: ${encodedUrl}`
+    },
   ];
 
   const copyLink = () => {

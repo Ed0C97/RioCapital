@@ -21,7 +21,8 @@ import {
     UtensilsCrossed,
     Check,
     Coins,
-    WalletCards
+    WalletCards,
+    Feather
 } from 'lucide-react';
 import { SiApplepay, SiGooglepay, SiPaypal, SiSamsungpay } from 'react-icons/si';
 import { FaCreditCard } from 'react-icons/fa';
@@ -124,6 +125,7 @@ const DonatePage = () => {
     anonymous: false
   });
   // --- STATO INIZIALE AGGIORNATO ---
+  const [activeSelection, setActiveSelection] = useState('10');
   const [paymentMethod, setPaymentMethod] = useState('card'); // Default su 'card'
   const [cardType, setCardType] = useState('default');
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -137,10 +139,11 @@ const DonatePage = () => {
   });
 
   const predefinedAmounts = [
-    { value: '5', icon: Coffee, title: 'Coffee'},
-    { value: '10', icon: Beer, title: 'Beer'},
-    { value: '20', icon: Hamburger, title: 'Aperitif'},
-    { value: '50', icon: UtensilsCrossed, title: 'Dinner'}
+    { value: '3', icon: Coffee, title: 'Coffee'},
+    { value: '8', icon: Beer, title: 'Beer'},
+    { value: '15', icon: Hamburger, title: 'Aperitif'},
+    { value: '30', icon: UtensilsCrossed, title: 'Dinner'},
+    { value: 'custom', icon: Feather, title: 'Custom' }
   ];
 
   const getCardType = (cardNumber) => {
@@ -173,16 +176,20 @@ const DonatePage = () => {
 ];
 
   const handleAmountSelect = (amount) => {
-    // Ora imposta semplicemente il valore intero, senza decimali
-    setCustomAmount(amount);
+    setActiveSelection(amount); // Imposta sempre la selezione attiva
+    if (amount === 'custom') {
+      setCustomAmount(''); // Svuota l'importo per mostrare il placeholder
+    } else {
+      setCustomAmount(amount); // Imposta l'importo predefinito
+    }
     setSelectedAmount('');
   };
 
   const handleCustomAmountChange = (e) => {
     const value = e.target.value;
-    // MODIFICA: La nuova regex accetta solo cifre (niente punti o virgole)
     if (/^\d*$/.test(value)) {
       setCustomAmount(value);
+      setActiveSelection('custom'); // Se l'utente digita, la selezione diventa 'custom'
       setSelectedAmount('');
     }
   };
@@ -298,7 +305,8 @@ const DonatePage = () => {
                       <p className="text-sm text-gray-400 mt-1 uppercase">or select an amount manually in the field on the card</p>
                     </div>
                     <div className="mt-10 mb-24">
-                      <SlidingTabsNav tabs={predefinedAmounts} activeTab={customAmount} onTabChange={handleAmountSelect} />
+                      {/* --- RIGA DA MODIFICARE --- */}
+                      <SlidingTabsNav tabs={predefinedAmounts} activeTab={activeSelection} onTabChange={handleAmountSelect} />
                     </div>
                   </div>
 

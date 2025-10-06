@@ -91,7 +91,7 @@ const RelatedArticles = ({ title, fetchUrl, variant = 'grid' }) => {
             variant="outline"
             className="btn-outline btn-outline-blue !px-8 !py-3 !text-base"
           >
-            Sfoglia l'archivio
+            Explore the archive
           </Button>
           </Link>
         </div>
