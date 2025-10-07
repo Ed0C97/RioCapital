@@ -23,11 +23,6 @@ Contenuti:
    Descrizione: Variabili CSS globali per i colori principali, per una gestione
                 centralizzata e una facile personalizzazione del tema.
    ============================================================================== */
-@layer base {
-  html {
-    zoom: 1.10;
-  }
-}
 
 :root {
   --color-text-primary: #1d1d1f; /* Testo scuro principale */

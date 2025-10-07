@@ -1,6 +1,7 @@
 # RioCapitalBlog-backend/src/routes/articles.py
 
 from flask import Blueprint, request, jsonify, session
+from sqlalchemy import or_, extract
 from datetime import datetime
 import re
 from sqlalchemy import extract
@@ -15,6 +16,7 @@ from src.models.user import User
 
 from src.extensions import db
 from src.routes.auth import login_required, author_required
+from src.models.category import Category
 
 articles_bp = Blueprint('articles', __name__)
 
@@ -24,65 +26,65 @@ def create_slug(title):
     slug = re.sub(r'[-\s]+', '-', slug)
     return slug.strip('-')
 
+
+# src/routes/articles.py
+
 @articles_bp.route('/', methods=['GET'])
 def get_articles():
     try:
+        # --- PRINT 1: VEDIAMO COSA RICEVE IL SERVER ---
+        print("PARAMETRI RICEVUTI:", request.args)
+        # ---------------------------------------------
 
         page = request.args.get('page', 1, type=int)
-        per_page = request.args.get('per_page', 10, type=int)
-        category_id = request.args.get('category_id', type=int)
-        author_id = request.args.get('author_id', type=int)
-        search = request.args.get('search', '')
-        published_only = request.args.get('published', 'true').lower() == 'true'
-        exclude_id = request.args.get('exclude_id', type=int)
-
+        per_page = request.args.get('per_page', 12, type=int)
         category_slug = request.args.get('category_slug', type=str)
+        author_id = request.args.get('author_id', type=int)
+        year = request.args.get('year', type=int)
+        month = request.args.get('month', type=int)
+        exclude_id = request.args.get('exclude_id', type=int)
+        search_query = request.args.get('q', type=str)
 
-        query = Article.query
+        query = Article.query.filter(Article.published.is_(True))
 
         if exclude_id:
             query = query.filter(Article.id != exclude_id)
 
-        if published_only:
-            query = query.filter(Article.published == True)
-
-        if category_id:
-            query = query.filter(Article.category_id == category_id)
-
-        if category_slug:
-
-            query = query.join(Category).filter(Category.slug == category_slug)
-
-        if author_id:
-            query = query.filter(Article.author_id == author_id)
-
-        if search:
+        if search_query:
+            # --- PRINT 2: VERIFICHIAMO SE IL FILTRO VIENE ATTIVATO ---
+            print(f"FILTRO DI RICERCA ATTIVATO CON TERMINE: {search_query}")
+            # -------------------------------------------------------
+            search_term = f"%{search_query}%"
             query = query.filter(
-                Article.title.contains(search) |
-                Article.content.contains(search) |
-                Article.excerpt.contains(search)
+                or_(
+                    Article.title.ilike(search_term),
+                    Article.content.ilike(search_term),
+                    Article.excerpt.ilike(search_term)
+                )
             )
 
-        query = query.order_by(Article.created_at.desc())
+        if category_slug:
+            query = query.join(Category).filter(Category.slug == category_slug)
+        if author_id:
+            query = query.filter(Article.author_id == author_id)
+        if year:
+            query = query.filter(extract('year', Article.created_at) == year)
+            if month:
+                query = query.filter(extract('month', Article.created_at) == month)
 
-        articles_pagination = query.paginate(
-            page=page,
-            per_page=per_page,
-            error_out=False
-        )
+        paginated_articles = query.order_by(Article.created_at.desc()).paginate(page=page, per_page=per_page,
+                                                                                error_out=False)
 
         return jsonify({
-            'articles': [article.to_dict() for article in articles_pagination.items],
-            'total': articles_pagination.total,
-            'pages': articles_pagination.pages,
-            'current_page': page,
-            'per_page': per_page
+            'articles': [article.to_dict() for article in paginated_articles.items],
+            'total_articles': paginated_articles.total,
+            'total_pages': paginated_articles.pages,
+            'current_page': page
         }), 200
 
     except Exception as e:
-
         print(f"Errore in get_articles: {e}")
-        return jsonify({'error': 'Si è verificato un errore interno'}), 500
+        return jsonify({'error': 'An internal error occurred'}), 500
 
 @articles_bp.route('/<int:article_id>', methods=['GET'])
 def get_article(article_id):

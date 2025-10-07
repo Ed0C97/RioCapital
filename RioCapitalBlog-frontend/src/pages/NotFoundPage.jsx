@@ -1,5 +1,10 @@
+// RioCapitalBlog-frontend/src/pages/NotFoundPage.jsx
+
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+// --- 1. IMPORTA useNavigate E I LINK DIRETTI ---
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import directLinks from '../data/directLinks.json';
+// ---------------------------------------------
 import { Card, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -17,19 +22,29 @@ import {
 const NotFoundPage = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const location = useLocation();
+  const navigate = useNavigate(); // --- 2. INIZIALIZZA useNavigate ---
 
+  // --- 3. SOSTITUISCI CON LA FUNZIONE DI RICERCA "INTELLIGENTE" ---
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
+    const query = searchQuery.trim().toLowerCase();
+
+    if (query) {
+      if (directLinks[query]) {
+        navigate(directLinks[query]); // Navigazione diretta
+      } else {
+        navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`); // Ricerca generica
+      }
+      setSearchQuery('');
     }
   };
+  // ----------------------------------------------------------------
 
   const popularPages = [
     { title: "Home", description: "Return to the main page", icon: <Home className="h-5 w-5 text-gray-500" />, href: "/" },
-    { title: "Archive", description: "Discover our latest content", icon: <BookOpen className="h-5 w-5 text-gray-500" />, href: "/archivio" },
-    { title: "Support Us", description: "Help us keep the blog running", icon: <Heart className="h-5 w-5 text-gray-500" />, href: "/dona" },
-    { title: "About Us", description: "Learn more about our mission", icon: <Users className="h-5 w-5 text-gray-500" />, href: "/chi-siamo" }
+    { title: "Archive", description: "Discover our latest content", icon: <BookOpen className="h-5 w-5 text-gray-500" />, href: "/archive" },
+    { title: "Support Us", description: "Help us keep the blog running", icon: <Heart className="h-5 w-5 text-gray-500" />, href: "/donate" },
+    { title: "About Us", description: "Learn more about our mission", icon: <Users className="h-5 w-5 text-gray-500" />, href: "/about-us" }
   ];
 
   return (

@@ -35,24 +35,27 @@ function App() {
             <Routes>
               {/* --- Rotte Principali --- */}
               <Route path="/" element={<HomePage />} />
-              <Route path="/articolo/:slug" element={<ArticleDetailPage />} />
+              <Route path="/article/:slug" element={<ArticleDetailPage />} />
               <Route path="/categoria/:slug" element={<ArticlesByCategoryPage />} />
-              <Route path="/archivio" element={<ArchivePage />} />
+              <Route path="/archive" element={<ArchivePage />} />
               
               {/* --- Vecchie rotte per le categorie ora puntano all'archivio --- */}
               <Route path="/categorie" element={<ArchivePage />} />
               <Route path="/categories" element={<ArchivePage />} />
 
               {/* --- Altre Pagine --- */}
-              <Route path="/chi-siamo" element={<AboutPage />} />
-              <Route path="/contatti" element={<ContactPage />} />
-              <Route path="/dona" element={<DonatePage />} />
-              
+              <Route path="/about-us" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/donate" element={<DonatePage />} />
+
+              {/* --- PAGINA DI RICERCA (DA AGGIUNGERE) --- */}
+              <Route path="/search" element={<ArchivePage />} />
+
               {/* --- Autenticazione e Profilo --- */}
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="/profilo" element={<ProfilePage />} />
-              <Route path="/preferiti" element={<FavoritesPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/favorites" element={<FavoritesPage />} />
               
               {/* --- Area Admin/Collaboratore --- */}
               <Route path="/admin/articoli/nuovo" element={<ArticleEditorPage />} />

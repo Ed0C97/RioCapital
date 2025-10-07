@@ -317,10 +317,18 @@ useEffect(() => {
                 <Button onClick={handlePreview} disabled={!article.title || !article.content} className="btn-outline btn-outline-gray">
                   <Eye className="w-4 h-4 mr-2" /> Anteprima
                 </Button>
-                <Button onClick={() => handleSave(false)} disabled={saving} className="btn-outline btn-outline-blue">
+                <Button
+                  onClick={() => handleSave(false)}
+                  disabled={saving || article.published} // Disabilitato se sta salvando O se l'articolo è già pubblicato
+                  className="btn-outline btn-outline-blue"
+                >
                   <Save className="w-4 h-4 mr-2" /> {saving ? 'Salvando...' : 'Salva Bozza'}
                 </Button>
-                <Button onClick={() => handleSave(true)} disabled={saving} className="btn-outline btn-outline-green">
+                <Button
+                  onClick={() => handleSave(true)}
+                  disabled={saving || !article.published} // Disabilitato se sta salvando O se l'articolo NON è pubblicato
+                  className="btn-outline btn-outline-green"
+                >
                   <CheckCircle className="w-4 h-4 mr-2" /> {saving ? 'Pubblicando...' : 'Pubblica'}
                 </Button>
               </div>

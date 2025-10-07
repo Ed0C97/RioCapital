@@ -59,9 +59,9 @@ const Footer = () => {
             <h3 className="font-semibold text-gray-800">Navigation</h3>
             <div className="flex flex-col space-y-2">
               <Link to="/" className="text-sm text-gray-500 hover:text-blue-600">Home</Link>
-              <Link to="/chi-siamo" className="text-sm text-gray-500 hover:text-blue-600">About Us</Link>
-              <Link to="/archivio" className="text-sm text-gray-500 hover:text-blue-600">Archive</Link>
-              <Link to="/contatti" className="text-sm text-gray-500 hover:text-blue-600">Contact</Link>
+              <Link to="/about-us" className="text-sm text-gray-500 hover:text-blue-600">About Us</Link>
+              <Link to="/archive" className="text-sm text-gray-500 hover:text-blue-600">Archive</Link>
+              <Link to="/contact" className="text-sm text-gray-500 hover:text-blue-600">Contact</Link>
             </div>
           </div>
 

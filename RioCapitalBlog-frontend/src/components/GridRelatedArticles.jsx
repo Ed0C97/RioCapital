@@ -14,7 +14,7 @@ const GridArticleItem = ({ article }) => {
   };
 
   return (
-    <Link to={`/articolo/${article.slug}`} className="article-list-item">
+    <Link to={`/article/${article.slug}`} className="article-list-item">
       <div className="article-list-item-image aspect-square"> {/* Immagine sempre quadrata */}
         <img src={article.image_url || placeholderImage} alt={article.title} />
       </div>
@@ -43,7 +43,7 @@ const GridRelatedArticles = ({ title, fetchUrl }) => {
           ))}
         </div>
         <div className="archive-button-container">
-          <Link to="/archivio">
+          <Link to="/archive">
             <Button size="lg" variant="outline">Sfoglia l'archivio</Button>
           </Link>
         </div>

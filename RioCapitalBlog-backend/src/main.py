@@ -36,7 +36,7 @@ from src.routes.upload import upload_bp
 from src.routes.filters import filters_bp
 from src.routes.content import content_bp
 from src.routes.stripe import stripe_bp
-
+from src.routes.search import search_bp
 
 def create_app():
     """Application Factory Function"""
@@ -98,6 +98,7 @@ def create_app():
     app.register_blueprint(contact_bp, url_prefix='/api/contact')
     app.register_blueprint(content_bp, url_prefix='/api/content')
     app.register_blueprint(stripe_bp, url_prefix='/api/stripe')
+    app.register_blueprint(search_bp, url_prefix='/api')
 
     # --- Registrazione Comandi CLI ---
     app.cli.add_command(create_admin)

@@ -52,7 +52,7 @@ def cerca_stringa_in_file(directory_radice, stringa_da_cercare, workers=8):
 
 if __name__ == "__main__":
     directory_di_partenza = "."  # Directory corrente
-    stringa_obiettivo = "SlidingTabsNav"  # Stringa da cercare
+    stringa_obiettivo = "/articolo/"  # Stringa da cercare
 
     print(
         f"🔍 Ricerca della stringa '{stringa_obiettivo}' "

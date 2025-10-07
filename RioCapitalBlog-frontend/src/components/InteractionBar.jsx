@@ -115,7 +115,7 @@ const InteractionBar = ({ article, onUpdate }) => {
 
       {/* --- Link Commenti --- */}
       <Link
-        to={`/articolo/${article.slug}#commenti`}
+        to={`/article/${article.slug}#commenti`}
         className="flex items-center space-x-1.5 hover:text-blue-500 transition-colors duration-200 group"
       >
         <MessageCircle

@@ -5,7 +5,7 @@ import { it } from 'date-fns/locale';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 
 const ArchiveListItem = ({ article }) => {
   const placeholderImage = 'https://...';
@@ -15,7 +15,7 @@ const ArchiveListItem = ({ article }) => {
   };
 
   return (
-    <Link to={`/articolo/${article.slug}`} className="archive-item-link">
+    <Link to={`/article/${article.slug}`} className="archive-item-link">
       <div className="archive-item">
         <div className="archive-item-image"><img src={article.image_url || placeholderImage} alt={article.title} /></div>
         <div className="archive-item-content">
@@ -36,6 +36,12 @@ const ArchivePage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [filterOptions, setFilterOptions] = useState({ categories: [], authors: [], dates: {} });
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('q');
+
+  const clearSearch = (e) => {
+    e.preventDefault();
+    setSearchParams({});
+  };
 
   const goToPage = (num) => {
     let validPage = Math.min(Math.max(1, num), totalPages);
@@ -47,26 +53,33 @@ const ArchivePage = () => {
     const fetchPageData = async () => {
       setLoading(true);
       try {
-        const filtersResponse = await fetch('/api/filters/options');
-        if (filtersResponse.ok) setFilterOptions(await filtersResponse.json());
+        //const filtersResponse = await fetch('/api/filters/options');
+        //if (filtersResponse.ok) setFilterOptions(await filtersResponse.json());
 
         const params = new URLSearchParams({ per_page: '12', page: String(page) });
+
+        // Aggiungi i filtri esistenti
         if (searchParams.get('category')) params.append('category_slug', searchParams.get('category'));
         if (searchParams.get('author')) params.append('author_id', searchParams.get('author'));
         if (searchParams.get('year')) params.append('year', searchParams.get('year'));
         if (searchParams.get('month')) params.append('month', searchParams.get('month'));
 
+        // Aggiungi il nuovo filtro di ricerca testuale
+        if (searchQuery) {
+          params.append('q', searchQuery);
+        }
+
         const articlesResponse = await fetch(`/api/articles?${params.toString()}`);
         if (articlesResponse.ok) {
           const data = await articlesResponse.json();
           setArticles(data.articles || []);
-          setTotalPages(data.pages || 1);
+          setTotalPages(data.total_pages || 1);
         }
       } catch (error) { console.error("Errore:", error); }
       finally { setLoading(false); }
     };
     fetchPageData();
-  }, [searchParams, page]);
+  }, [searchParams, page, searchQuery]); // <-- Aggiungi searchQuery alle dipendenze
 
   const handleFilterChange = (filterName, value) => {
     setSearchParams(prevParams => {
@@ -94,8 +107,20 @@ const ArchivePage = () => {
   return (
     <div className="bg-white w-full">
       <div className="mx-auto px-4 py-12" style={{ maxWidth: '1012px' }}>
-        <h1 className="text-4xl font-bold mb-14">Archivio</h1>
-        {/* --- MODIFICA 1: Rimosso 'border-b' e 'pb-8', aggiornato 'mb-5' a 'mb-8' --- */}
+        {searchQuery ? (
+        <div className="flex items-center gap-4 mb-14">
+          <h1 className="text-3xl font-bold">Results for:</h1>
+          <span className="inline-flex items-center gap-x-3 px-4 py-2 text-2xl font-bold bg-blue-100 text-blue-800 rounded-full">
+            "{searchQuery}"
+            <a href="#" onClick={clearSearch} className="text-blue-600 hover:text-blue-900">
+              <X className="w-5 h-5" />
+            </a>
+          </span>
+        </div>
+      ) : (
+        <h1 className="text-4xl font-bold mb-14">Archive</h1>
+      )}
+        {!searchQuery && (
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <Select
             value={searchParams.get('category') || 'all'}
@@ -150,6 +175,7 @@ const ArchivePage = () => {
             </SelectContent>
           </Select>
         </div>
+        )}
 
         <div className="space-y-12">
           {Object.entries(groupedArticles).map(([monthYear, articlesInGroup]) => (

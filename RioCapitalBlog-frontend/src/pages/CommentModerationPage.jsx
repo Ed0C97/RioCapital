@@ -457,7 +457,7 @@ const CommentModerationPage = () => {
                               </>
                             )}
                             <DropdownMenuItem asChild>
-                              <Link to={`/articolo/${comment.article?.slug}#comment-${comment.id}`} target="_blank">
+                              <Link to={`/article/${comment.article?.slug}#comment-${comment.id}`} target="_blank">
                                 <Eye className="w-4 h-4 mr-2" />
                                 Visualizza nell'articolo
                               </Link>
@@ -478,7 +478,7 @@ const CommentModerationPage = () => {
                         <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-3">
                           <FileText className="w-4 h-4" />
                           <Link
-                            to={`/articolo/${comment.article?.slug}`}
+                            to={`/article/${comment.article?.slug}`}
                             className="hover:text-primary transition-colors line-clamp-1"
                             target="_blank"
                           >

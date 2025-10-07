@@ -29,7 +29,7 @@ const ShareButton = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const shareUrl = url || `${window.location.origin}/articolo/${articleId}`;
+  const shareUrl = url || `${window.location.origin}/article/${articleId}`;
   const shareTitle = title || 'Articolo interessante su RioCapitalBlog';
 
   const trackShare = async (platform) => {

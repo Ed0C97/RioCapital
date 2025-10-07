@@ -37,7 +37,7 @@ const ArticleCard = ({
   };
 
   return (
-    <Link to={`/articolo/${article.slug}`} className="block h-full group">
+    <Link to={`/article/${article.slug}`} className="block h-full group">
 
       {}
       <div className="

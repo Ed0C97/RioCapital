@@ -28,7 +28,7 @@ const NewsTile = ({ article, variant = 'standard' }) => {
 
   if (variant === 'hero') {
     return (
-      <Link to={`/articolo/${article.slug}`} className="news-card-link">
+      <Link to={`/article/${article.slug}`} className="news-card-link">
         <div className="news-card news-card--hero">
           <div className="news-card-media">
             <img src={article.image_url || placeholderImage} alt={article.title} />
@@ -49,7 +49,7 @@ const NewsTile = ({ article, variant = 'standard' }) => {
   }
 
   return (
-    <Link to={`/articolo/${article.slug}`} className="news-card-link">
+    <Link to={`/article/${article.slug}`} className="news-card-link">
       <div className="news-card news-card--standard">
         <div className="news-card-media">
           <img src={article.image_url || placeholderImage} alt={article.title} />

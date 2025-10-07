@@ -409,7 +409,7 @@ const MyArticlesPage = () => {
                             </DropdownMenuItem>
                             {article.published && (
                               <DropdownMenuItem asChild>
-                                <Link to={`/articolo/${article.slug}`} target="_blank">
+                                <Link to={`/article/${article.slug}`} target="_blank">
                                   <Eye className="w-4 h-4 mr-2" />
                                   Visualizza
                                 </Link>

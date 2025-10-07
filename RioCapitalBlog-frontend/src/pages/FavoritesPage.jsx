@@ -18,7 +18,7 @@ const LikedArticleListItem = ({ article }) => {
   };
 
   return (
-    <Link to={`/articolo/${article.slug}`} className="archive-item-link">
+    <Link to={`/article/${article.slug}`} className="archive-item-link">
       <div className="archive-item">
         <div className="archive-item-image">
           <img src={article.image_url || placeholderImage} alt={article.title} />

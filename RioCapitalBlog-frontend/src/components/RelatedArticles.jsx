@@ -18,7 +18,7 @@ const ArticleListItem = ({ article }) => {
   };
 
   return (
-    <Link to={`/articolo/${article.slug}`} className="article-list-item">
+    <Link to={`/article/${article.slug}`} className="article-list-item">
       <div className="article-list-item-image">
         <img src={article.image_url || placeholderImage} alt={article.title} />
       </div>
@@ -85,7 +85,7 @@ const RelatedArticles = ({ title, fetchUrl, variant = 'grid' }) => {
 
         {variant === 'grid' && (
         <div className="archive-button-container mt-22 flex justify-center">
-          <Link to="/archivio">
+          <Link to="/archive">
           <Button
             size="lg"
             variant="outline"

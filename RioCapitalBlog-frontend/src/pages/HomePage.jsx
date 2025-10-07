@@ -85,7 +85,7 @@ const HomePage = () => {
 
             {/* Articolo HERO (Riga 1) */}
             <div className="article-item--1">
-              <Link to={`/articolo/${articles[0].slug}`} className="news-card news-card--hero">
+              <Link to={`/article/${articles[0].slug}`} className="news-card news-card--hero">
                 <div className="news-card-media">
                   <img src={articles[0].image_url || placeholderImage} alt={articles[0].title} />
                 </div>
@@ -111,7 +111,7 @@ const HomePage = () => {
             {/* Articoli MEDI (Riga 2) */}
             {articles[1] && (
               <div className="article-item--2">
-                <Link to={`/articolo/${articles[1].slug}`} className="news-card news-card--standard">
+                <Link to={`/article/${articles[1].slug}`} className="news-card news-card--standard">
                   <div className="news-card-media"><img src={articles[1].image_url || placeholderImage} alt={articles[1].title} /></div>
                   <div className="news-card-content">
                     <div className="flex-grow">
@@ -128,7 +128,7 @@ const HomePage = () => {
             )}
             {articles[2] && (
               <div className="article-item--3">
-                <Link to={`/articolo/${articles[2].slug}`} className="news-card news-card--standard">
+                <Link to={`/article/${articles[2].slug}`} className="news-card news-card--standard">
                   <div className="news-card-media"><img src={articles[2].image_url || placeholderImage} alt={articles[2].title} /></div>
                   <div className="news-card-content">
                     <div className="flex-grow">
@@ -147,7 +147,7 @@ const HomePage = () => {
             {/* Articoli PICCOLI (Riga 3) */}
             {articles.slice(3, 6).map((article, index) => (
             <div className={`article-item--${index + 4}`} key={article.id}>
-              <Link to={`/articolo/${article.slug}`} className="news-card news-card--standard news-card--small">
+              <Link to={`/article/${article.slug}`} className="news-card news-card--standard news-card--small">
                   <div className="news-card-media"><img src={article.image_url || placeholderImage} alt={article.title} /></div>
                   <div className="news-card-content">
                     <div className="flex-grow">

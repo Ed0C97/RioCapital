@@ -90,8 +90,8 @@ const ArticleListItem = ({ article, onTogglePublish, onDelete }) => (
             {/* Contenuto Principale */}
             <div className="flex-1 min-w-0">
                 <div className="flex items-center space-x-4 mb-2.5 flex-wrap">
-                    <span className={`text-sm font-semibold ${article.published ? 'text-xs text-blue-600' : 'text-red-600'}`}>
-                        {article.published ? 'PUBLISHED' : 'Bozza'}
+                    <span className={`text-xs font-semibold ${article.published ? 'text-blue-600' : 'text-red-600'}`}>
+                      {article.published ? 'PUBLISHED' : 'DRAFT'}
                     </span>
                     {article.category && (
                         <span className="text-sm text-gray-500">{article.category.name}</span>
@@ -135,7 +135,7 @@ const ArticleListItem = ({ article, onTogglePublish, onDelete }) => (
                   {article.published && (
                     <DropdownMenuItem asChild>
                       <Link
-                        to={`/articolo/${article.slug}`}
+                        to={`/article/${article.slug}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
