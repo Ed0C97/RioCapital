@@ -8,9 +8,10 @@ import { format, formatDistanceToNow, differenceInDays } from 'date-fns';
 import { it } from 'date-fns/locale';
 import RelatedArticles from '../components/RelatedArticles';
 import ArticleActions from '../components/ArticleActions';
-
-// --- MODIFICA CHIAVE: Aggiungi questa riga di importazione ---
 import Disclaimer from '../components/Disclaimer';
+
+// 1. === IMPORTA IL COMPONENTE PER L'ANIMAZIONE ===
+import FadeInOnScroll from '../components/FadeInOnScroll';
 
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
@@ -62,29 +63,30 @@ const HomePage = () => {
 
   const placeholderImage = 'https://images.unsplash.com/photo-1518186225043-963158e70a41?q=80&w=1974&auto=format&fit=crop';
 
-  if (loading) {
+  if (loading ) {
     return <div className="text-center p-20">Caricamento...</div>;
   }
   if (articles.length === 0) {
     return <div className="text-center p-20">Nessun articolo da mostrare.</div>;
   }
 
-  const heroArticle = articles[0];
-  const secondaryArticles = articles.slice(1);
-
   return (
     <>
       {/* === Blocco 1: Ultime Notizie (con larghezza limitata) === */}
       <div className="mx-auto px-4 py-12" style={{ maxWidth: '1012px' }}>
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold">Ultimi Articoli</h1>
-        </div>
+        {/* 2. === AVVOLGI IL TITOLO === */}
+        <FadeInOnScroll>
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold">Ultimi Articoli</h1>
+          </div>
+        </FadeInOnScroll>
 
         {articles.length > 0 ? (
           <div className="news-grid">
 
             {/* Articolo HERO (Riga 1) */}
-            <div className="article-item--1">
+            {/* 3. === AVVOLGI OGNI CARD CON UN RITARDO CRESCENTE === */}
+            <FadeInOnScroll className="article-item--1" delay={0}>
               <Link to={`/article/${articles[0].slug}`} className="news-card news-card--hero">
                 <div className="news-card-media">
                   <img src={articles[0].image_url || placeholderImage} alt={articles[0].title} />
@@ -106,11 +108,11 @@ const HomePage = () => {
                   </div>
                 </div>
               </Link>
-            </div>
+            </FadeInOnScroll>
 
             {/* Articoli MEDI (Riga 2) */}
             {articles[1] && (
-              <div className="article-item--2">
+              <FadeInOnScroll className="article-item--2" delay={100}>
                 <Link to={`/article/${articles[1].slug}`} className="news-card news-card--standard">
                   <div className="news-card-media"><img src={articles[1].image_url || placeholderImage} alt={articles[1].title} /></div>
                   <div className="news-card-content">
@@ -124,10 +126,10 @@ const HomePage = () => {
                     </div>
                   </div>
                 </Link>
-              </div>
+              </FadeInOnScroll>
             )}
             {articles[2] && (
-              <div className="article-item--3">
+              <FadeInOnScroll className="article-item--3" delay={200}>
                 <Link to={`/article/${articles[2].slug}`} className="news-card news-card--standard">
                   <div className="news-card-media"><img src={articles[2].image_url || placeholderImage} alt={articles[2].title} /></div>
                   <div className="news-card-content">
@@ -141,45 +143,50 @@ const HomePage = () => {
                       </div>
                   </div>
                 </Link>
-              </div>
+              </FadeInOnScroll>
             )}
 
             {/* Articoli PICCOLI (Riga 3) */}
             {articles.slice(3, 6).map((article, index) => (
-            <div className={`article-item--${index + 4}`} key={article.id}>
-              <Link to={`/article/${article.slug}`} className="news-card news-card--standard news-card--small">
-                  <div className="news-card-media"><img src={article.image_url || placeholderImage} alt={article.title} /></div>
-                  <div className="news-card-content">
-                    <div className="flex-grow">
-                      <div className="flex justify-between items-baseline"><p className="news-card-category">{article.category_name}</p>{isVeryRecent(article.created_at) && <p className="news-card-eyebrow-new">Novità</p>}</div>
-                      <h3 className="news-card-headline">{article.title}</h3>
-                    </div>
-                      <div className="flex items-baseline justify-between mt-4">
-                        <p className="news-card-timestamp">{isRecent(article.created_at) && <Clock size={16} />}<span>{formatDate(article.created_at)}</span></p>
-                        <ArticleActions article={article} size="small" />
+              <FadeInOnScroll className={`article-item--${index + 4}`} key={article.id} delay={300 + index * 100}>
+                <Link to={`/article/${article.slug}`} className="news-card news-card--standard news-card--small">
+                    <div className="news-card-media"><img src={article.image_url || placeholderImage} alt={article.title} /></div>
+                    <div className="news-card-content">
+                      <div className="flex-grow">
+                        <div className="flex justify-between items-baseline"><p className="news-card-category">{article.category_name}</p>{isVeryRecent(article.created_at) && <p className="news-card-eyebrow-new">Novità</p>}</div>
+                        <h3 className="news-card-headline">{article.title}</h3>
                       </div>
-                  </div>
-                </Link>
-              </div>
+                        <div className="flex items-baseline justify-between mt-4">
+                          <p className="news-card-timestamp">{isRecent(article.created_at) && <Clock size={16} />}<span>{formatDate(article.created_at)}</span></p>
+                          <ArticleActions article={article} size="small" />
+                        </div>
+                    </div>
+                  </Link>
+                </FadeInOnScroll>
             ))}
           </div>
         ) : (
           <div className="text-center py-12"><h3 className="text-xl font-semibold">Nessun articolo da mostrare.</h3></div>
         )}
 
-        <div className="mt-24 mb-4">
-          <Disclaimer variant="white" />
-        </div>
+        {/* 4. === AVVOLGI ANCHE GLI ELEMENTI FINALI DELLA PAGINA === */}
+        <FadeInOnScroll>
+          <div className="mt-24 mb-4">
+            <Disclaimer variant="white" />
+          </div>
+        </FadeInOnScroll>
 
       </div>
 
       {/* === Blocco 2: I Più Popolari (con sfondo a larghezza piena) === */}
-      <div className="mt-16">
-        <RelatedArticles
-          title="I più popolari"
-          fetchUrl="/api/articles?per_page=4"
-        />
-      </div>
+      <FadeInOnScroll>
+        <div className="mt-16">
+          <RelatedArticles
+            title="I più popolari"
+            fetchUrl="/api/articles?per_page=4"
+          />
+        </div>
+      </FadeInOnScroll>
     </>
   );
 };
