@@ -9,7 +9,7 @@ from typing import Dict, Callable, List, Set, Optional, Tuple
 # Definisci qui la directory principale del tuo progetto.
 # Per portabilità, è meglio usare un percorso assoluto o relativo allo script.
 # Esempio: ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = r'F:\cacio\Documents\Personal_Projects\Rio_Capital_Blog'
+ROOT_DIR = r'/'
 
 # Nome dello script da ignorare durante l'elaborazione.
 SCRIPT_NAME = os.path.basename(__file__)
