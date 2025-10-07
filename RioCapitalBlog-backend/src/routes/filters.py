@@ -10,7 +10,7 @@ from src.extensions import db
 filters_bp = Blueprint('filters', __name__)
 
 
-@filters_bp.route('/filters/options', methods=['GET'])
+@filters_bp.route('/options', methods=['GET'])
 def get_filter_options():
     try:
         # 1. Prendi tutte le categorie

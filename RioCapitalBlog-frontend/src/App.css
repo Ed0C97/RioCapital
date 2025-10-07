@@ -23,6 +23,11 @@ Contenuti:
    Descrizione: Variabili CSS globali per i colori principali, per una gestione
                 centralizzata e una facile personalizzazione del tema.
    ============================================================================== */
+html {
+  /* Imposta la dimensione di base al 110% dello standard del browser (che di solito è 16px) */
+  /* Questo equivale a circa 17.6px, ottenendo lo stesso effetto di zoom */
+  font-size: 120%;
+}
 
 :root {
   --color-text-primary: #1d1d1f; /* Testo scuro principale */
@@ -629,6 +634,23 @@ Contenuti:
   flex-grow: 1;
 }
 
+/* 1. Card Eroe (prima riga) */
+.news-card--hero .news-card-content {
+  min-height: 550px; /* Altezza minima per la card più grande */
+}
+
+/* 2. Card Medie (seconda riga) */
+.news-card--standard .news-card-content {
+  min-height: 680px; /* Altezza minima per le card intermedie */
+}
+
+/* 3. Card Piccole (terza riga) */
+/* La classe .news-card--small è già usata insieme a .news-card--standard,
+   quindi dobbiamo essere più specifici per sovrascrivere la regola precedente. */
+.news-card--standard.news-card--small .news-card-content {
+  min-height: 150px; /* Altezza minima per le card più piccole */
+}
+
 .news-card-category {
   font-size: 0.8rem;
   font-weight: 600;
@@ -912,9 +934,20 @@ button:hover,
   border-bottom: 1px solid var(--color-border-light);
 }
 
+/* --- MODIFICA INIZIO --- */
+/*
+  Regola per nascondere il separatore:
+  1. Nasconde il bordo per l'ultimo elemento della lista (fallback).
+  2. Nasconde il bordo quando viene applicata la classe .no-divider dal componente React.
+     Questo gestisce i casi in cui un elemento non è l'ultimo della pagina ma è l'ultimo
+     del suo gruppo mensile.
+*/
+.archive-item-link.no-divider,
 .archive-list > .archive-item-link:last-child {
   border-bottom: none;
 }
+/* --- MODIFICA FINE --- */
+
 
 .archive-item {
   display: grid;

@@ -49,7 +49,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="bg-[#f5f5f7]">
+    <div className="bg-[#0e549c]">
       {/* --- BLOCCO HEADER DI PAGINA (Larghezza Limitata) --- */}
       {/* 2. Avvolgi il blocco header con l'animazione */}
       <FadeInOnScroll>

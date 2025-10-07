@@ -109,7 +109,7 @@ const ArticleDetailPage = () => {
             />
           )}
 
-          <div className="mt-0 is-compact">
+          <div className="mt-68 is-compact">
             <RelatedArticles
               title="Altro da Lit Investor"
               fetchUrl={`/api/articles?category_id=${article.category_id}&exclude_id=${article.id}&per_page=4`}
