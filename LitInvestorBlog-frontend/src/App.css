@@ -1,0 +1,1754 @@
+/*
+
+================================================================================
+File: App.css (Riorganizzato)
+Progetto: RioCapitalBlog-frontend
+Descrizione: Foglio di stile principale per l'applicazione RioCapitalBlog,
+             riorganizzato per chiarezza, manutenibilità e coerenza dei colori.
+
+Contenuti:
+- Importazione di font personalizzati.
+- Integrazione e configurazione di Tailwind CSS.
+- Definizione di variabili CSS per il tema (light e dark).
+- Stili di base e classi di utilità personalizzate.
+- Stili per componenti specifici come card, griglie di notizie e articoli.
+- Media query per il design responsivo.
+================================================================================
+
+*/
+
+/* ==============================================================================
+   0. DEFINIZIONE VARIABILI COLORE GLOBALI
+   ==============================================================================
+   Descrizione: Variabili CSS globali per i colori principali, per una gestione
+                centralizzata e una facile personalizzazione del tema.
+   ============================================================================== */
+/* html {
+  font-size: 110%;
+} */
+
+:root {
+  --color-text-primary: #1d1d1f; /* Testo scuro principale */
+  --color-background-light: #f5f5f7; /* Sfondo grigio chiaro */
+  --color-background-white: #ffffff; /* Sfondo bianco */
+  --color-blue-accent: #0e549c; /* Blu principale */
+  --color-border-light: #d2d2d7; /* Bordo grigio chiaro */
+  --color-text-secondary: #6e6e73; /* Testo grigio secondario */
+  --color-text-muted: #86868b; /* Testo grigio muted */
+  --color-blue-link: #0066cc; /* Blu per link */
+  --color-blue-highlight: #0071e3; /* Blu per evidenziazioni */
+  --color-background-button: #e8e8ed; /* Sfondo pulsante grigio */
+  --color-border-separator: #e5e7eb; /* Bordo separatore */
+  --color-input-background: #f2f2f2; /* Sfondo input */
+  --color-input-placeholder: #888888; /* Placeholder input */
+  --color-button-text: #333333; /* Testo pulsante */
+  --color-button-hover: #e0e0e0; /* Sfondo pulsante hover */
+}
+
+/* ==============================================================================
+   1. IMPORTAZIONE FONT
+   ==============================================================================
+   Descrizione: Importazione del font custom 'SF Pro Display' con diversi pesi
+   e stili. L'attributo `font-display: swap;` assicura che il testo sia
+   visibile con un font di fallback mentre il font personalizzato viene caricato.
+   ============================================================================== */
+
+/* poppins-100 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 100;
+  src: url('./assets/fonts/poppins-v24-latin-100.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-100italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 100;
+  src: url('./assets/fonts/poppins-v24-latin-100italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-200 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 200;
+  src: url('./assets/fonts/poppins-v24-latin-200.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-200italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 200;
+  src: url('./assets/fonts/poppins-v24-latin-200italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-300 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  src: url('./assets/fonts/poppins-v24-latin-300.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-300italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 300;
+  src: url('./assets/fonts/poppins-v24-latin-300italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/poppins-v24-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 400;
+  src: url('./assets/fonts/poppins-v24-latin-italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-500 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  src: url('./assets/fonts/poppins-v24-latin-500.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-500italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 500;
+  src: url('./assets/fonts/poppins-v24-latin-500italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-600 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  src: url('./assets/fonts/poppins-v24-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-600italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 600;
+  src: url('./assets/fonts/poppins-v24-latin-600italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./assets/fonts/poppins-v24-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-700italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 700;
+  src: url('./assets/fonts/poppins-v24-latin-700italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-800 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  src: url('./assets/fonts/poppins-v24-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-800italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 800;
+  src: url('./assets/fonts/poppins-v24-latin-800italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-900 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 900;
+  src: url('./assets/fonts/poppins-v24-latin-900.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* poppins-900italic - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 900;
+  src: url('./assets/fonts/poppins-v24-latin-900italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* ==============================================================================
+   2. INTEGRAZIONE TAILWIND CSS
+   ==============================================================================
+   Descrizione: Importazione delle direttive di base di Tailwind CSS e di una
+   libreria di animazioni aggiuntiva. Viene definita anche una variante
+   personalizzata per il tema scuro.
+   ============================================================================== */
+
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* Variante personalizzata per applicare stili specifici ai figli di un elemento .dark */
+@custom-variant dark (&:is(.dark *));
+
+/* ==============================================================================
+   3. DEFINIZIONE DEL TEMA (THEME)
+   ==============================================================================
+   Descrizione: Definizione delle variabili CSS che verranno utilizzate in tutta
+   l'applicazione. Questo permette una facile personalizzazione e coerenza
+   del design. Le variabili sono definite per colori, raggi dei bordi, ecc.
+   ============================================================================== */
+
+@theme inline {
+  /* Raggi dei bordi */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Colori di base */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Colori per componenti Card */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  /* Colori per componenti Popover */
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Colori primari e secondari */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  /* Colori per stati "muted" e "accent" */
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Altri colori */
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Colori per i grafici */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Colori per la Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* ==============================================================================
+   4. TEMA LIGHT (DEFAULT)
+   ==============================================================================
+   Descrizione: Valori specifici delle variabili CSS per il tema chiaro (light).
+   Utilizza la notazione di colore OKLCH per una migliore percezione
+   e consistenza dei colori.
+   ============================================================================== */
+
+:root {
+  --radius: 1rem; /* 10px */
+
+  /* Colori di base */
+  --background: var(--color-background-light);
+  --foreground: oklch(0.2 0 0);
+
+  /* Colori per componenti Card */
+  --card: var(--color-background-white);
+  --card-foreground: oklch(0.2 0 0);
+
+  /* Colori per componenti Popover */
+  --popover: var(--color-background-white);
+  --popover-foreground: oklch(0.2 0 0);
+
+  /* Colori primari e secondari */
+  --primary: oklch(0.5 0.15 240);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.6 0.15 140);
+  --secondary-foreground: oklch(0.985 0 0);
+
+  /* Colori per stati "muted" e "accent" */
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.7 0.15 60);
+  --accent-foreground: oklch(0.2 0 0);
+
+  /* Altri colori */
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.95 0 0);
+  --ring: oklch(0.5 0.15 240);
+
+  /* Colori per i grafici */
+  --chart-1: oklch(0.5 0.15 240);
+  --chart-2: oklch(0.6 0.15 140);
+  --chart-3: oklch(0.7 0.15 60);
+  --chart-4: oklch(0.577 0.245 27.325);
+  --chart-5: oklch(0.4 0.15 280);
+
+  /* Colori per la Sidebar */
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.2 0 0);
+  --sidebar-primary: oklch(0.5 0.15 240);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.96 0 0);
+  --sidebar-accent-foreground: oklch(0.2 0 0);
+  --sidebar-border: oklch(0.9 0 0);
+  --sidebar-ring: oklch(0.5 0.15 240);
+}
+
+/* ==============================================================================
+   5. TEMA DARK
+   ==============================================================================
+   Descrizione: Sovrascrive le variabili CSS per il tema scuro (dark).
+   Questi stili vengono applicati quando un elemento ha la classe `.dark`.
+   ============================================================================== */
+
+.dark {
+  /* Colori di base */
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+
+  /* Colori per componenti Card */
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+
+  /* Colori per componenti Popover */
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+
+  /* Colori primari e secondari */
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+
+  /* Colori per stati "muted" e "accent" */
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+
+  /* Altri colori */
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+
+  /* Colori per i grafici */
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+
+  /* Colori per la Sidebar */
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* ==============================================================================
+   6. STILI DI BASE (LAYER BASE)
+   ==============================================================================
+   Descrizione: Stili di base applicati a tutti gli elementi (`*`) e al `body`.
+   Utilizza la direttiva `@layer base` di Tailwind per garantire che questi
+   stili abbiano una precedenza corretta.
+   ============================================================================== */
+
+@layer base {
+  /* Applica un bordo e un anello di focus a tutti gli elementi */
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  /* Imposta il colore di sfondo, il colore del testo e il font per il corpo della pagina */
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+/* ==============================================================================
+   7. CLASSI DI UTILITÀ PERSONALIZZATE
+   ==============================================================================
+   Descrizione: Classi riutilizzabili per effetti specifici come gradienti,
+   effetti hover e stili per il testo.
+   ============================================================================== */
+
+/* Gradiente per sfondi */
+.RioCapitalBlog-gradient {
+  background: linear-gradient(
+    135deg,
+    oklch(0.5 0.15 240) 0%,
+    oklch(0.6 0.15 140) 100%
+  );
+}
+
+/* Effetto hover per le card */
+.RioCapitalBlog-card-hover {
+  transition: all 0.3s ease;
+}
+
+.RioCapitalBlog-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+}
+
+/* Gradiente per il testo */
+.RioCapitalBlog-text-gradient {
+  background: linear-gradient(135deg, oklch(0.5 0.15 240), oklch(0.6 0.15 140));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Sfondo per la sezione Hero */
+.RioCapitalBlog-hero-bg {
+  background: linear-gradient(135deg, oklch(0.99 0 0) 0%, oklch(0.96 0 0) 100%);
+}
+
+/* Badge per le categorie */
+.RioCapitalBlog-category-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-background-white);
+}
+
+/* ==============================================================================
+   8. STILI PER IL CONTENUTO DEGLI ARTICOLI (Stile Apple Newsroom)
+   ==============================================================================
+   Descrizione: Stili per la formattazione del contenuto degli articoli generato
+   da ReactMarkdown, per imitare il layout pulito e leggibile di Apple Newsroom.
+   ============================================================================== */
+
+.article-content {
+  color: var(--color-text-primary);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  /* Aggiungi questa classe se vuoi che tutto il testo sia giustificato di default */
+  text-align: justify;
+}
+
+.article-content p {
+  margin-bottom: 1.25rem;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+  font-weight: 600;
+  margin-top: 1.8rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.article-content h1 {
+  font-size: 2rem;
+} /* 32px */
+.article-content h2 {
+  font-size: 1.75rem;
+} /* 28px */
+.article-content h3 {
+  font-size: 1.5rem;
+} /* 24px */
+.article-content h4 {
+  font-size: 1.25rem;
+} /* 20px */
+
+.article-content a {
+  color: var(--color-blue-link);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-blue-link);
+  transition: border-bottom-color 0.2s ease;
+}
+
+.article-content a:hover {
+  border-bottom-color: transparent;
+}
+
+.article-content blockquote {
+  border-left: 3px solid var(--color-border-separator);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.article-content ul,
+.article-content ol {
+  margin-bottom: 1.25rem;
+  padding-left: 2rem;
+}
+
+.article-content ul {
+  list-style-type: disc;
+}
+.article-content ol {
+  list-style-type: decimal;
+}
+
+.article-content li {
+  margin-bottom: 0.5rem;
+}
+
+.article-content img {
+  display: block;
+  width: 127%; /* Larghezza totale (100% + 10% a sx + 10% a dx) */
+  margin-left: -13%; /* Margine negativo per "tirare" a sinistra */
+  margin-right: -13%; /* Margine negativo per "tirare" a destra */
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  max-width: 127%; /* Assicura che la larghezza non venga limitata */
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+}
+
+/* Stile per il contenitore dell'immagine e della didascalia */
+.article-content figure {
+  /* Rimuove il margine di default del browser */
+  margin: 0;
+}
+
+/* Stile per la didascalia */
+.article-content figcaption {
+  font-size: 0.8rem; /* Testo leggermente più piccolo */
+  color: var(--color-text-muted); /* Colore grigio secondario */
+  text-align: left; /* Testo centrato */
+  margin-top: -3rem; /* Spazio tra l'immagine e la didascalia */
+  line-height: 5;
+  font-weight: 600;
+}
+
+/* ==============================================================================
+   9. LAYOUT E GRIGLIE
+   ==============================================================================
+   Descrizione: Stili per il layout principale e le griglie.
+   ============================================================================== */
+
+.main-container {
+  max-width: 1440px;
+  margin: 0 auto; /* Centra il contenitore */
+  padding: 3rem 1rem; /* Spaziatura interna */
+}
+
+/* Griglia per le notizie */
+.news-grid {
+  display: grid;
+  gap: 38px 38px;
+  grid-template-columns: repeat(1, 1fr);
+}
+
+/* Media query per la griglia di notizie su schermi medi e grandi */
+@media (min-width: 768px) {
+  .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .news-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Stili per gli elementi della griglia */
+.article-item--1 {
+  grid-column: span 1;
+}
+@media (min-width: 1024px) {
+  .article-item--1 {
+    grid-column: span 6;
+  }
+}
+
+.article-item--2,
+.article-item--3 {
+  grid-column: span 1;
+}
+@media (min-width: 1024px) {
+  .article-item--2,
+  .article-item--3 {
+    grid-column: span 3;
+  }
+}
+
+.article-item--4,
+.article-item--5,
+.article-item--6 {
+  grid-column: span 1;
+}
+@media (min-width: 1024px) {
+  .article-item--4,
+  .article-item--5,
+  .article-item--6 {
+    grid-column: span 2;
+  }
+}
+
+/* ==============================================================================
+   10. COMPONENTE: NEWS CARD
+   ==============================================================================
+   Descrizione: Stili per le card che mostrano le anteprime delle notizie.
+   ============================================================================== */
+
+.news-card {
+  background-color: var(--color-background-white);
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.news-card:hover {
+  box-shadow: 0 6px 17px rgba(0, 0, 0, 0.01);
+}
+
+.news-card-media {
+  overflow: hidden;
+  background-color: var(--color-background-light);
+  position: relative;
+}
+
+.news-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.news-card:hover .news-card-media img {
+  transform: scale(1.04);
+}
+
+.news-card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* 1. Card Eroe (prima riga) */
+.news-card--hero .news-card-content {
+  min-height: 435px; /* Altezza minima per la card più grande */
+}
+
+/* 2. Card Medie (seconda riga) */
+.news-card--standard .news-card-content {
+  min-height: 650px; /* Altezza minima per le card intermedie */
+}
+
+/* 3. Card Piccole (terza riga) */
+/* La classe .news-card--small è già usata insieme a .news-card--standard,
+   quindi dobbiamo essere più specifici per sovrascrivere la regola precedente. */
+.news-card--standard.news-card--small .news-card-content {
+  min-height: 150px; /* Altezza minima per le card più piccole */
+}
+
+.news-card-category {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.news-card-headline {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.news-card-timestamp {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.news-card-timestamp svg {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+}
+
+/* Varianti della News Card */
+.news-card--hero .news-card-content {
+  padding: 32px;
+}
+.news-card--hero .news-card-headline {
+  font-size: 2.2rem;
+}
+
+.news-card--standard .news-card-media {
+  height: 265px;
+  flex-shrink: 0;
+}
+
+.news-card--standard .news-card-content {
+  min-height: 208px;
+}
+
+.news-card--small .news-card-media {
+  height: 165px;
+  flex-shrink: 0;
+}
+
+.news-card--small .news-card-content {
+  min-height: 100px;
+}
+
+/* Stili per la card hero su schermi più grandi */
+@media (min-width: 768px) {
+  .news-card--hero {
+    flex-direction: row;
+  }
+  .news-card--hero .news-card-media {
+    flex-basis: 66%;
+    min-height: 362px;
+  }
+  .news-card--hero .news-card-content {
+    flex-basis: 34%;
+  }
+}
+
+/* Stile per il badge "New" */
+.news-card-eyebrow-new {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-blue-highlight);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  background-color: rgba(0, 113, 227, 0.1);
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+/* ==============================================================================
+   11. SEZIONE ARTICOLI CORRELATI (Layout Griglia per Homepage, etc.)
+   ============================================================================== */
+
+.related-articles-section {
+  background-color: var(--color-background-white);
+  width: 100%;
+  padding-top: 4rem;
+  padding-bottom: 5rem;
+}
+
+.related-articles-container {
+  max-width: 1012px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Griglia articoli */
+.related-articles-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 colonna su mobile */
+  row-gap: 5rem; /* spazio verticale tra gli articoli */
+}
+
+/* ------------------------------
+   MOBILE: linea tra ogni articolo
+--------------------------------*/
+@media (max-width: 767px) {
+  .related-articles-grid > .article-list-item-wrapper:not(:last-child) {
+    border-bottom: 1px solid var(--color-border-separator);
+    padding-bottom: 2.5rem; /* metà del row-gap */
+    margin-bottom: -2.3rem;
+  }
+}
+
+/* ------------------------------
+   DESKTOP: 2 colonne
+--------------------------------*/
+@media (min-width: 768px) {
+  .related-articles-grid {
+    grid-template-columns: 1fr 1fr; /* 2 colonne */
+    column-gap: 5rem;
+    padding-bottom: 4rem; /* metà del row-gap */
+    position: relative;
+  }
+
+  /* Rimuove le linee sotto i singoli articoli */
+  .related-articles-grid > .article-list-item-wrapper {
+    border-bottom: none;
+    margin-bottom: -5rem;
+  }
+
+  /* Linea tra le righe della griglia (una sola linea tra la prima e seconda riga) */
+  .related-articles-section .row-separator {
+    grid-column: 1 / -1;
+    height: 1px;
+    background-color: var(--color-border-separator);
+    margin-top: 2.5rem;
+    margin-bottom: -2.3rem; /* regola qui lo spazio sotto la linea */
+  }
+}
+
+/* ==============================================================================
+   12. COMPONENTE: ARTICLE LIST ITEM
+   ==============================================================================
+   Descrizione: Stili per gli elementi della lista di articoli, usati nella
+   sezione degli articoli correlati.
+   ============================================================================== */
+
+.article-list-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.article-list-item-image {
+  width: 134px;
+  height: 134px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.article-list-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.article-list-item:hover .article-list-item-image img {
+  transform: scale(1.05);
+}
+
+.article-list-item-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 134px;
+}
+
+.article-list-item-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.article-list-item-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+  transition: color 0.2s ease;
+}
+.article-list-item:hover .article-list-item-title {
+  color: var(--color-blue-highlight);
+}
+.article-list-item-date {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* ==============================================================================
+   13. STILI PER ELEMENTI DI FORM
+   ==============================================================================
+   Descrizione: Stili per input e bottoni.
+   ============================================================================== */
+
+/* Stile per l'input (probabilmente da un componente UI) */
+input[data-slot='input'] {
+  font-size: 0.9rem;
+  color: var(--color-button-text);
+  background-color: var(--color-input-background);
+  border: none;
+  border-radius: 9999px;
+  padding: 6px 14px 6px 3rem;
+  outline: none;
+  box-shadow: none;
+}
+
+input[data-slot='input']::placeholder {
+  color: var(--color-input-placeholder);
+}
+
+/* Stili generici per bottoni */
+button,
+.button,
+.btn {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-button-text);
+  background-color: var(--color-input-background);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: none;
+}
+
+button:hover,
+.button:hover,
+.btn:hover {
+  background-color: var(--color-button-hover);
+}
+
+/* ==============================================================================
+   14. MEDIA QUERIES RESPONSIVE GENERALI
+   ==============================================================================
+   Descrizione: Media query per adattare il layout a diverse dimensioni
+   dello schermo.
+   ============================================================================== */
+
+@media (max-width: 768px) {
+  /* Stili per la sezione Hero su schermi piccoli */
+  .RioCapitalBlog-hero-title {
+    font-size: 2rem;
+  }
+
+  .RioCapitalBlog-hero-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* ==============================================================================
+   16. STILI PER LA PAGINA ARCHIVIO (STILE APPLE NEWSROOM)
+   ==============================================================================
+   Descrizione: Stili specifici per la pagina dell'archivio, ispirati al layout
+                pulito e leggibile di Apple Newsroom.
+   ============================================================================== */
+
+.archive-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  border-top: 1px solid var(--color-border-light);
+  padding-top: 1.5rem;
+}
+
+.archive-item-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 1.6rem 0;
+  padding-bottom: 2.8rem;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+/* --- MODIFICA INIZIO --- */
+/*
+  Regola per nascondere il separatore:
+  1. Nasconde il bordo per l'ultimo elemento della lista (fallback).
+  2. Nasconde il bordo quando viene applicata la classe .no-divider dal componente React.
+     Questo gestisce i casi in cui un elemento non è l'ultimo della pagina ma è l'ultimo
+     del suo gruppo mensile.
+*/
+.archive-item-link.no-divider,
+.archive-list > .archive-item-link:last-child {
+  border-bottom: none;
+}
+/* --- MODIFICA FINE --- */
+
+.archive-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .archive-item {
+    grid-template-columns: 295px 1fr;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+.archive-item-image {
+  width: 100%;
+  aspect-ratio: 295 / 167;
+  border-radius: 22px;
+  overflow: hidden;
+  background-color: var(--color-background-light);
+}
+
+.archive-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.archive-item-link:hover .archive-item-image img {
+  transform: scale(1.05);
+}
+
+.archive-item-content {
+  /* Il testo si adatta */
+}
+
+.archive-item-category {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.archive-item-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.archive-item-link:hover .archive-item-title {
+  color: var(--color-blue-highlight);
+}
+
+.archive-item-date {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* ==============================================================================
+   17. STILI PER LA PAGINAZIONE (STILE APPLE)
+   ==============================================================================
+   Descrizione: Stili per il componente di paginazione, ispirati al design Apple.
+   ============================================================================== */
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  margin-top: 5rem;
+}
+
+.pagination-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background-color: var(--color-background-light);
+  color: var(--color-text-secondary);
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s linear,
+    color 0.2s linear;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: var(--color-background-button);
+  color: var(--color-text-primary);
+}
+
+.pagination-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.pagination-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.pagination-input {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  -moz-appearance: textfield;
+}
+
+.pagination-input::-webkit-outer-spin-button,
+.pagination-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ==============================================================================
+   18. VARIANTE COMPATTA ARTICOLI CORRELATI (Layout Lista per Pagina Articolo)
+   ============================================================================== */
+.is-compact .row-separator {
+  display: none;
+}
+
+.is-compact .archive-button-container {
+  margin-bottom: -2.4rem; /* spazio sotto il bottone (tra bottone e contenitore successivo) */
+}
+
+/* Applica questi stili solo quando il contenitore ha la classe .is-compact */
+
+.is-compact .related-articles-container > h2 {
+  /* PARAMETRO: Controlla lo spazio SOPRA il titolo "Altro da..." */
+  margin-top: -3rem;
+}
+/* ------------------------------------ */
+
+.is-compact .related-articles-container {
+  padding: 0;
+}
+
+/* Forza la griglia a colonna singola e rimuove il gap */
+.is-compact .related-articles-grid {
+  grid-template-columns: 1fr;
+  gap: 0;
+  position: static; /* Resetta la posizione per evitare conflitti con ::after */
+}
+
+/* Disattiva la linea continua della Sezione 11 */
+.is-compact .article-list-item-wrapper::after {
+  display: none;
+}
+
+/* Aggiunge un bordo inferiore a ogni elemento, tranne l'ultimo */
+.is-compact .article-list-item-wrapper:not(:last-child) {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border-separator);
+}
+
+/* Stili per l'elemento interno della lista */
+.is-compact .article-list-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.is-compact .article-list-item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  aspect-ratio: 1 / 1; /* Immagine quadrata su mobile */
+}
+
+.is-compact .article-list-item-content {
+  height: auto;
+}
+
+.is-compact .article-list-item-title {
+  font-size: 1.125rem;
+}
+
+/* Stile per schermi più grandi nella versione compatta */
+@media (min-width: 500px) {
+  .is-compact .article-list-item {
+    grid-template-columns: 180px 1fr;
+    gap: 1.5rem;
+  }
+
+  .is-compact .article-list-item-image {
+    aspect-ratio: 295 / 167; /* Immagine rettangolare */
+  }
+}
+
+/* ==============================================================================
+   19. STILI PERSONALIZZATI PER COMPONENTI UI (SWITCH)
+   ==============================================================================
+   Descrizione: Stili per il componente Switch personalizzato.
+   ============================================================================== */
+
+.switch-container {
+  --switch-width: 44px;
+  --switch-height: 26px;
+  --thumb-size: 22px;
+  --thumb-offset: 2px;
+
+  --color-grey: var(
+    --color-border-separator
+  ); /* Utilizzo variabile esistente */
+  --color-blue: var(--color-blue-highlight); /* Utilizzo variabile esistente */
+}
+
+.switch-container button[role='switch'] {
+  display: inline-block !important;
+  position: relative;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 0 !important;
+
+  width: var(--switch-width) !important;
+  height: var(--switch-height) !important;
+
+  background-color: var(--color-grey) !important;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.switch-container button[role='switch'] > span {
+  display: block !important;
+  position: absolute;
+  top: var(--thumb-offset);
+  left: var(--thumb-offset);
+
+  width: var(--thumb-size) !important;
+  height: var(--thumb-size) !important;
+  border-radius: 50%;
+  background-color: var(--color-background-white) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  transform: translateX(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+.switch-container button[role='switch'][data-state='checked'] {
+  background-color: var(--color-blue) !important;
+}
+
+.switch-container button[role='switch'][data-state='checked'] > span {
+  transform: translateX(-2px);
+}
+
+.ticker-content {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  white-space: nowrap;
+  height: 100%;
+}
+
+.ticker-content:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* App.css */
+
+/* ==============================================================================
+   20. STILI PER LA PAGINA DI LOGIN
+   ============================================================================== */
+
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #ffffff;
+  padding: 30px;
+  width: 100%;
+  max-width: 450px;
+  border-radius: 28px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.login-form-container .inputForm {
+  border: 1.5px solid #ecedec;
+  border-radius: 10px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.login-form-container .inputForm:focus-within {
+  border: 1.5px solid #2d79f3;
+}
+
+.login-form-container .input {
+  margin-left: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.login-form-container .input:focus {
+  outline: none;
+}
+
+.login-form-container .button-submit {
+  margin: 10px 0;
+  background-color: #151717;
+  border: none;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.login-form-container .button-submit:hover {
+  background-color: #2d2f2f;
+}
+
+/* --- AGGIUNGI QUESTA CLASSE --- */
+.login-form-container .line {
+  border-top: 1px solid #e0e0e0;
+  line-height: 0.1em;
+  margin: 20px 0;
+}
+
+/* ==============================================================================
+   21. VARIANTI BOTTONI OUTLINE (Stile Editor)
+   ============================================================================== */
+
+/* Stile base per tutti i bottoni outline */
+.btn-outline {
+  /* Dimensioni e Spaziatura (più piccoli) */
+  height: auto; /* Altezza automatica */
+  padding: 0.5rem 1rem; /* Padding per controllare la dimensione */
+  aspect-ratio: initial; /* Rimuove l'aspect-ratio fisso */
+
+  /* Stile del testo */
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500; /* Medium */
+
+  /* Stile del bottone */
+  background-color: transparent;
+  border-radius: 9999px;
+  border-width: 1px !important; /* !important per forzare la visibilità del bordo */
+  border-style: solid;
+  transition: all 0.2s ease-in-out;
+}
+.btn-outline:hover {
+  color: var(--color-background-white);
+  transform: scale(1.05);
+  box-shadow: none;
+}
+
+/* Variante Grigia (Anteprima) */
+.btn-outline-gray {
+  border-color: var(--color-border-light);
+  color: var(--color-text-secondary);
+}
+.btn-outline-gray:hover {
+  background-color: var(--color-text-secondary);
+}
+
+/* --- AGGIUNGI QUESTO NUOVO BLOCCO --- */
+
+/* Variante Gialla (Dona Ora) */
+.btn-outline-yellow {
+  border-color: #fbbc05;
+  color: #fbbc05;
+}
+.btn-outline-yellow:hover {
+  background-color: #fbbc05;
+  color: black; /* <-- RIGA AGGIUNTA */
+}
+
+/* Variante Blu (Salva Bozza) */
+.btn-outline-blue {
+  border-color: var(--color-blue-accent);
+  color: var(--color-blue-accent);
+}
+.btn-outline-blue:hover {
+  background-color: var(--color-blue-accent);
+}
+
+/* Variante Verde (Pubblica) */
+.btn-outline-green {
+  border-color: #28a745;
+  color: #28a745;
+}
+.btn-outline-green:hover {
+  background-color: #28a745;
+}
+
+/* Mobile (default) */
+.btn-outline {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem; /* 12px */
+}
+
+/* Tablet */
+@media (min-width: 640px) {
+  .btn-outline {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8125rem; /* 13px */
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .btn-outline {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem; /* 14px */
+  }
+}
+
+/*
+  ==============================================================
+  CSS DEFINITIVO - Riscritto con Misure Personalizzate
+  ==============================================================
+*/
+
+.payment-page-background {
+  background: transparent;
+  border-radius: 20px;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center; /* Mantiene il blocco in alto */
+  align-items: center;
+
+  /* --- INIZIO MODIFICA CHIAVE --- */
+
+  /* RIMUOVI la vecchia riga 'padding' */
+  /* padding: 6rem 1rem; */
+
+  /* AGGIUNGI queste 4 righe per il controllo individuale */
+  padding-top: 2rem; /* << MODIFICA QUI per spostare su/giù */
+  padding-bottom: 6rem; /* << MODIFICA QUI per dare spazio sotto */
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  /* --- FINE MODIFICA CHIAVE --- */
+}
+
+.payment-form-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Modulo di Pagamento (Contenitore di Titolo + Card) --- */
+.payment-module {
+  width: 480px; /* Larghezza allineata alla card per una centratura perfetta */
+  position: relative;
+  z-index: 2;
+  /* Dispone titolo e card in colonna e li centra */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem; /* Spazio verticale tra il titolo e la card */
+}
+
+/* --- Titolo --- */
+.payment-module .title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: #ffffff;
+  line-height: 1.5em;
+  text-align: center; /* Assicura che il testo sia centrato */
+  /* Rimosse le vecchie proprietà che forzavano l'allineamento a sinistra */
+}
+
+/* --- Animazioni Sfondo --- */
+.payment-module .circles {
+  position: absolute;
+  height: 270px;
+  width: 450px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Sta dietro a tutto */
+}
+
+.payment-module .circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(120deg, #40b06f, #2ca6ab);
+  animation: float 6s cubic-bezier(0.54, 0.085, 0.5, 0.92) infinite alternate;
+}
+
+.payment-module .circle-1 {
+  height: 300px;
+  width: 300px;
+  top: 100px;
+  left: -50px;
+  opacity: 0.8;
+  animation-delay: 3.5s;
+}
+.payment-module .circle-2 {
+  height: 240px;
+  width: 240px;
+  bottom: 40px;
+  right: -100px;
+  opacity: 0.8;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(10px) translateX(5px);
+  }
+}
+
+/* --- Card di Vetro --- */
+.payment-module .card {
+  height: 325px; /* TUA MISURA */
+  width: 480px; /* TUA MISURA */
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(35px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding-top: 125px;
+  padding-bottom: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
+  justify-content: space-between;
+}
+
+/* --- Logo --- */
+.payment-module .logo {
+  position: absolute;
+  top: 40px;
+  left: 30px;
+  height: 48px;
+  width: 48px;
+  opacity: 0.9;
+  z-index: 3;
+  animation: fadeInLogo 0.4s ease-out; /* <-- RIGA DA AGGIUNGERE */
+}
+
+/* --- Stili Generali Form --- */
+.payment-module .form-group {
+  position: relative;
+  overflow: hidden;
+}
+.payment-module .form-group label {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: normal;
+  font-family: 'Space Mono', monospace;
+  display: block;
+  padding-bottom: 2px;
+}
+.payment-module .form-group input {
+  font-family: 'Space Mono', monospace;
+  border: none;
+  background: none;
+  color: #ffffff;
+  width: 100%;
+  outline: none;
+  padding: 0;
+}
+.payment-module .form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'Space Mono', monospace;
+}
+.payment-module .underline {
+  transition: all 0.3s;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+}
+.payment-module .form-group input:focus + .underline,
+.payment-module .form-group input:hover + .underline {
+  left: 0;
+}
+
+/* --- Campi Specifici --- */
+.payment-module .card-number input {
+  font-size: 30px;
+  height: 50px;
+}
+.payment-module .card-number input::placeholder {
+  font-size: 30px;
+}
+.payment-module .group input {
+  font-size: 16px;
+  height: 26px;
+}
+
+/*
+  ==============================================================
+  CONTROLLO INDIVIDUALE PER TITOLARE, SCADENZA, CCV
+  ==============================================================
+*/
+.payment-module .group {
+  display: flex;
+  align-items: flex-end; /* Allinea i campi alla base se hanno altezze diverse */
+}
+
+/* --- CONTROLLO LARGHEZZA --- */
+/* Modifica i valori 'width' per cambiare la larghezza di ogni campo */
+.payment-module .group .form-group:nth-child(1) {
+  /* Titolare */
+  width: 54%;
+}
+.payment-module .group .form-group:nth-child(2) {
+  /* Scadenza */
+  width: 23%;
+}
+.payment-module .group .form-group:nth-child(3) {
+  /* CCV */
+  width: 23%;
+}
+
+/* --- CONTROLLO DISTANZA --- */
+/* Modifica i valori 'margin-right' per cambiare lo spazio TRA i campi */
+.payment-module .group .form-group:nth-child(1) {
+  /* Spazio a destra di Titolare */
+  margin-right: 60px;
+}
+.payment-module .group .form-group:nth-child(2) {
+  /* Spazio a destra di Scadenza */
+  margin-right: 30px;
+}
+
+/* --- Stili per Pagamenti Alternativi (PayPal, etc.) --- */
+.payment-module .simplified-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.payment-module .simplified-view .pay-button {
+  width: 80%;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-blue-highlight, #007bff);
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.payment-module .simplified-view .pay-button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+/*
+  ==============================================================
+  STILE "LINEA SOTTO" - VERSIONE CORRETTA E SPECIFICA
+  ==============================================================
+*/
+
+input.underline-input,
+textarea.underline-input {
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+
+  /* Linea grigio chiaro semi-trasparente */
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3) !important;
+
+  /* Colore del testo BIANCO */
+  color: white !important;
+
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+
+  transition: border-color 0.3s ease-in-out;
+}
+
+input.underline-input:focus,
+textarea.underline-input:focus {
+  /* La linea diventa blu quando in focus */
+  border-bottom-color: #0071e3 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  ring: 0 !important;
+  ring-offset-width: 0 !important;
+}
+
+input.underline-input::placeholder,
+textarea.underline-input::placeholder {
+  /* Placeholder bianco semi-trasparente */
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+@keyframes fadeInLogo {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

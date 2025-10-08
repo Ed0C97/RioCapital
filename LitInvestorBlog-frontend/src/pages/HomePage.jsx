@@ -1,0 +1,277 @@
+// RioCapitalBlog-frontend/src/pages/HomePage.jsx
+
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '../components/ui/button';
+import { ArrowRight, Clock } from 'lucide-react';
+import { format, formatDistanceToNow, differenceInDays } from 'date-fns';
+import { it } from 'date-fns/locale';
+import RelatedArticles from '../components/RelatedArticles';
+import ArticleActions from '../components/ArticleActions';
+import Disclaimer from '../components/Disclaimer';
+
+// 1. === IMPORTA IL COMPONENTE PER L'ANIMAZIONE ===
+import FadeInOnScroll from '../components/FadeInOnScroll';
+
+const HomePage = () => {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch('/api/articles?per_page=10');
+        if (response.ok) {
+          const data = await response.json();
+          setArticles(data.articles || []);
+        }
+      } catch (error) {
+        console.error('Errore nel caricamento delle notizie:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, []);
+
+  const formatDate = (dateString) => {
+    try {
+      const date = new Date(dateString);
+      if (differenceInDays(new Date(), date) > 7) {
+        return format(date, 'd MMMM yyyy', { locale: it });
+      }
+      return formatDistanceToNow(date, { addSuffix: true, locale: it });
+    } catch {
+      return '';
+    }
+  };
+
+  const isRecent = (dateString) => {
+    try {
+      return differenceInDays(new Date(), new Date(dateString)) <= 7;
+    } catch {
+      return false;
+    }
+  };
+
+  const isVeryRecent = (dateString) => {
+    try {
+      const articleDate = new Date(dateString);
+      const now = new Date();
+      const hoursDiff = (now - articleDate) / (1000 * 60 * 60);
+      return hoursDiff <= 24;
+    } catch {
+      return false;
+    }
+  };
+
+  const placeholderImage =
+    'https://images.unsplash.com/photo-1518186225043-963158e70a41?q=80&w=1974&auto=format&fit=crop';
+
+  if (loading) {
+    return <div className="text-center p-20">Caricamento...</div>;
+  }
+  if (articles.length === 0) {
+    return <div className="text-center p-20">Nessun articolo da mostrare.</div>;
+  }
+
+  return (
+    <>
+      {/* === Blocco 1: Ultime Notizie (con larghezza limitata) === */}
+      <div className="mx-auto px-4 py-12" style={{ maxWidth: '1012px' }}>
+        {/* 2. === AVVOLGI IL TITOLO === */}
+        <FadeInOnScroll>
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold">Ultimi Articoli</h1>
+          </div>
+        </FadeInOnScroll>
+
+        {articles.length > 0 ? (
+          <div className="news-grid">
+            {/* Articolo HERO (Riga 1) */}
+            {/* 3. === AVVOLGI OGNI CARD CON UN RITARDO CRESCENTE === */}
+            <FadeInOnScroll className="article-item--1" delay={0}>
+              <Link
+                to={`/article/${articles[0].slug}`}
+                className="news-card news-card--hero"
+              >
+                <div className="news-card-media">
+                  <img
+                    src={articles[0].image_url || placeholderImage}
+                    alt={articles[0].title}
+                  />
+                </div>
+                <div className="news-card-content">
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-baseline">
+                      <p className="news-card-category">
+                        {articles[0].category_name}
+                      </p>
+                      {isVeryRecent(articles[0].created_at) && (
+                        <p className="news-card-eyebrow-new">Novità</p>
+                      )}
+                    </div>
+                    <h3 className="news-card-headline">{articles[0].title}</h3>
+                  </div>
+                  <div className="flex items-baseline justify-between mt-4">
+                    <p className="news-card-timestamp">
+                      {isRecent(articles[0].created_at) && <Clock size={16} />}
+                      <span>{formatDate(articles[0].created_at)}</span>
+                    </p>
+                    <ArticleActions article={articles[0]} size="small" />
+                  </div>
+                </div>
+              </Link>
+            </FadeInOnScroll>
+
+            {/* Articoli MEDI (Riga 2) */}
+            {articles[1] && (
+              <FadeInOnScroll className="article-item--2" delay={100}>
+                <Link
+                  to={`/article/${articles[1].slug}`}
+                  className="news-card news-card--standard"
+                >
+                  <div className="news-card-media">
+                    <img
+                      src={articles[1].image_url || placeholderImage}
+                      alt={articles[1].title}
+                    />
+                  </div>
+                  <div className="news-card-content">
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-baseline">
+                        <p className="news-card-category">
+                          {articles[1].category_name}
+                        </p>
+                        {isVeryRecent(articles[1].created_at) && (
+                          <p className="news-card-eyebrow-new">Novità</p>
+                        )}
+                      </div>
+                      <h3 className="news-card-headline">
+                        {articles[1].title}
+                      </h3>
+                    </div>
+                    <div className="flex items-baseline justify-between mt-4">
+                      <p className="news-card-timestamp">
+                        {isRecent(articles[1].created_at) && (
+                          <Clock size={16} />
+                        )}
+                        <span>{formatDate(articles[1].created_at)}</span>
+                      </p>
+                      <ArticleActions article={articles[1]} size="small" />
+                    </div>
+                  </div>
+                </Link>
+              </FadeInOnScroll>
+            )}
+            {articles[2] && (
+              <FadeInOnScroll className="article-item--3" delay={200}>
+                <Link
+                  to={`/article/${articles[2].slug}`}
+                  className="news-card news-card--standard"
+                >
+                  <div className="news-card-media">
+                    <img
+                      src={articles[2].image_url || placeholderImage}
+                      alt={articles[2].title}
+                    />
+                  </div>
+                  <div className="news-card-content">
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-baseline">
+                        <p className="news-card-category">
+                          {articles[2].category_name}
+                        </p>
+                        {isVeryRecent(articles[2].created_at) && (
+                          <p className="news-card-eyebrow-new">Novità</p>
+                        )}
+                      </div>
+                      <h3 className="news-card-headline">
+                        {articles[2].title}
+                      </h3>
+                    </div>
+                    <div className="flex items-baseline justify-between mt-4">
+                      <p className="news-card-timestamp">
+                        {isRecent(articles[2].created_at) && (
+                          <Clock size={16} />
+                        )}
+                        <span>{formatDate(articles[2].created_at)}</span>
+                      </p>
+                      <ArticleActions article={articles[2]} size="small" />
+                    </div>
+                  </div>
+                </Link>
+              </FadeInOnScroll>
+            )}
+
+            {/* Articoli PICCOLI (Riga 3) */}
+            {articles.slice(3, 6).map((article, index) => (
+              <FadeInOnScroll
+                className={`article-item--${index + 4}`}
+                key={article.id}
+                delay={300 + index * 100}
+              >
+                <Link
+                  to={`/article/${article.slug}`}
+                  className="news-card news-card--standard news-card--small"
+                >
+                  <div className="news-card-media">
+                    <img
+                      src={article.image_url || placeholderImage}
+                      alt={article.title}
+                    />
+                  </div>
+                  <div className="news-card-content">
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-baseline">
+                        <p className="news-card-category">
+                          {article.category_name}
+                        </p>
+                        {isVeryRecent(article.created_at) && (
+                          <p className="news-card-eyebrow-new">Novità</p>
+                        )}
+                      </div>
+                      <h3 className="news-card-headline">{article.title}</h3>
+                    </div>
+                    <div className="flex items-baseline justify-between mt-4">
+                      <p className="news-card-timestamp">
+                        {isRecent(article.created_at) && <Clock size={16} />}
+                        <span>{formatDate(article.created_at)}</span>
+                      </p>
+                      <ArticleActions article={article} size="small" />
+                    </div>
+                  </div>
+                </Link>
+              </FadeInOnScroll>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <h3 className="text-xl font-semibold">
+              Nessun articolo da mostrare.
+            </h3>
+          </div>
+        )}
+
+        {/* 4. === AVVOLGI ANCHE GLI ELEMENTI FINALI DELLA PAGINA === */}
+        <FadeInOnScroll>
+          <div className="mt-24 mb-4">
+            <Disclaimer variant="white" />
+          </div>
+        </FadeInOnScroll>
+      </div>
+
+      {/* === Blocco 2: I Più Popolari (con sfondo a larghezza piena) === */}
+      <FadeInOnScroll>
+        <div className="mt-16">
+          <RelatedArticles
+            title="I più popolari"
+            fetchUrl="/api/articles?per_page=4"
+          />
+        </div>
+      </FadeInOnScroll>
+    </>
+  );
+};
+
+export default HomePage;

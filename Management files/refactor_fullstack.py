@@ -1,89 +1,93 @@
 import os
+import re
 
 # --- CONFIGURAZIONE ---
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-# 1. Percorsi dei progetti (CORRETTI PER WINDOWS CON r'...')
-FRONTEND_PROJECT_ROOT = r'F:\cacio\Documents\Personal_Projects\Rio_Capital_Blog\RioCapitalBlog-frontend'
-BACKEND_PROJECT_ROOT = r'F:\cacio\Documents\Personal_Projects\Rio_Capital_Blog\RioCapitalBlog-backend'
-
-# 2. Mappa di sostituzione
-REPLACEMENT_MAP = {
-    # Frontend
-    '/articolo/': '/article/',
-    # Backend
-    '/api/articolo/': '/api/article/'
+REPLACEMENTS = {
+    'Lit': 'Lit',
+    'Investor': 'Investor'
 }
 
-# 3. Estensioni e cartelle da ignorare (invariate)
-FRONTEND_EXTENSIONS = ('.js', '.jsx', '.json')
-BACKEND_EXTENSIONS = ('.py',)
-EXCLUDED_DIRS = ('node_modules', '.git', 'build', 'dist', 'public', '__pycache__', 'venv', '.venv')
+EXCLUDED_DIRS = {'node_modules', 'venv', '.venv', 'env', '.git', '.idea', '.vscode', '__pycache__', 'build', 'dist'}
+EXCLUDED_FILES = {os.path.basename(__file__)}
 
 
-# --- FINE CONFIGURAZIONE ---
+def rename_filesystem_items():
+    """
+    Scansiona e rinomina file e cartelle applicando le sostituzioni definite.
+    Usa i "word boundaries" per evitare sostituzioni parziali e controlla
+    se il file esiste già per prevenire errori.
+    """
+    replacements_str = ", ".join([f"'{k}' -> '{v}'" for k, v in REPLACEMENTS.items()])
+    print(f"--- Inizio rinomina di file e cartelle: {replacements_str} ---\n")
+
+    for dirpath, dirnames, filenames in os.walk(ROOT_DIR, topdown=False):
+        dirnames[:] = [d for d in dirnames if d not in EXCLUDED_DIRS]
+
+        # 1. Rinomina i file
+        for filename in filenames:
+            if filename in EXCLUDED_FILES:
+                continue
+
+            new_filename = filename
+            for old, new in REPLACEMENTS.items():
+                # Usa \b per cercare solo parole intere
+                pattern = r'\b' + re.escape(old) + r'\b'
+                new_filename, subs = re.subn(pattern, new, new_filename, flags=re.IGNORECASE)
+
+            old_filepath = os.path.join(dirpath, filename)
+            new_filepath = os.path.join(dirpath, new_filename)
+
+            # Esegui la rinomina solo se il nome è effettivamente cambiato
+            if old_filepath.lower() != new_filepath.lower():
+                print(
+                    f"Rinomino file:    {os.path.relpath(old_filepath, ROOT_DIR)} -> {os.path.relpath(new_filepath, ROOT_DIR)}")
+                try:
+                    os.rename(old_filepath, new_filepath)
+                except OSError as e:
+                    print(f"  -> ERRORE durante la rinomina del file: {e}")
+
+        # 2. Rinomina le cartelle
+        for dirname in dirnames:
+            new_dirname = dirname
+            for old, new in REPLACEMENTS.items():
+                # Usa \b anche per le cartelle
+                pattern = r'\b' + re.escape(old) + r'\b'
+                new_dirname, subs = re.subn(pattern, new, new_dirname, flags=re.IGNORECASE)
+
+            old_dirpath = os.path.join(dirpath, dirname)
+            new_dirpath = os.path.join(dirpath, new_dirname)
+
+            # Applica lo stesso controllo di sicurezza per le cartelle
+            if old_dirpath.lower() != new_dirpath.lower():
+                print(
+                    f"Rinomino cartella: {os.path.relpath(old_dirpath, ROOT_DIR)} -> {os.path.relpath(new_dirpath, ROOT_DIR)}")
+                try:
+                    os.rename(old_dirpath, new_dirpath)
+                except OSError as e:
+                    print(f"  -> ERRORE durante la rinomina della cartella: {e}")
+
+    print("\n--- Rinomina interna completata. ---")
+
+    final_root_name = os.path.basename(ROOT_DIR)
+    for old, new in REPLACEMENTS.items():
+        pattern = r'\b' + re.escape(old) + r'\b'
+        final_root_name, _ = re.subn(pattern, new, final_root_name, flags=re.IGNORECASE)
+
+    print("\nAZIONE MANUALE RICHIESTA:")
+    print(f"Per completare, rinomina la cartella radice del progetto:")
+    print(f"  DA: {os.path.basename(ROOT_DIR)}")
+    print(f"  A:  {final_root_name}")
 
 
-def process_file(file_path, route_map):
-    try:
-        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
-            content = f.read()
-    except Exception as e:
-        print(f"  -> Errore durante la lettura di {file_path}: {e}")
-        return False
+if __name__ == "__main__":
+    print("ATTENZIONE: Questo script modificherà i nomi di file e cartelle in modo permanente.")
+    print(f"La radice del progetto identificata è: {ROOT_DIR}")
+    print("Assicurati di aver chiuso tutti i file e gli editor in questa cartella.")
 
-    original_content = content
-    modified_content = content
-
-    # --- LOGICA DI SOSTITUZIONE CORRETTA (PIÙ SEMPLICE E POTENTE) ---
-    for old_string, new_string in route_map.items():
-        modified_content = modified_content.replace(old_string, new_string)
-    # ----------------------------------------------------------------
-
-    if modified_content != original_content:
-        print(f"  -> Sostituzione eseguita in: {os.path.basename(file_path)}")
-        try:
-            with open(file_path, 'w', encoding='utf-8') as f:
-                f.write(modified_content)
-            return True
-        except Exception as e:
-            print(f"  -> ERRORE: Impossibile scrivere su {file_path}: {e}")
-            return False
-
-    return False
-
-
-def run_refactor(project_path, extensions, route_map, project_name):
-    if not project_path or not os.path.exists(project_path):
-        print(f"--- Sostituzione per {project_name} saltata: percorso non valido o non configurato. ---")
-        return 0
-
-    print(f"--- Avvio scansione del {project_name}: {project_path} ---")
-    modified_count = 0
-    for root, dirs, files in os.walk(project_path):
-        dirs[:] = [d for d in dirs if d not in EXCLUDED_DIRS]
-
-        for file in files:
-            if file.endswith(extensions):
-                file_path = os.path.join(root, file)
-                if process_file(file_path, route_map):
-                    modified_count += 1
-    return modified_count
-
-
-def main():
-    total_modified = 0
-
-    total_modified += run_refactor(FRONTEND_PROJECT_ROOT, FRONTEND_EXTENSIONS, REPLACEMENT_MAP, "Frontend")
-    print("\n")
-    total_modified += run_refactor(BACKEND_PROJECT_ROOT, BACKEND_EXTENSIONS, REPLACEMENT_MAP, "Backend")
-
-    print("\n--- Operazione completata ---")
-    if total_modified > 0:
-        print(f"✅ Sono stati modificati {total_modified} file.")
-        print("Consiglio: Rivedi le modifiche con 'git diff' prima di fare un commit.")
+    confirm = input(f"Sei sicuro di voler procedere? (Digita 'si' per iniziare): ")
+    if confirm.lower() == 'si':
+        rename_filesystem_items()
     else:
-        print("ℹ️ Nessuna stringa da sostituire è stata trovata nei file.")
-
-
-if __name__ == '__main__':
-    main()
+        print("Operazione annullata.")

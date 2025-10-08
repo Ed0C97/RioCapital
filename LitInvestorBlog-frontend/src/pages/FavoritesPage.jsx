@@ -1,0 +1,158 @@
+// src/pages/FavoritesPage.jsx
+
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/AuthContext.js';
+import { format } from 'date-fns';
+import { it } from 'date-fns/locale';
+import { Heart, Search } from 'lucide-react';
+import { toast } from 'sonner';
+import { Input } from '../components/ui/input'; // <-- Aggiungi questo
+
+// Componente riutilizzato dalla pagina Archivio
+const LikedArticleListItem = ({ article }) => {
+  const placeholderImage =
+    'https://images.unsplash.com/photo-1518186225043-963158e70a41?q=80&w=1974&auto=format&fit=crop';
+  const formatDate = (dateString) => {
+    try {
+      return format(new Date(dateString), 'd MMMM yyyy', { locale: it });
+    } catch {
+      return '';
+    }
+  };
+
+  return (
+    <Link to={`/article/${article.slug}`} className="archive-item-link">
+      <div className="archive-item">
+        <div className="archive-item-image">
+          <img
+            src={article.image_url || placeholderImage}
+            alt={article.title}
+          />
+        </div>
+        <div className="archive-item-content">
+          <p className="archive-item-category">{article.category_name}</p>
+          <h3 className="archive-item-title">{article.title}</h3>
+          <p className="archive-item-date">{formatDate(article.created_at)}</p>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+const FavoritesPage = () => {
+  const { user } = useAuth();
+  const [likedArticles, setLikedArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      fetchLikedArticles();
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
+
+  const fetchLikedArticles = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/users/me/likes', {
+        credentials: 'include',
+      });
+      if (!response.ok)
+        throw new Error('Errore nel caricamento degli articoli.');
+
+      const data = await response.json();
+      setLikedArticles(data.articles || []);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div className="text-center p-20">Caricamento...</div>;
+  }
+
+  if (!user) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <h1 className="text-2xl font-bold mb-2">Accesso Richiesto</h1>
+        <p className="text-muted-foreground">
+          Devi accedere per vedere i tuoi articoli piaciuti.
+        </p>
+      </div>
+    );
+  }
+
+  // --- AGGIUNGI QUESTA LOGICA DI FILTRAGGIO ---
+  const filteredArticles = likedArticles.filter((article) =>
+    article.title.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+  // -------------------------------------------
+
+  return (
+    <div className="bg-white">
+      <div className="w-full mb-12">
+        <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
+          <div className="border-b border-[#d2d2d7] my-2"></div>
+          <h2 className="text-2xl font-regular text-gray-500">
+            Articoli che ti piacciono
+          </h2>
+        </div>
+      </div>
+
+      <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16">
+        {/* --- AGGIUNGI LA BARRA DI RICERCA QUI --- */}
+        {likedArticles.length > 0 && (
+          // --- MODIFICA QUI ---
+          // Aggiungi una classe max-w-* per controllare la larghezza
+          <div className="relative mb-8 max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              type="text"
+              placeholder="Cerca nei tuoi articoli piaciuti..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+        )}
+        {/* ----------------------------------------- */}
+
+        {/* --- MODIFICA LA LOGICA DI VISUALIZZAZIONE --- */}
+        {likedArticles.length > 0 ? (
+          // Usa la lista filtrata invece di quella originale
+          filteredArticles.length > 0 ? (
+            <div className="archive-list">
+              {filteredArticles.map((article) => (
+                <LikedArticleListItem key={article.id} article={article} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500">
+                Nessun articolo trovato per "{searchTerm}".
+              </p>
+            </div>
+          )
+        ) : (
+          <div className="text-center py-12 border-t border-gray-200">
+            <Heart className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-800">
+              Nessun "mi piace" ancora
+            </h3>
+            <p className="text-gray-500">
+              Gli articoli a cui metti "mi piace" appariranno qui.
+            </p>
+          </div>
+        )}
+        {/* ------------------------------------------- */}
+      </div>
+    </div>
+  );
+};
+
+export default FavoritesPage;

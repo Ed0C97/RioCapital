@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$/.idea" />
+    <content url="file://$MODULE_DIR$/LitInvestorBlog-backend" />
+    <content url="file://$MODULE_DIR$/LitInvestorBlog-frontend" />
+    <content url="file://$MODULE_DIR$/Management files" />
     <orderEntry type="jdk" jdkName="C:\Users\cacio\anaconda3 (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

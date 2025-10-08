@@ -7,9 +7,9 @@ param (
 )
 
 $scriptPath = $PSScriptRoot
-$backendPath = Join-Path $scriptPath "RioCapitalBlog-backend"
-$frontendPath = Join-Path $scriptPath "RioCapitalBlog-frontend"
-$dbPath = Join-Path $backendPath "src\RioCapitalBlog.db"
+$backendPath = Join-Path $scriptPath "LitInvestorBlog-backend"
+$frontendPath = Join-Path $scriptPath "LitInvestorBlog-frontend"
+$dbPath = Join-Path $backendPath "src\LitInvestorBlog.db"
 $flaskAppName = "src/main.py"
 
 if ($Reset) {

@@ -1,10 +1,10 @@
 # reset_database.ps1 - VERSIONE FINALE E CORRETTA
 
 # --- INIZIO CONFIGURAZIONE ---
-$backendRootPath = "F:\cacio\Documents\Personal_Projects\Rio_Capital_Blog\RioCapitalBlog-backend"
+$backendRootPath = "F:\cacio\Documents\Personal_Projects\Rio_Capital_Blog\LitInvestorBlog-backend"
 $backendSrcPath = Join-Path $backendRootPath "src"
 $migrationsPath = Join-Path $backendRootPath "migrations"
-$dbPath = Join-Path $backendSrcPath "RioCapitalBlog.db"
+$dbPath = Join-Path $backendSrcPath "LitInvestorBlog.db"
 
 $adminUsername = "Porfirio"
 $adminEmail = "app.test356@gmail.com"
@@ -30,9 +30,9 @@ if (Test-Path -Path $migrationsPath) {
 if (Test-Path -Path $dbPath) {
     Write-Host "Rimozione file '$dbPath'..."
     Remove-Item -Path $dbPath -Force
-    Write-HostColored "'RioCapitalBlog.db' rimosso con successo." "Green"
+    Write-HostColored "'LitInvestorBlog.db' rimosso con successo." "Green"
 } else {
-    Write-Host "File 'RioCapitalBlog.db' non trovato, si procede."
+    Write-Host "File 'LitInvestorBlog.db' non trovato, si procede."
 }
 
 Write-HostColored "--- Pulizia Completata ---`n" "Yellow"
