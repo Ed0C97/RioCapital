@@ -4,6 +4,9 @@ import os
 import mmap
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
+# Percorso fisso del progetto principale
+PROJECT_ROOT = r"F:\cacio\Documents\Personal_Projects\Rio_Capital_Blog"
+
 def cerca_in_file(percorso_file, stringa_bytes):
     try:
         with open(percorso_file, "rb", 0) as f:
@@ -36,16 +39,15 @@ def cerca_stringa_in_file(directory_radice, stringa_da_cercare, workers=8):
     return risultati
 
 if __name__ == "__main__":
-    directory_di_partenza = "."
-    stringa_obiettivo = "/src/LitInvestorBlog.db"
+    stringa_obiettivo = "index.css"
 
     print(
         f"🔍 Ricerca della stringa '{stringa_obiettivo}' "
-        f"nella directory '{os.path.abspath(directory_di_partenza)}' e sottodirectory..."
+        f"nella directory '{PROJECT_ROOT}' e sottodirectory..."
     )
 
     trovati = cerca_stringa_in_file(
-        directory_di_partenza,
+        PROJECT_ROOT,
         stringa_obiettivo,
         workers=os.cpu_count()
     )

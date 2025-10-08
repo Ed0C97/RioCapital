@@ -21,3 +21,5 @@ Write-Host "Push su origin/main..." -ForegroundColor Green
 git push origin main
 
 Write-Host "Operazione completata." -ForegroundColor Cyan
+
+#.\git-push.ps1 -Message "Commit message"

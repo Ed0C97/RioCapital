@@ -1,430 +1,245 @@
-/*
-
-================================================================================
-File: App.css (Riorganizzato)
-Progetto: RioCapitalBlog-frontend
-Descrizione: Foglio di stile principale per l'applicazione RioCapitalBlog,
-             riorganizzato per chiarezza, manutenibilità e coerenza dei colori.
-
-Contenuti:
-- Importazione di font personalizzati.
-- Integrazione e configurazione di Tailwind CSS.
-- Definizione di variabili CSS per il tema (light e dark).
-- Stili di base e classi di utilità personalizzate.
-- Stili per componenti specifici come card, griglie di notizie e articoli.
-- Media query per il design responsivo.
-================================================================================
-
-*/
-
-/* ==============================================================================
-   0. DEFINIZIONE VARIABILI COLORE GLOBALI
-   ==============================================================================
-   Descrizione: Variabili CSS globali per i colori principali, per una gestione
-                centralizzata e una facile personalizzazione del tema.
-   ============================================================================== */
-/* html {
-  font-size: 110%;
-} */
-
-:root {
-  --color-text-primary: #1d1d1f; /* Testo scuro principale */
-  --color-background-light: #f5f5f7; /* Sfondo grigio chiaro */
-  --color-background-white: #ffffff; /* Sfondo bianco */
-  --color-blue-accent: #0e549c; /* Blu principale */
-  --color-border-light: #d2d2d7; /* Bordo grigio chiaro */
-  --color-text-secondary: #6e6e73; /* Testo grigio secondario */
-  --color-text-muted: #86868b; /* Testo grigio muted */
-  --color-blue-link: #0066cc; /* Blu per link */
-  --color-blue-highlight: #0071e3; /* Blu per evidenziazioni */
-  --color-background-button: #e8e8ed; /* Sfondo pulsante grigio */
-  --color-border-separator: #e5e7eb; /* Bordo separatore */
-  --color-input-background: #f2f2f2; /* Sfondo input */
-  --color-input-placeholder: #888888; /* Placeholder input */
-  --color-button-text: #333333; /* Testo pulsante */
-  --color-button-hover: #e0e0e0; /* Sfondo pulsante hover */
-}
-
 /* ==============================================================================
    1. IMPORTAZIONE FONT
    ==============================================================================
-   Descrizione: Importazione del font custom 'SF Pro Display' con diversi pesi
-   e stili. L'attributo `font-display: swap;` assicura che il testo sia
-   visibile con un font di fallback mentre il font personalizzato viene caricato.
+   Descrizione: Importazione del font 'Poppins' con diversi pesi e stili.
+                `font-display: swap` garantisce la visibilità del testo con un
+                font di fallback durante il caricamento.
    ============================================================================== */
 
 /* poppins-100 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 100;
-  src: url('./assets/fonts/poppins-v24-latin-100.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-100.woff2') format('woff2');
 }
 /* poppins-100italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: italic;
   font-weight: 100;
-  src: url('./assets/fonts/poppins-v24-latin-100italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-100italic.woff2') format('woff2');
 }
 /* poppins-200 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 200;
-  src: url('./assets/fonts/poppins-v24-latin-200.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-200.woff2') format('woff2');
 }
 /* poppins-200italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: italic;
   font-weight: 200;
-  src: url('./assets/fonts/poppins-v24-latin-200italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-200italic.woff2') format('woff2');
 }
 /* poppins-300 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 300;
-  src: url('./assets/fonts/poppins-v24-latin-300.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-300.woff2') format('woff2');
 }
 /* poppins-300italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: italic;
   font-weight: 300;
-  src: url('./assets/fonts/poppins-v24-latin-300italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-300italic.woff2') format('woff2');
 }
 /* poppins-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/poppins-v24-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-regular.woff2') format('woff2');
 }
 /* poppins-italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: italic;
   font-weight: 400;
-  src: url('./assets/fonts/poppins-v24-latin-italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-italic.woff2') format('woff2');
 }
 /* poppins-500 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
-  src: url('./assets/fonts/poppins-v24-latin-500.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-500.woff2') format('woff2');
 }
 /* poppins-500italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: italic;
   font-weight: 500;
-  src: url('./assets/fonts/poppins-v24-latin-500italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-500italic.woff2') format('woff2');
 }
 /* poppins-600 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
-  src: url('./assets/fonts/poppins-v24-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-600.woff2') format('woff2');
 }
 /* poppins-600italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: italic;
   font-weight: 600;
-  src: url('./assets/fonts/poppins-v24-latin-600italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-600italic.woff2') format('woff2');
 }
 /* poppins-700 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 700;
-  src: url('./assets/fonts/poppins-v24-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-700.woff2') format('woff2');
 }
 /* poppins-700italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: italic;
   font-weight: 700;
-  src: url('./assets/fonts/poppins-v24-latin-700italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-700italic.woff2') format('woff2');
 }
 /* poppins-800 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 800;
-  src: url('./assets/fonts/poppins-v24-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-800.woff2') format('woff2');
 }
 /* poppins-800italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: italic;
   font-weight: 800;
-  src: url('./assets/fonts/poppins-v24-latin-800italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-800italic.woff2') format('woff2');
 }
 /* poppins-900 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 900;
-  src: url('./assets/fonts/poppins-v24-latin-900.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-900.woff2') format('woff2');
 }
 /* poppins-900italic - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: 'Poppins';
   font-style: italic;
   font-weight: 900;
-  src: url('./assets/fonts/poppins-v24-latin-900italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('./assets/fonts/poppins-v24-latin-900italic.woff2') format('woff2');
 }
 
 /* ==============================================================================
    2. INTEGRAZIONE TAILWIND CSS
    ==============================================================================
-   Descrizione: Importazione delle direttive di base di Tailwind CSS e di una
-   libreria di animazioni aggiuntiva. Viene definita anche una variante
-   personalizzata per il tema scuro.
+   Descrizione: Importazione delle direttive di base di Tailwind CSS, di una
+                libreria di animazioni e definizione di una variante custom.
    ============================================================================== */
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-/* Variante personalizzata per applicare stili specifici ai figli di un elemento .dark */
+/* Variante personalizzata per applicare stili ai figli di un elemento .dark */
 @custom-variant dark (&:is(.dark *));
 
 /* ==============================================================================
-   3. DEFINIZIONE DEL TEMA (THEME)
+   3. DEFINIZIONE VARIABILI GLOBALI
    ==============================================================================
-   Descrizione: Definizione delle variabili CSS che verranno utilizzate in tutta
-   l'applicazione. Questo permette una facile personalizzazione e coerenza
-   del design. Le variabili sono definite per colori, raggi dei bordi, ecc.
-   ============================================================================== */
-
-@theme inline {
-  /* Raggi dei bordi */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-
-  /* Colori di base */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  /* Colori per componenti Card */
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-
-  /* Colori per componenti Popover */
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-
-  /* Colori primari e secondari */
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-
-  /* Colori per stati "muted" e "accent" */
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-
-  /* Altri colori */
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  /* Colori per i grafici */
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-
-  /* Colori per la Sidebar */
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-/* ==============================================================================
-   4. TEMA LIGHT (DEFAULT)
-   ==============================================================================
-   Descrizione: Valori specifici delle variabili CSS per il tema chiaro (light).
-   Utilizza la notazione di colore OKLCH per una migliore percezione
-   e consistenza dei colori.
+   Descrizione: Variabili CSS globali per una gestione centralizzata del tema.
+                La palette è stata razionalizzata secondo le nuove regole.
    ============================================================================== */
 
 :root {
-  --radius: 1rem; /* 10px */
+  /* --- Palette Colori Principale --- */
+  --color-blue: #0071e3;
+  --color-green: #28a745;
+  --color-yellow: #fbbc05;
+  --color-green-gradient: #40b06f;
+  --color-cyan-gradient: #2ca6ab;
 
-  /* Colori di base */
-  --background: var(--color-background-light);
-  --foreground: oklch(0.2 0 0);
+  /* --- Testi --- */
+  --color-text-primary: #1d1d1f;
+  --color-text-primary-dark-bg: #000000;
+  --color-text-secondary: #6e6e73;
+  --color-text-placeholder: #888888;
 
-  /* Colori per componenti Card */
-  --card: var(--color-background-white);
-  --card-foreground: oklch(0.2 0 0);
+  /* --- Sfondi --- */
+  --color-background-light: #f5f5f7;
+  --color-background-white: #ffffff;
+  --color-background-navbar: #313132;
 
-  /* Colori per componenti Popover */
-  --popover: var(--color-background-white);
-  --popover-foreground: oklch(0.2 0 0);
+  /* --- Bordi e Separatori --- */
+  --color-border: #e5e7eb;
 
-  /* Colori primari e secondari */
-  --primary: oklch(0.5 0.15 240);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.6 0.15 140);
-  --secondary-foreground: oklch(0.985 0 0);
-
-  /* Colori per stati "muted" e "accent" */
-  --muted: oklch(0.96 0 0);
-  --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.7 0.15 60);
-  --accent-foreground: oklch(0.2 0 0);
-
-  /* Altri colori */
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.95 0 0);
-  --ring: oklch(0.5 0.15 240);
-
-  /* Colori per i grafici */
-  --chart-1: oklch(0.5 0.15 240);
-  --chart-2: oklch(0.6 0.15 140);
-  --chart-3: oklch(0.7 0.15 60);
-  --chart-4: oklch(0.577 0.245 27.325);
-  --chart-5: oklch(0.4 0.15 280);
-
-  /* Colori per la Sidebar */
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.2 0 0);
-  --sidebar-primary: oklch(0.5 0.15 240);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.96 0 0);
-  --sidebar-accent-foreground: oklch(0.2 0 0);
-  --sidebar-border: oklch(0.9 0 0);
-  --sidebar-ring: oklch(0.5 0.15 240);
+  /* --- Raggi dei Bordi --- */
+  --radius: 1rem; /* 16px */
+  --radius-sm: calc(var(--radius) - 4px); /* 12px */
+  --radius-md: calc(var(--radius) - 2px); /* 14px */
+  --radius-lg: var(--radius); /* 16px */
+  --radius-xl: calc(var(--radius) + 4px); /* 20px */
 }
 
 /* ==============================================================================
-   5. TEMA DARK
+   7. STILI DI BASE (LAYER BASE)
    ==============================================================================
-   Descrizione: Sovrascrive le variabili CSS per il tema scuro (dark).
-   Questi stili vengono applicati quando un elemento ha la classe `.dark`.
-   ============================================================================== */
-
-.dark {
-  /* Colori di base */
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-
-  /* Colori per componenti Card */
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-
-  /* Colori per componenti Popover */
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-
-  /* Colori primari e secondari */
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-
-  /* Colori per stati "muted" e "accent" */
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-
-  /* Altri colori */
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-
-  /* Colori per i grafici */
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-
-  /* Colori per la Sidebar */
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
-/* ==============================================================================
-   6. STILI DI BASE (LAYER BASE)
-   ==============================================================================
-   Descrizione: Stili di base applicati a tutti gli elementi (`*`) e al `body`.
-   Utilizza la direttiva `@layer base` di Tailwind per garantire che questi
-   stili abbiano una precedenza corretta.
+   Descrizione: Stili di base applicati a tutti gli elementi e al body.
    ============================================================================== */
 
 @layer base {
-  /* Applica un bordo e un anello di focus a tutti gli elementi */
   * {
-    @apply border-border outline-ring/50;
+    @apply border-[var(--color-border)] outline-[var(--color-blue)]/50;
   }
 
-  /* Imposta il colore di sfondo, il colore del testo e il font per il corpo della pagina */
   body {
-    @apply bg-background text-foreground;
+    @apply bg-[var(--color-background-light)] text-[var(--color-text-primary)];
     font-family: 'Poppins', sans-serif;
   }
 }
 
 /* ==============================================================================
-   7. CLASSI DI UTILITÀ PERSONALIZZATE
+   8. CLASSI DI UTILITÀ PERSONALIZZATE
    ==============================================================================
-   Descrizione: Classi riutilizzabili per effetti specifici come gradienti,
-   effetti hover e stili per il testo.
+   Descrizione: Classi riutilizzabili per effetti specifici.
    ============================================================================== */
 
 /* Gradiente per sfondi */
 .RioCapitalBlog-gradient {
-  background: linear-gradient(
-    135deg,
-    oklch(0.5 0.15 240) 0%,
-    oklch(0.6 0.15 140) 100%
-  );
+  background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-green) 100%);
+}
+
+/* Gradiente per il testo */
+.RioCapitalBlog-text-gradient {
+  background: linear-gradient(135deg, var(--color-blue), var(--color-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Sfondo per la sezione Hero */
+.RioCapitalBlog-hero-bg {
+  background: linear-gradient(135deg, var(--color-background-white) 0%, var(--color-background-light) 100%);
 }
 
 /* Effetto hover per le card */
@@ -435,19 +250,6 @@ Contenuti:
 .RioCapitalBlog-card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
-}
-
-/* Gradiente per il testo */
-.RioCapitalBlog-text-gradient {
-  background: linear-gradient(135deg, oklch(0.5 0.15 240), oklch(0.6 0.15 140));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Sfondo per la sezione Hero */
-.RioCapitalBlog-hero-bg {
-  background: linear-gradient(135deg, oklch(0.99 0 0) 0%, oklch(0.96 0 0) 100%);
 }
 
 /* Badge per le categorie */
@@ -462,17 +264,15 @@ Contenuti:
 }
 
 /* ==============================================================================
-   8. STILI PER IL CONTENUTO DEGLI ARTICOLI (Stile Apple Newsroom)
+   9. STILI PER IL CONTENUTO DEGLI ARTICOLI
    ==============================================================================
-   Descrizione: Stili per la formattazione del contenuto degli articoli generato
-   da ReactMarkdown, per imitare il layout pulito e leggibile di Apple Newsroom.
+   Descrizione: Stili per la formattazione del contenuto degli articoli.
    ============================================================================== */
 
 .article-content {
   color: var(--color-text-primary);
   font-size: 1.125rem;
   line-height: 1.7;
-  /* Aggiungi questa classe se vuoi che tutto il testo sia giustificato di default */
   text-align: justify;
 }
 
@@ -490,23 +290,15 @@ Contenuti:
   line-height: 1.3;
 }
 
-.article-content h1 {
-  font-size: 2rem;
-} /* 32px */
-.article-content h2 {
-  font-size: 1.75rem;
-} /* 28px */
-.article-content h3 {
-  font-size: 1.5rem;
-} /* 24px */
-.article-content h4 {
-  font-size: 1.25rem;
-} /* 20px */
+.article-content h1 { font-size: 2rem; }
+.article-content h2 { font-size: 1.75rem; }
+.article-content h3 { font-size: 1.5rem; }
+.article-content h4 { font-size: 1.25rem; }
 
 .article-content a {
-  color: var(--color-blue-link);
+  color: var(--color-blue);
   text-decoration: none;
-  border-bottom: 1px solid var(--color-blue-link);
+  border-bottom: 1px solid var(--color-blue);
   transition: border-bottom-color 0.2s ease;
 }
 
@@ -515,7 +307,7 @@ Contenuti:
 }
 
 .article-content blockquote {
-  border-left: 3px solid var(--color-border-separator);
+  border-left: 3px solid var(--color-border);
   padding-left: 1rem;
   margin: 1.5rem 0;
   font-style: italic;
@@ -528,12 +320,8 @@ Contenuti:
   padding-left: 2rem;
 }
 
-.article-content ul {
-  list-style-type: disc;
-}
-.article-content ol {
-  list-style-type: decimal;
-}
+.article-content ul { list-style-type: disc; }
+.article-content ol { list-style-type: decimal; }
 
 .article-content li {
   margin-bottom: 0.5rem;
@@ -541,102 +329,76 @@ Contenuti:
 
 .article-content img {
   display: block;
-  width: 127%; /* Larghezza totale (100% + 10% a sx + 10% a dx) */
-  margin-left: -13%; /* Margine negativo per "tirare" a sinistra */
-  margin-right: -13%; /* Margine negativo per "tirare" a destra */
+  width: 127%;
+  margin-left: -13%;
+  margin-right: -13%;
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
-  max-width: 127%; /* Assicura che la larghezza non venga limitata */
+  max-width: 127%;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
 }
 
-/* Stile per il contenitore dell'immagine e della didascalia */
 .article-content figure {
-  /* Rimuove il margine di default del browser */
   margin: 0;
 }
 
-/* Stile per la didascalia */
 .article-content figcaption {
-  font-size: 0.8rem; /* Testo leggermente più piccolo */
-  color: var(--color-text-muted); /* Colore grigio secondario */
-  text-align: left; /* Testo centrato */
-  margin-top: -3rem; /* Spazio tra l'immagine e la didascalia */
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  text-align: left;
+  margin-top: -3rem;
   line-height: 5;
   font-weight: 600;
 }
 
 /* ==============================================================================
-   9. LAYOUT E GRIGLIE
-   ==============================================================================
-   Descrizione: Stili per il layout principale e le griglie.
+   10. LAYOUT E GRIGLIE
    ============================================================================== */
 
 .main-container {
   max-width: 1440px;
-  margin: 0 auto; /* Centra il contenitore */
-  padding: 3rem 1rem; /* Spaziatura interna */
+  margin: 0 auto;
+  padding: 3rem 1rem;
 }
 
-/* Griglia per le notizie */
 .news-grid {
   display: grid;
   gap: 38px 38px;
   grid-template-columns: repeat(1, 1fr);
 }
 
-/* Media query per la griglia di notizie su schermi medi e grandi */
 @media (min-width: 768px) {
-  .news-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .news-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 1024px) {
-  .news-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
+  .news-grid { grid-template-columns: repeat(6, 1fr); }
 }
 
-/* Stili per gli elementi della griglia */
-.article-item--1 {
-  grid-column: span 1;
-}
+.article-item--1 { grid-column: span 1; }
 @media (min-width: 1024px) {
-  .article-item--1 {
-    grid-column: span 6;
-  }
+  .article-item--1 { grid-column: span 6; }
 }
 
 .article-item--2,
-.article-item--3 {
-  grid-column: span 1;
-}
+.article-item--3 { grid-column: span 1; }
 @media (min-width: 1024px) {
   .article-item--2,
-  .article-item--3 {
-    grid-column: span 3;
-  }
+  .article-item--3 { grid-column: span 3; }
 }
 
 .article-item--4,
 .article-item--5,
-.article-item--6 {
-  grid-column: span 1;
-}
+.article-item--6 { grid-column: span 1; }
 @media (min-width: 1024px) {
   .article-item--4,
   .article-item--5,
-  .article-item--6 {
-    grid-column: span 2;
-  }
+  .article-item--6 { grid-column: span 2; }
 }
 
 /* ==============================================================================
-   10. COMPONENTE: NEWS CARD
-   ==============================================================================
-   Descrizione: Stili per le card che mostrano le anteprime delle notizie.
+   11. COMPONENTE: NEWS CARD
    ============================================================================== */
 
 .news-card {
@@ -678,22 +440,9 @@ Contenuti:
   flex-grow: 1;
 }
 
-/* 1. Card Eroe (prima riga) */
-.news-card--hero .news-card-content {
-  min-height: 435px; /* Altezza minima per la card più grande */
-}
-
-/* 2. Card Medie (seconda riga) */
-.news-card--standard .news-card-content {
-  min-height: 650px; /* Altezza minima per le card intermedie */
-}
-
-/* 3. Card Piccole (terza riga) */
-/* La classe .news-card--small è già usata insieme a .news-card--standard,
-   quindi dobbiamo essere più specifici per sovrascrivere la regola precedente. */
-.news-card--standard.news-card--small .news-card-content {
-  min-height: 150px; /* Altezza minima per le card più piccole */
-}
+.news-card--hero .news-card-content { min-height: 435px; }
+.news-card--standard .news-card-content { min-height: 650px; }
+.news-card--standard.news-card--small .news-card-content { min-height: 150px; }
 
 .news-card-category {
   font-size: 0.8rem;
@@ -711,7 +460,7 @@ Contenuti:
 
 .news-card-timestamp {
   font-size: 0.9rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   display: flex;
   align-items: center;
   margin-top: 1rem;
@@ -723,51 +472,23 @@ Contenuti:
   margin-right: 0.5em;
 }
 
-/* Varianti della News Card */
-.news-card--hero .news-card-content {
-  padding: 32px;
-}
-.news-card--hero .news-card-headline {
-  font-size: 2.2rem;
-}
+.news-card--hero .news-card-content { padding: 32px; }
+.news-card--hero .news-card-headline { font-size: 2.2rem; }
+.news-card--standard .news-card-media { height: 265px; flex-shrink: 0; }
+.news-card--standard .news-card-content { min-height: 208px; }
+.news-card--small .news-card-media { height: 165px; flex-shrink: 0; }
+.news-card--small .news-card-content { min-height: 100px; }
 
-.news-card--standard .news-card-media {
-  height: 265px;
-  flex-shrink: 0;
-}
-
-.news-card--standard .news-card-content {
-  min-height: 208px;
-}
-
-.news-card--small .news-card-media {
-  height: 165px;
-  flex-shrink: 0;
-}
-
-.news-card--small .news-card-content {
-  min-height: 100px;
-}
-
-/* Stili per la card hero su schermi più grandi */
 @media (min-width: 768px) {
-  .news-card--hero {
-    flex-direction: row;
-  }
-  .news-card--hero .news-card-media {
-    flex-basis: 66%;
-    min-height: 362px;
-  }
-  .news-card--hero .news-card-content {
-    flex-basis: 34%;
-  }
+  .news-card--hero { flex-direction: row; }
+  .news-card--hero .news-card-media { flex-basis: 66%; min-height: 362px; }
+  .news-card--hero .news-card-content { flex-basis: 34%; }
 }
 
-/* Stile per il badge "New" */
 .news-card-eyebrow-new {
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-blue-highlight);
+  color: var(--color-blue);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   background-color: rgba(0, 113, 227, 0.1);
@@ -776,7 +497,7 @@ Contenuti:
 }
 
 /* ==============================================================================
-   11. SEZIONE ARTICOLI CORRELATI (Layout Griglia per Homepage, etc.)
+   12. SEZIONE ARTICOLI CORRELATI
    ============================================================================== */
 
 .related-articles-section {
@@ -792,56 +513,44 @@ Contenuti:
   padding: 0 1rem;
 }
 
-/* Griglia articoli */
 .related-articles-grid {
   display: grid;
-  grid-template-columns: 1fr; /* 1 colonna su mobile */
-  row-gap: 5rem; /* spazio verticale tra gli articoli */
+  grid-template-columns: 1fr;
+  row-gap: 5rem;
 }
 
-/* ------------------------------
-   MOBILE: linea tra ogni articolo
---------------------------------*/
 @media (max-width: 767px) {
   .related-articles-grid > .article-list-item-wrapper:not(:last-child) {
-    border-bottom: 1px solid var(--color-border-separator);
-    padding-bottom: 2.5rem; /* metà del row-gap */
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 2.5rem;
     margin-bottom: -2.3rem;
   }
 }
 
-/* ------------------------------
-   DESKTOP: 2 colonne
---------------------------------*/
 @media (min-width: 768px) {
   .related-articles-grid {
-    grid-template-columns: 1fr 1fr; /* 2 colonne */
+    grid-template-columns: 1fr 1fr;
     column-gap: 5rem;
-    padding-bottom: 4rem; /* metà del row-gap */
+    padding-bottom: 4rem;
     position: relative;
   }
 
-  /* Rimuove le linee sotto i singoli articoli */
   .related-articles-grid > .article-list-item-wrapper {
     border-bottom: none;
     margin-bottom: -5rem;
   }
 
-  /* Linea tra le righe della griglia (una sola linea tra la prima e seconda riga) */
   .related-articles-section .row-separator {
     grid-column: 1 / -1;
     height: 1px;
-    background-color: var(--color-border-separator);
+    background-color: var(--color-border);
     margin-top: 2.5rem;
-    margin-bottom: -2.3rem; /* regola qui lo spazio sotto la linea */
+    margin-bottom: -2.3rem;
   }
 }
 
 /* ==============================================================================
-   12. COMPONENTE: ARTICLE LIST ITEM
-   ==============================================================================
-   Descrizione: Stili per gli elementi della lista di articoli, usati nella
-   sezione degli articoli correlati.
+   13. COMPONENTE: ARTICLE LIST ITEM
    ============================================================================== */
 
 .article-list-item {
@@ -891,24 +600,21 @@ Contenuti:
   transition: color 0.2s ease;
 }
 .article-list-item:hover .article-list-item-title {
-  color: var(--color-blue-highlight);
+  color: var(--color-blue);
 }
 .article-list-item-date {
   font-size: 0.9rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 /* ==============================================================================
-   13. STILI PER ELEMENTI DI FORM
-   ==============================================================================
-   Descrizione: Stili per input e bottoni.
+   14. STILI PER ELEMENTI DI FORM
    ============================================================================== */
 
-/* Stile per l'input (probabilmente da un componente UI) */
 input[data-slot='input'] {
   font-size: 0.9rem;
-  color: var(--color-button-text);
-  background-color: var(--color-input-background);
+  color: var(--color-text-primary);
+  background-color: var(--color-background-light);
   border: none;
   border-radius: 9999px;
   padding: 6px 14px 6px 3rem;
@@ -917,17 +623,14 @@ input[data-slot='input'] {
 }
 
 input[data-slot='input']::placeholder {
-  color: var(--color-input-placeholder);
+  color: var(--color-text-placeholder);
 }
 
-/* Stili generici per bottoni */
-button,
-.button,
-.btn {
+button, .button, .btn {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--color-button-text);
-  background-color: var(--color-input-background);
+  color: var(--color-text-primary);
+  background-color: var(--color-background-light);
   padding: 6px 14px;
   border-radius: 9999px;
   border: none;
@@ -936,42 +639,28 @@ button,
   box-shadow: none;
 }
 
-button:hover,
-.button:hover,
-.btn:hover {
-  background-color: var(--color-button-hover);
+button:hover, .button:hover, .btn:hover {
+  background-color: #e0e0e0; /* Leggermente più scuro di --color-background-light */
 }
 
 /* ==============================================================================
-   14. MEDIA QUERIES RESPONSIVE GENERALI
-   ==============================================================================
-   Descrizione: Media query per adattare il layout a diverse dimensioni
-   dello schermo.
+   15. MEDIA QUERIES RESPONSIVE GENERALI
    ============================================================================== */
 
 @media (max-width: 768px) {
-  /* Stili per la sezione Hero su schermi piccoli */
-  .RioCapitalBlog-hero-title {
-    font-size: 2rem;
-  }
-
-  .RioCapitalBlog-hero-subtitle {
-    font-size: 1rem;
-  }
+  .RioCapitalBlog-hero-title { font-size: 2rem; }
+  .RioCapitalBlog-hero-subtitle { font-size: 1rem; }
 }
 
 /* ==============================================================================
-   16. STILI PER LA PAGINA ARCHIVIO (STILE APPLE NEWSROOM)
-   ==============================================================================
-   Descrizione: Stili specifici per la pagina dell'archivio, ispirati al layout
-                pulito e leggibile di Apple Newsroom.
+   16. STILI PER LA PAGINA ARCHIVIO
    ============================================================================== */
 
 .archive-list {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  border-top: 1px solid var(--color-border-light);
+  border-top: 1px solid var(--color-border);
   padding-top: 1.5rem;
 }
 
@@ -981,22 +670,13 @@ button:hover,
   color: inherit;
   padding: 1.6rem 0;
   padding-bottom: 2.8rem;
-  border-bottom: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border);
 }
 
-/* --- MODIFICA INIZIO --- */
-/*
-  Regola per nascondere il separatore:
-  1. Nasconde il bordo per l'ultimo elemento della lista (fallback).
-  2. Nasconde il bordo quando viene applicata la classe .no-divider dal componente React.
-     Questo gestisce i casi in cui un elemento non è l'ultimo della pagina ma è l'ultimo
-     del suo gruppo mensile.
-*/
 .archive-item-link.no-divider,
 .archive-list > .archive-item-link:last-child {
   border-bottom: none;
 }
-/* --- MODIFICA FINE --- */
 
 .archive-item {
   display: grid;
@@ -1031,10 +711,6 @@ button:hover,
   transform: scale(1.05);
 }
 
-.archive-item-content {
-  /* Il testo si adatta */
-}
-
 .archive-item-category {
   font-size: 0.8rem;
   font-weight: 600;
@@ -1052,18 +728,16 @@ button:hover,
 }
 
 .archive-item-link:hover .archive-item-title {
-  color: var(--color-blue-highlight);
+  color: var(--color-blue);
 }
 
 .archive-item-date {
   font-size: 0.9rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 /* ==============================================================================
-   17. STILI PER LA PAGINAZIONE (STILE APPLE)
-   ==============================================================================
-   Descrizione: Stili per il componente di paginazione, ispirati al design Apple.
+   17. STILI PER LA PAGINAZIONE
    ============================================================================== */
 
 .pagination-container {
@@ -1091,7 +765,7 @@ button:hover,
 }
 
 .pagination-button:hover:not(:disabled) {
-  background-color: var(--color-background-button);
+  background-color: #e0e0e0;
   color: var(--color-text-primary);
 }
 
@@ -1117,7 +791,7 @@ button:hover,
 .pagination-input {
   width: 44px;
   height: 44px;
-  border: 1px solid var(--color-border-light);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   text-align: center;
   font-weight: 600;
@@ -1132,48 +806,41 @@ button:hover,
 }
 
 /* ==============================================================================
-   18. VARIANTE COMPATTA ARTICOLI CORRELATI (Layout Lista per Pagina Articolo)
+   18. VARIANTE COMPATTA ARTICOLI CORRELATI
    ============================================================================== */
+
 .is-compact .row-separator {
   display: none;
 }
 
 .is-compact .archive-button-container {
-  margin-bottom: -2.4rem; /* spazio sotto il bottone (tra bottone e contenitore successivo) */
+  margin-bottom: -2.4rem;
 }
-
-/* Applica questi stili solo quando il contenitore ha la classe .is-compact */
 
 .is-compact .related-articles-container > h2 {
-  /* PARAMETRO: Controlla lo spazio SOPRA il titolo "Altro da..." */
   margin-top: -3rem;
 }
-/* ------------------------------------ */
 
 .is-compact .related-articles-container {
   padding: 0;
 }
 
-/* Forza la griglia a colonna singola e rimuove il gap */
 .is-compact .related-articles-grid {
   grid-template-columns: 1fr;
   gap: 0;
-  position: static; /* Resetta la posizione per evitare conflitti con ::after */
+  position: static;
 }
 
-/* Disattiva la linea continua della Sezione 11 */
 .is-compact .article-list-item-wrapper::after {
   display: none;
 }
 
-/* Aggiunge un bordo inferiore a ogni elemento, tranne l'ultimo */
 .is-compact .article-list-item-wrapper:not(:last-child) {
   padding-bottom: 2rem;
   margin-bottom: 2rem;
-  border-bottom: 1px solid var(--color-border-separator);
+  border-bottom: 1px solid var(--color-border);
 }
 
-/* Stili per l'elemento interno della lista */
 .is-compact .article-list-item {
   display: grid;
   grid-template-columns: 1fr;
@@ -1185,7 +852,7 @@ button:hover,
   width: 100%;
   height: auto;
   border-radius: 18px;
-  aspect-ratio: 1 / 1; /* Immagine quadrata su mobile */
+  aspect-ratio: 1 / 1;
 }
 
 .is-compact .article-list-item-content {
@@ -1196,7 +863,6 @@ button:hover,
   font-size: 1.125rem;
 }
 
-/* Stile per schermi più grandi nella versione compatta */
 @media (min-width: 500px) {
   .is-compact .article-list-item {
     grid-template-columns: 180px 1fr;
@@ -1204,14 +870,12 @@ button:hover,
   }
 
   .is-compact .article-list-item-image {
-    aspect-ratio: 295 / 167; /* Immagine rettangolare */
+    aspect-ratio: 295 / 167;
   }
 }
 
 /* ==============================================================================
-   19. STILI PERSONALIZZATI PER COMPONENTI UI (SWITCH)
-   ==============================================================================
-   Descrizione: Stili per il componente Switch personalizzato.
+   19. COMPONENTE: SWITCH
    ============================================================================== */
 
 .switch-container {
@@ -1219,11 +883,6 @@ button:hover,
   --switch-height: 26px;
   --thumb-size: 22px;
   --thumb-offset: 2px;
-
-  --color-grey: var(
-    --color-border-separator
-  ); /* Utilizzo variabile esistente */
-  --color-blue: var(--color-blue-highlight); /* Utilizzo variabile esistente */
 }
 
 .switch-container button[role='switch'] {
@@ -1233,11 +892,9 @@ button:hover,
   box-shadow: none !important;
   outline: none !important;
   padding: 0 !important;
-
   width: var(--switch-width) !important;
   height: var(--switch-height) !important;
-
-  background-color: var(--color-grey) !important;
+  background-color: var(--color-border) !important;
   border-radius: 9999px;
   transition: background-color 0.2s ease-in-out;
 }
@@ -1247,13 +904,11 @@ button:hover,
   position: absolute;
   top: var(--thumb-offset);
   left: var(--thumb-offset);
-
   width: var(--thumb-size) !important;
   height: var(--thumb-size) !important;
   border-radius: 50%;
   background-color: var(--color-background-white) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-
   transform: translateX(0);
   transition: transform 0.2s ease-in-out;
 }
@@ -1263,8 +918,12 @@ button:hover,
 }
 
 .switch-container button[role='switch'][data-state='checked'] > span {
-  transform: translateX(-2px);
+  transform: translateX(calc(var(--switch-width) - var(--thumb-size) - (var(--thumb-offset) * 2)));
 }
+
+/* ==============================================================================
+   20. COMPONENTE: TICKER ANIMATO
+   ============================================================================== */
 
 .ticker-content {
   display: flex;
@@ -1279,37 +938,29 @@ button:hover,
 }
 
 @keyframes scroll {
-  from {
-    transform: translateX(0%);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0%); }
+  to { transform: translateX(-50%); }
 }
 
-/* App.css */
-
 /* ==============================================================================
-   20. STILI PER LA PAGINA DI LOGIN
+   21. COMPONENTE: LOGIN FORM
    ============================================================================== */
 
 .login-form-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background-color: #ffffff;
+  background-color: var(--color-background-white);
   padding: 30px;
   width: 100%;
   max-width: 450px;
   border-radius: 28px;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .login-form-container .inputForm {
-  border: 1.5px solid #ecedec;
+  border: 1.5px solid var(--color-border);
   border-radius: 10px;
   height: 50px;
   display: flex;
@@ -1319,7 +970,7 @@ button:hover,
 }
 
 .login-form-container .inputForm:focus-within {
-  border: 1.5px solid #2d79f3;
+  border: 1.5px solid var(--color-blue);
 }
 
 .login-form-container .input {
@@ -1337,9 +988,9 @@ button:hover,
 
 .login-form-container .button-submit {
   margin: 10px 0;
-  background-color: #151717;
+  background-color: var(--color-text-primary-dark-bg);
   border: none;
-  color: #ffffff;
+  color: var(--color-background-white);
   font-size: 15px;
   font-weight: 500;
   border-radius: 10px;
@@ -1353,32 +1004,24 @@ button:hover,
   background-color: #2d2f2f;
 }
 
-/* --- AGGIUNGI QUESTA CLASSE --- */
 .login-form-container .line {
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-border);
   line-height: 0.1em;
   margin: 20px 0;
 }
 
 /* ==============================================================================
-   21. VARIANTI BOTTONI OUTLINE (Stile Editor)
+   22. VARIANTI BOTTONI OUTLINE
    ============================================================================== */
 
-/* Stile base per tutti i bottoni outline */
 .btn-outline {
-  /* Dimensioni e Spaziatura (più piccoli) */
-  height: auto; /* Altezza automatica */
-  padding: 0.5rem 1rem; /* Padding per controllare la dimensione */
-  aspect-ratio: initial; /* Rimuove l'aspect-ratio fisso */
-
-  /* Stile del testo */
-  font-size: 0.875rem; /* 14px */
-  font-weight: 500; /* Medium */
-
-  /* Stile del bottone */
+  height: auto;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   background-color: transparent;
   border-radius: 9999px;
-  border-width: 1px !important; /* !important per forzare la visibilità del bordo */
+  border-width: 1px !important;
   border-style: solid;
   transition: all 0.2s ease-in-out;
 }
@@ -1388,72 +1031,60 @@ button:hover,
   box-shadow: none;
 }
 
-/* Variante Grigia (Anteprima) */
+/* Variante Grigia */
 .btn-outline-gray {
-  border-color: var(--color-border-light);
+  border-color: var(--color-border);
   color: var(--color-text-secondary);
 }
 .btn-outline-gray:hover {
   background-color: var(--color-text-secondary);
 }
 
-/* --- AGGIUNGI QUESTO NUOVO BLOCCO --- */
-
-/* Variante Gialla (Dona Ora) */
+/* Variante Gialla */
 .btn-outline-yellow {
-  border-color: #fbbc05;
-  color: #fbbc05;
+  border-color: var(--color-yellow);
+  color: var(--color-yellow);
 }
 .btn-outline-yellow:hover {
-  background-color: #fbbc05;
-  color: black; /* <-- RIGA AGGIUNTA */
+  background-color: var(--color-yellow);
+  color: var(--color-text-primary-dark-bg);
 }
 
-/* Variante Blu (Salva Bozza) */
+/* Variante Blu */
 .btn-outline-blue {
-  border-color: var(--color-blue-accent);
-  color: var(--color-blue-accent);
+  border-color: var(--color-blue);
+  color: var(--color-blue);
 }
 .btn-outline-blue:hover {
-  background-color: var(--color-blue-accent);
+  background-color: var(--color-blue);
 }
 
-/* Variante Verde (Pubblica) */
+/* Variante Verde */
 .btn-outline-green {
-  border-color: #28a745;
-  color: #28a745;
+  border-color: var(--color-green);
+  color: var(--color-green);
 }
 .btn-outline-green:hover {
-  background-color: #28a745;
+  background-color: var(--color-green);
 }
 
-/* Mobile (default) */
-.btn-outline {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.75rem; /* 12px */
-}
-
-/* Tablet */
-@media (min-width: 640px) {
+/* Responsive per bottoni outline */
+@media (max-width: 1023px) {
   .btn-outline {
     padding: 0.4rem 0.9rem;
-    font-size: 0.8125rem; /* 13px */
+    font-size: 0.8125rem;
   }
 }
-
-/* Desktop */
-@media (min-width: 1024px) {
+@media (max-width: 639px) {
   .btn-outline {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem; /* 14px */
+    padding: 0.35rem 0.75rem;
+    font-sire: 0.75rem;
   }
 }
 
-/*
-  ==============================================================
-  CSS DEFINITIVO - Riscritto con Misure Personalizzate
-  ==============================================================
-*/
+/* ==============================================================================
+   23. COMPONENTE: PAYMENT FORM (Glassmorphism)
+   ============================================================================== */
 
 .payment-page-background {
   background: transparent;
@@ -1462,21 +1093,9 @@ button:hover,
   position: relative;
   overflow: hidden;
   display: flex;
-  justify-content: center; /* Mantiene il blocco in alto */
+  justify-content: center;
   align-items: center;
-
-  /* --- INIZIO MODIFICA CHIAVE --- */
-
-  /* RIMUOVI la vecchia riga 'padding' */
-  /* padding: 6rem 1rem; */
-
-  /* AGGIUNGI queste 4 righe per il controllo individuale */
-  padding-top: 2rem; /* << MODIFICA QUI per spostare su/giù */
-  padding-bottom: 6rem; /* << MODIFICA QUI per dare spazio sotto */
-  padding-left: 1rem;
-  padding-right: 1rem;
-
-  /* --- FINE MODIFICA CHIAVE --- */
+  padding: 2rem 1rem 6rem 1rem;
 }
 
 .payment-form-wrapper {
@@ -1485,30 +1104,26 @@ button:hover,
   justify-content: center;
 }
 
-/* --- Modulo di Pagamento (Contenitore di Titolo + Card) --- */
 .payment-module {
-  width: 480px; /* Larghezza allineata alla card per una centratura perfetta */
+  width: 480px;
   position: relative;
   z-index: 2;
-  /* Dispone titolo e card in colonna e li centra */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem; /* Spazio verticale tra il titolo e la card */
+  gap: 2rem;
 }
 
-/* --- Titolo --- */
 .payment-module .title {
   font-family: 'Poppins', sans-serif;
   font-size: 20px;
   font-weight: 300;
-  color: #ffffff;
+  color: var(--color-background-white);
   line-height: 1.5em;
-  text-align: center; /* Assicura che il testo sia centrato */
-  /* Rimosse le vecchie proprietà che forzavano l'allineamento a sinistra */
+  text-align: center;
 }
 
-/* --- Animazioni Sfondo --- */
+/* Animazioni Sfondo */
 .payment-module .circles {
   position: absolute;
   height: 270px;
@@ -1516,13 +1131,13 @@ button:hover,
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1; /* Sta dietro a tutto */
+  z-index: 1;
 }
 
 .payment-module .circle {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(120deg, #40b06f, #2ca6ab);
+  background: linear-gradient(120deg, var(--color-green-gradient), var(--color-cyan-gradient));
   animation: float 6s cubic-bezier(0.54, 0.085, 0.5, 0.92) infinite alternate;
 }
 
@@ -1549,10 +1164,10 @@ button:hover,
   }
 }
 
-/* --- Card di Vetro --- */
+/* Card di Vetro */
 .payment-module .card {
-  height: 325px; /* TUA MISURA */
-  width: 480px; /* TUA MISURA */
+  height: 325px;
+  width: 480px;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(35px);
@@ -1563,14 +1178,10 @@ button:hover,
   z-index: 2;
   display: flex;
   flex-direction: column;
-  padding-top: 125px;
-  padding-bottom: 40px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 125px 30px 40px 30px;
   justify-content: space-between;
 }
 
-/* --- Logo --- */
 .payment-module .logo {
   position: absolute;
   top: 40px;
@@ -1579,16 +1190,21 @@ button:hover,
   width: 48px;
   opacity: 0.9;
   z-index: 3;
-  animation: fadeInLogo 0.4s ease-out; /* <-- RIGA DA AGGIUNGERE */
+  animation: fadeInLogo 0.4s ease-out;
 }
 
-/* --- Stili Generali Form --- */
+@keyframes fadeInLogo {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Stili Form Interno */
 .payment-module .form-group {
   position: relative;
   overflow: hidden;
 }
 .payment-module .form-group label {
-  color: #ffffff;
+  color: var(--color-background-white);
   font-size: 12px;
   font-weight: normal;
   font-family: 'Space Mono', monospace;
@@ -1599,7 +1215,7 @@ button:hover,
   font-family: 'Space Mono', monospace;
   border: none;
   background: none;
-  color: #ffffff;
+  color: var(--color-background-white);
   width: 100%;
   outline: none;
   padding: 0;
@@ -1616,63 +1232,26 @@ button:hover,
   left: -100%;
   width: 100%;
   height: 2px;
-  background-color: #ffffff;
+  background-color: var(--color-background-white);
 }
 .payment-module .form-group input:focus + .underline,
 .payment-module .form-group input:hover + .underline {
   left: 0;
 }
 
-/* --- Campi Specifici --- */
-.payment-module .card-number input {
-  font-size: 30px;
-  height: 50px;
-}
-.payment-module .card-number input::placeholder {
-  font-size: 30px;
-}
-.payment-module .group input {
-  font-size: 16px;
-  height: 26px;
-}
+.payment-module .card-number input { font-size: 30px; height: 50px; }
+.payment-module .card-number input::placeholder { font-size: 30px; }
+.payment-module .group input { font-size: 16px; height: 26px; }
 
-/*
-  ==============================================================
-  CONTROLLO INDIVIDUALE PER TITOLARE, SCADENZA, CCV
-  ==============================================================
-*/
 .payment-module .group {
   display: flex;
-  align-items: flex-end; /* Allinea i campi alla base se hanno altezze diverse */
+  align-items: flex-end;
 }
+.payment-module .group .form-group:nth-child(1) { width: 54%; margin-right: 60px; } /* Titolare */
+.payment-module .group .form-group:nth-child(2) { width: 23%; margin-right: 30px; } /* Scadenza */
+.payment-module .group .form-group:nth-child(3) { width: 23%; } /* CCV */
 
-/* --- CONTROLLO LARGHEZZA --- */
-/* Modifica i valori 'width' per cambiare la larghezza di ogni campo */
-.payment-module .group .form-group:nth-child(1) {
-  /* Titolare */
-  width: 54%;
-}
-.payment-module .group .form-group:nth-child(2) {
-  /* Scadenza */
-  width: 23%;
-}
-.payment-module .group .form-group:nth-child(3) {
-  /* CCV */
-  width: 23%;
-}
-
-/* --- CONTROLLO DISTANZA --- */
-/* Modifica i valori 'margin-right' per cambiare lo spazio TRA i campi */
-.payment-module .group .form-group:nth-child(1) {
-  /* Spazio a destra di Titolare */
-  margin-right: 60px;
-}
-.payment-module .group .form-group:nth-child(2) {
-  /* Spazio a destra di Scadenza */
-  margin-right: 30px;
-}
-
-/* --- Stili per Pagamenti Alternativi (PayPal, etc.) --- */
+/* Pagamenti Alternativi */
 .payment-module .simplified-view {
   display: flex;
   flex-direction: column;
@@ -1685,8 +1264,8 @@ button:hover,
   padding: 15px;
   border: none;
   border-radius: 8px;
-  background-color: var(--color-blue-highlight, #007bff);
-  color: #ffffff;
+  background-color: var(--color-blue);
+  color: var(--color-background-white);
   font-family: 'Poppins', sans-serif;
   font-size: 1.2rem;
   font-weight: 600;
@@ -1698,11 +1277,9 @@ button:hover,
   transform: scale(1.02);
 }
 
-/*
-  ==============================================================
-  STILE "LINEA SOTTO" - VERSIONE CORRETTA E SPECIFICA
-  ==============================================================
-*/
+/* ==============================================================================
+   24. INPUT CON LINEA SOTTOSTANTE
+   ============================================================================== */
 
 input.underline-input,
 textarea.underline-input {
@@ -1711,25 +1288,15 @@ textarea.underline-input {
   border-radius: 0 !important;
   box-shadow: none !important;
   outline: none !important;
-
-  /* Linea grigio chiaro semi-trasparente */
   border-bottom: 2px solid rgba(255, 255, 255, 0.3) !important;
-
-  /* Colore del testo BIANCO */
-  color: white !important;
-
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
-
+  color: var(--color-background-white) !important;
+  padding: 8px 0 !important;
   transition: border-color 0.3s ease-in-out;
 }
 
 input.underline-input:focus,
 textarea.underline-input:focus {
-  /* La linea diventa blu quando in focus */
-  border-bottom-color: #0071e3 !important;
+  border-bottom-color: var(--color-blue) !important;
   box-shadow: none !important;
   outline: none !important;
   ring: 0 !important;
@@ -1738,17 +1305,59 @@ textarea.underline-input:focus {
 
 input.underline-input::placeholder,
 textarea.underline-input::placeholder {
-  /* Placeholder bianco semi-trasparente */
   color: rgba(255, 255, 255, 0.5) !important;
 }
 
-@keyframes fadeInLogo {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
+/* ==============================================================================
+   🗑️ CESTINO
+   ==============================================================================
+   Descrizione: Contiene variabili, colori e regole duplicate, inutilizzate o
+                non conformi alla nuova palette. Da revisionare ed eliminare.
+   ============================================================================== */
+
+/*
+  --- Variabili Colore Duplicate o Sostituite ---
+  --color-text-primary: #1d1d1f; (Mantenuta, ma era già definita)
+  --color-background-light: #f5f5f7; (Mantenuta, ma era già definita)
+  --color-background-white: #ffffff; (Mantenuta, ma era già definita)
+  --color-blue-accent: #0e549c; (Sostituita da --color-blue: #0071e3)
+  --color-border-light: #d2d2d7; (Sostituita da --color-border: #e5e7eb)
+  --color-text-secondary: #6e6e73; (Mantenuta, ma era già definita)
+  --color-text-muted: #86868b; (Sostituita da --color-text-secondary)
+  --color-blue-link: #0066cc; (Sostituita da --color-blue: #0071e3)
+  --color-blue-highlight: #0071e3; (Rinominata in --color-blue)
+  --color-background-button: #e8e8ed; (Sostituita da --color-background-light)
+  --color-border-separator: #e5e7eb; (Rinominata in --color-border)
+  --color-input-background: #f2f2f2; (Sostituita da --color-background-light)
+  --color-input-placeholder: #888888; (Rinominata in --color-text-placeholder)
+  --color-button-text: #333333; (Sostituita da --color-text-primary)
+  --color-button-hover: #e0e0e0; (Valore hardcoded dove serve)
+
+  --- Valori Colore Non Approvati (OKLCH) ---
+  Tutti i valori oklch() sono stati rimossi e sostituiti con i valori HEX
+  della palette approvata. Esempi:
+  - oklch(0.5 0.15 240) -> #0071e3
+  - oklch(0.2 0 0) -> #1d1d1f
+  - oklch(0.985 0 0) -> #f5f5f7
+  - oklch(0.145 0 0) -> #000000
+  - etc.
+
+  --- Regole Potenzialmente Superflue ---
+  html {
+    font-size: 110%;
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+  (Commentata nell'originale, probabilmente non necessaria)
+
+  .login-form-container .button-submit:hover {
+    background-color: #2d2f2f;
   }
-}
+  (Il colore #2d2f2f non è nella palette, potrebbe essere allineato a #313132)
+
+  .btn-outline-blue {
+    border-color: var(--color-blue-accent);
+    color: var(--color-blue-accent);
+  }
+  (Utilizzava la vecchia variabile --color-blue-accent, ora corretta)
+*/
+
+
