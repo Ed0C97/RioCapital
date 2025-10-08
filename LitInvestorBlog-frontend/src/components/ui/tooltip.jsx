@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/tooltip.jsx
+// LitInvestorBlog-frontend/src/components/ui/tooltip.jsx
 
 import * as React from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';

@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/pages/ArticleEditorPage.jsx
+// LitInvestorBlog-frontend/src/pages/ArticleEditorPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -35,7 +35,6 @@ import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import { clsx } from 'clsx';
 
-// Reusable FilterLink component, identical to the one in ArchivePage
 const FilterLink = ({ label, onClick, isActive }) => (
   <a
     href="#"
@@ -228,14 +227,12 @@ const ArticleEditorPage = () => {
       const url = isEditing ? `/api/articles/${id}` : '/api/articles';
       const method = isEditing ? 'PUT' : 'POST';
 
-      // --- CORREZIONE QUI ---
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(articleData),
-        credentials: 'include', // <-- RIGA AGGIUNTA
+        credentials: 'include',
       });
-      // ---------------------
 
       if (response.ok) {
         const data = await response.json();
@@ -247,12 +244,12 @@ const ArticleEditorPage = () => {
         if (!isEditing) {
           navigate(`/admin/articles/edit/${data.article.id}`);
         } else {
-          // Aggiorna lo stato 'published' anche nel form dopo il salvataggio
+
           handleInputChange('published', publish);
         }
       } else {
         const error = await response.json();
-        // Mostra un messaggio più specifico se il backend lo fornisce
+
         toast.error(error.error || 'An error occurred while saving.');
       }
     } catch (error) {
@@ -287,8 +284,6 @@ const ArticleEditorPage = () => {
     return <div className="text-center p-8">Loading...</div>;
   }
 
-  // Stili uniformi per Input, Textarea e RichTextEditor wrapper
-  // Uso di !important (con !) per forzare l'override di stili predefiniti di Shadcn/ui o Tailwind
   const cleanInputStyle =
     '!border !border-gray-300 !bg-white focus:border-blue-500 focus:ring-blue-500';
 
@@ -297,7 +292,7 @@ const ArticleEditorPage = () => {
       <div className="bg-[#f5f5f7]">
         <div className="w-full mb-12">
           <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
-            {/* Title and Line */}
+            {}
             <div className="mb-8">
               <div className="border-b border-[#d2d2d7] my-2"></div>
               <h2 className="text-2xl font-regular text-gray-500">
@@ -305,7 +300,7 @@ const ArticleEditorPage = () => {
               </h2>
             </div>
 
-            {/* Controls (Back and Action Buttons) */}
+            {}
             <div className="flex items-center justify-between">
               <a
                 href="/admin/my-articles"
@@ -347,9 +342,9 @@ const ArticleEditorPage = () => {
           </div>
         </div>
 
-        {/* Main Container */}
+        {}
         <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16 space-y-8">
-          {/* Slug and Status Section (outside cards) */}
+          {}
           <div className="text-sm text-muted-foreground space-y-4">
             <div
               className="flex items-center gap-2 cursor-pointer group"
@@ -389,13 +384,13 @@ const ArticleEditorPage = () => {
             </div>
           </div>
 
-          {/* Single Card for Settings */}
+          {}
           <Card className="shadow-none border-none">
             <CardHeader>
               <CardTitle className="text-xl">Main Settings</CardTitle>
             </CardHeader>
             <CardContent className="p-6 space-y-6">
-              {/* Title and Excerpt */}
+              {}
               <div className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="title">
@@ -410,7 +405,7 @@ const ArticleEditorPage = () => {
                         handleInputChange('title', e.target.value)
                       }
                       required
-                      className={`pl-9 ${cleanInputStyle}`} // Applicazione dello stile pulito forzato
+                      className={`pl-9 ${cleanInputStyle}`}
                     />
                   </div>
                   {validationAttempted && !article.title.trim() && (
@@ -431,7 +426,7 @@ const ArticleEditorPage = () => {
                     }
                     rows={3}
                     required
-                    className={cleanInputStyle} // Applicazione dello stile pulito forzato
+                    className={cleanInputStyle}
                   />
                   {validationAttempted && !article.excerpt.trim() && (
                     <p className="text-xs text-red-500 italic mt-2">
@@ -441,7 +436,7 @@ const ArticleEditorPage = () => {
                 </div>
               </div>
 
-              {/* Category and Tags */}
+              {}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2 w-full">
                   <Label>
@@ -477,14 +472,14 @@ const ArticleEditorPage = () => {
                           handleInputChange('tags', e.target.value)
                         }
                         placeholder="tag1, tag2"
-                        className={`pl-9 ${cleanInputStyle}`} // Applicazione dello stile pulito forzato
+                        className={`pl-9 ${cleanInputStyle}`}
                       />
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Switches */}
+              {}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="published">Published</Label>
@@ -528,13 +523,13 @@ const ArticleEditorPage = () => {
             </CardContent>
           </Card>
 
-          {/* Cover Image Card */}
+          {}
           <Card className="shadow-none border-none">
             <CardHeader>
               <CardTitle className="text-xl">Cover Image</CardTitle>
             </CardHeader>
             <CardContent>
-              {/* Wrapper per ImageUploader per uniformità. Ho rimosso il padding dal wrapper per lasciare che ImageUploader gestisca il suo spazio interno. */}
+              {}
               <div className={`rounded-lg ${cleanInputStyle}`}>
                 <ImageUploader
                   currentImage={article.image_url}
@@ -544,7 +539,7 @@ const ArticleEditorPage = () => {
             </CardContent>
           </Card>
 
-          {/* Article Content Card */}
+          {}
           <Card className="shadow-none border-none">
             <CardHeader>
               <CardTitle className="text-xl">
@@ -552,12 +547,12 @@ const ArticleEditorPage = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-0">
-              {/* Applico lo stile direttamente al RichTextEditor (assumendo che accetti la prop className per il suo contenitore esterno) */}
+              {}
               <RichTextEditor
                 value={article.content}
                 onChange={(content) => handleInputChange('content', content)}
                 height="600px"
-                className={`rounded-lg ${cleanInputStyle}`} // Applicazione dello stile pulito forzato
+                className={`rounded-lg ${cleanInputStyle}`}
               />
               {validationAttempted && !article.content.trim() && (
                 <p className="text-xs text-red-500 italic mt-2">

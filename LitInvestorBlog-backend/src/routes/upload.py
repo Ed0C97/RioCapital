@@ -1,4 +1,4 @@
-# RioCapitalBlog-backend/src/routes/upload.py
+# LitInvestorBlog-backend/src/routes/upload.py
 
 import os
 from flask import Blueprint, request, jsonify, current_app
@@ -9,12 +9,10 @@ upload_bp = Blueprint("upload", __name__)
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
 
-
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
-@upload_bp.route("/image", methods=["POST"])  # URL: POST /api/upload/image
+@upload_bp.route("/image", methods=["POST"])
 @login_required
 def upload_image():
     if "image" not in request.files:

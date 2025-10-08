@@ -1,1 +1,3 @@
-# RioCapitalBlog-backend/src/__init__.py
+# LitInvestorBlog-backend/src/__init__.py
+
+

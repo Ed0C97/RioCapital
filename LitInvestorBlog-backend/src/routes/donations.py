@@ -1,4 +1,4 @@
-# RioCapitalBlog-backend/src/routes/donations.py
+# LitInvestorBlog-backend/src/routes/donations.py
 
 from flask import Blueprint, request, jsonify, make_response
 from sqlalchemy import desc, func
@@ -11,7 +11,6 @@ import io
 from datetime import datetime, timedelta
 
 donations_bp = Blueprint("donations", __name__)
-
 
 @donations_bp.route("/api/donations", methods=["POST"])
 def create_donation():
@@ -70,7 +69,6 @@ def create_donation():
         logging.error(f"Errore nella creazione donazione: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
 
-
 @donations_bp.route("/api/donations/list", methods=["GET"])
 @admin_required
 def get_donations():
@@ -105,7 +103,6 @@ def get_donations():
     except Exception as e:
         logging.error(f"Errore nel caricamento donazioni: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
-
 
 @donations_bp.route("/api/donations/stats", methods=["GET"])
 @admin_required
@@ -193,7 +190,6 @@ def get_donation_stats():
         logging.error(f"Errore nelle statistiche donazioni: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
 
-
 @donations_bp.route("/api/donations/recent", methods=["GET"])
 def get_recent_donations():
     """Ottieni donazioni recenti pubbliche (per homepage)"""
@@ -229,7 +225,6 @@ def get_recent_donations():
     except Exception as e:
         logging.error(f"Errore nel caricamento donazioni recenti: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
-
 
 @donations_bp.route("/api/donations/export", methods=["GET"])
 @admin_required
@@ -292,7 +287,6 @@ def export_donations():
     except Exception as e:
         logging.error(f"Errore nell'export donazioni: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
-
 
 @donations_bp.route("/api/donations/<int:donation_id>/refund", methods=["POST"])
 @admin_required

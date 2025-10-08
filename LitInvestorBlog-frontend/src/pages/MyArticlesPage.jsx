@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/pages/MyArticlesPage.jsx
+// LitInvestorBlog-frontend/src/pages/MyArticlesPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -63,7 +63,7 @@ const MyArticlesPage = () => {
   const fetchArticles = async () => {
     try {
       const response = await fetch('/api/articles/my-articles', {
-        // <-- URL MODIFICATO
+
         credentials: 'include',
         cache: 'no-cache',
       });

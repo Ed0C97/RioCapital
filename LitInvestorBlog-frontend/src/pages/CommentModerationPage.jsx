@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/pages/CommentModerationPage.jsx
+// LitInvestorBlog-frontend/src/pages/CommentModerationPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';

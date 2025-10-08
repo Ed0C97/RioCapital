@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/NewsTile.jsx
+// LitInvestorBlog-frontend/src/components/NewsTile.jsx
 
 import React from 'react';
 import { Link } from 'react-router-dom';

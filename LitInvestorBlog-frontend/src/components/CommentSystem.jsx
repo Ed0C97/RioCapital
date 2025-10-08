@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/CommentSystem.jsx
+// LitInvestorBlog-frontend/src/components/CommentSystem.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';

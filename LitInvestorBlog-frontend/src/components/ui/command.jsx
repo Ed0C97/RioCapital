@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/command.jsx
+// LitInvestorBlog-frontend/src/components/ui/command.jsx
 
 'use client';
 

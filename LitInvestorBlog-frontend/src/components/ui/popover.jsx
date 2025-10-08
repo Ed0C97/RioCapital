@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/popover.jsx
+// LitInvestorBlog-frontend/src/components/ui/popover.jsx
 
 'use client';
 

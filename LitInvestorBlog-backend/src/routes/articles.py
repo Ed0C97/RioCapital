@@ -1,4 +1,4 @@
-# RioCapitalBlog-backend/src/routes/articles.py
+# LitInvestorBlog-backend/src/routes/articles.py
 
 from flask import Blueprint, request, jsonify, session
 from sqlalchemy import or_, extract
@@ -18,23 +18,17 @@ from src.routes.auth import login_required, author_required
 
 articles_bp = Blueprint("articles", __name__)
 
-
 def create_slug(title):
     """Crea uno slug dall'titolo dell'articolo"""
     slug = re.sub(r"[^\w\s-]", "", title.lower())
     slug = re.sub(r"[-\s]+", "-", slug)
     return slug.strip("-")
 
-
-# src/routes/articles.py
-
-
 @articles_bp.route("/", methods=["GET"])
 def get_articles():
     try:
-        # --- PRINT 1: VEDIAMO COSA RICEVE IL SERVER ---
+
         print("PARAMETRI RICEVUTI:", request.args)
-        # ---------------------------------------------
 
         page = request.args.get("page", 1, type=int)
         per_page = request.args.get("per_page", 12, type=int)
@@ -51,9 +45,9 @@ def get_articles():
             query = query.filter(Article.id != exclude_id)
 
         if search_query:
-            # --- PRINT 2: VERIFICHIAMO SE IL FILTRO VIENE ATTIVATO ---
+
             print(f"FILTRO DI RICERCA ATTIVATO CON TERMINE: {search_query}")
-            # -------------------------------------------------------
+
             search_term = f"%{search_query}%"
             query = query.filter(
                 or_(
@@ -94,7 +88,6 @@ def get_articles():
         print(f"Errore in get_articles: {e}")
         return jsonify({"error": "An internal error occurred"}), 500
 
-
 @articles_bp.route("/<int:article_id>", methods=["GET"])
 def get_article(article_id):
     try:
@@ -116,7 +109,6 @@ def get_article(article_id):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @articles_bp.route("/<string:slug>", methods=["GET"])
 def get_article_by_slug(slug):
@@ -140,16 +132,13 @@ def get_article_by_slug(slug):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 @articles_bp.route("/id/<int:article_id>", methods=["GET"])
 def get_article_by_id(article_id):
     try:
         article = Article.query.get_or_404(article_id)
-        # Non incrementiamo le views qui, perché è una vista da admin
 
         article_data = article.to_dict()
 
-        # Aggiungiamo i commenti se necessario per l'editor
         comments = (
             Comment.query.filter_by(article_id=article_id)
             .order_by(Comment.created_at.desc())
@@ -161,7 +150,6 @@ def get_article_by_id(article_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 @articles_bp.route("/", methods=["POST"])
 @author_required
 def create_article():
@@ -169,7 +157,6 @@ def create_article():
         data = request.get_json()
         title = data.get("title")
 
-        # Controlli di validazione (invariati)
         if not data.get("title") or not data.get("content"):
             return jsonify({"error": "Titolo e contenuto sono obbligatori"}), 400
         if not data.get("category_id"):
@@ -180,16 +167,13 @@ def create_article():
         if not category:
             return jsonify({"error": "Categoria non trovata"}), 404
 
-        # --- LOGICA DELLO SLUG MIGLIORATA ---
         new_slug = create_slug(title)
-        # Controlla se uno slug identico esiste già
+
         if Article.query.filter_by(slug=new_slug).first():
-            # Se esiste, aggiungi un timestamp per renderlo unico
+
             timestamp = int(datetime.utcnow().timestamp())
             new_slug = f"{new_slug}-{timestamp}"
-        # ------------------------------------
 
-        # --- CREAZIONE DELL'ARTICOLO CON TUTTI I CAMPI ---
         article = Article(
             title=title,
             slug=new_slug,
@@ -199,10 +183,9 @@ def create_article():
             author_id=session["user_id"],
             category_id=data["category_id"],
             published=data.get("published", False),
-            featured=data.get("featured", False),  # Aggiunto featured
+            featured=data.get("featured", False),
             show_author_contacts=data.get("show_author_contacts", False),
         )
-        # -------------------------------------------------
 
         db.session.add(article)
         db.session.commit()
@@ -221,7 +204,6 @@ def create_article():
         db.session.rollback()
         print(f"Errore in create_article: {e}")
         return jsonify({"error": str(e)}), 500
-
 
 @articles_bp.route("/<int:article_id>", methods=["PUT"])
 @author_required
@@ -274,7 +256,6 @@ def update_article(article_id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @articles_bp.route("/<int:article_id>", methods=["DELETE"])
 @author_required
 def delete_article(article_id):
@@ -297,19 +278,17 @@ def delete_article(article_id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @articles_bp.route("/<int:article_id>/like", methods=["POST"])
 @login_required
 def like_article(article_id):
     user_id = session["user_id"]
 
     try:
-        # Tentativo di aggiunta
+
         new_like = ArticleLike(user_id=user_id, article_id=article_id)
         db.session.add(new_like)
         db.session.commit()
 
-        # Aggiornamento contatore
         Article.query.filter_by(id=article_id).update(
             {"likes_count": Article.likes_count + 1}
         )
@@ -319,7 +298,7 @@ def like_article(article_id):
         return jsonify({"liked": True, "likes_count": article.likes_count}), 200
 
     except IntegrityError:
-        # Gestione errore (rimozione)
+
         db.session.rollback()
 
         like_to_delete = ArticleLike.query.filter_by(
@@ -336,7 +315,6 @@ def like_article(article_id):
             return jsonify({"liked": False, "likes_count": article.likes_count}), 200
 
         return jsonify({"error": "Impossibile trovare il like da rimuovere"}), 500
-
 
 @articles_bp.route("/<int:article_id>/favorite", methods=["POST"])
 @login_required
@@ -370,7 +348,6 @@ def favorite_article(article_id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @articles_bp.route("/<int:article_id>/comments", methods=["POST"])
 @login_required
 def add_comment(article_id):
@@ -402,7 +379,6 @@ def add_comment(article_id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @articles_bp.route("/my-articles", methods=["GET"])
 @author_required
 def get_my_articles():
@@ -431,7 +407,6 @@ def get_my_articles():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @articles_bp.route("/favorites", methods=["GET"])
 @login_required

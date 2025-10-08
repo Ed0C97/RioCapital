@@ -1,4 +1,4 @@
-// src/components/FadeInOnScroll.jsx
+// LitInvestorBlog-frontend/src/components/FadeInOnScroll.jsx
 
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -11,9 +11,9 @@ const FadeInOnScroll = ({
   threshold = 0.1,
 }) => {
   const { ref, inView } = useInView({
-    // triggerOnce: true, // L'animazione avviene solo una volta
-    threshold: threshold, // L'elemento è considerato "in vista" quando il 10% è visibile
-    triggerOnce: true, // Imposta a 'false' se vuoi che l'animazione si ripeta ogni volta che entra/esce
+
+    threshold: threshold,
+    triggerOnce: true,
   });
 
   return (
@@ -21,11 +21,11 @@ const FadeInOnScroll = ({
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
       className={twMerge(
-        // Stili di base per la transizione
+
         'transition-all duration-700 ease-out',
-        // Stato iniziale (invisibile e spostato)
+
         inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8',
-        // Unisci eventuali classi personalizzate passate come prop
+
         className,
       )}
     >

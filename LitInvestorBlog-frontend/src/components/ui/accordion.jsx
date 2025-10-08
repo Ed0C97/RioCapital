@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/accordion.jsx
+// LitInvestorBlog-frontend/src/components/ui/accordion.jsx
 
 import * as React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';

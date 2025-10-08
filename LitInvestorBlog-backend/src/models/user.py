@@ -1,9 +1,8 @@
-# RioCapitalBlog-backend/src/models/user.py
+# LitInvestorBlog-backend/src/models/user.py
 
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from src.extensions import db
-
 
 class User(db.Model):
     __tablename__ = "user"
@@ -45,11 +44,10 @@ class User(db.Model):
         return self.role == "admin"
 
     def to_dict(self):
-        # --- COSTRUISCI IL NOME COMPLETO QUI DENTRO ---
-        full_name_str = self.username  # Inizia con l'username come fallback
+
+        full_name_str = self.username
         if self.first_name and self.last_name:
             full_name_str = f"{self.first_name} {self.last_name}"
-        # ---------------------------------------------
 
         return {
             "id": self.id,
@@ -63,8 +61,8 @@ class User(db.Model):
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "is_active": self.is_active,
             "newsletter_subscribed": self.newsletter_subscribed,
-            # --- AGGIUNGI QUESTI DUE CAMPI ---
+
             "linkedin_url": self.linkedin_url,
             "full_name": full_name_str,
-            # ---------------------------------
+
         }

@@ -1,9 +1,8 @@
-# RioCapitalBlog-backend/src/models/donation.py
+# LitInvestorBlog-backend/src/models/donation.py
 
 from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, Float
 from datetime import datetime
 from src.extensions import db
-
 
 class Donation(db.Model):
     __tablename__ = "donations"

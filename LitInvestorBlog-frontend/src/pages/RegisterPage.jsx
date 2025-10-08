@@ -1,4 +1,4 @@
-// src/pages/RegisterPage.jsx
+// LitInvestorBlog-frontend/src/pages/RegisterPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
@@ -6,7 +6,6 @@ import { useAuth } from '../hooks/AuthContext.js';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { User, Lock, Mail } from 'lucide-react';
 
-// Riusiamo le icone di Google e Apple (spostale in un file separato se preferisci)
 const GoogleIcon = () => (
   <svg
     xmlSpace="preserve"
@@ -83,7 +82,6 @@ const RegisterPage = () => {
     }
   }, [user, navigate]);
 
-  // Gestisce gli errori provenienti dal redirect OAuth
   useEffect(() => {
     const oauthError = searchParams.get('error');
     if (oauthError === 'no_account') {
@@ -118,7 +116,7 @@ const RegisterPage = () => {
     if (!result.success) {
       setError(result.error || 'Errore durante la registrazione');
     }
-    // Il redirect viene gestito dall'useEffect [user, navigate]
+
     setLoading(false);
   };
 
@@ -240,10 +238,9 @@ const RegisterPage = () => {
         </p>
 
         <div className="flex items-center gap-4">
-          {/* Pulsante Google stile Apple */}
+          {}
           <a
-            // --- MODIFICA CHIAVE QUI ---
-            // Rimuovi "/register" dall'URL per farlo corrispondere alla rotta del backend
+
             href="http://localhost:5000/api/auth/google/login"
             className="w-full h-11 px-4 flex items-center justify-center gap-2 bg-[#F5F5F7] rounded-full text-sm font-medium text-black no-underline transition-colors hover:bg-[#EAEAEB]"
           >
@@ -251,7 +248,7 @@ const RegisterPage = () => {
             <span>Google</span>
           </a>
 
-          {/* Pulsante Apple stile Apple */}
+          {}
           <button
             type="button"
             className="w-full h-11 px-4 flex items-center justify-center gap-2 bg-[#F5F5F7] rounded-full text-sm font-medium text-black no-underline transition-colors hover:bg-[#EAEAEB] cursor-not-allowed opacity-60"

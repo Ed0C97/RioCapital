@@ -1,9 +1,9 @@
-// src/components/ShareLinks.jsx
+// LitInvestorBlog-frontend/src/components/ShareLinks.jsx
 
 import React, { useState } from 'react';
 import { Facebook, Instagram, Mail, Link, Check } from 'lucide-react';
 import { toast } from 'sonner';
-import { SiX } from 'react-icons/si'; // icona ufficiale di X
+import { SiX } from 'react-icons/si';
 
 const ShareLinks = ({ articleTitle }) => {
   const [copied, setCopied] = useState(false);
@@ -20,7 +20,7 @@ const ShareLinks = ({ articleTitle }) => {
     },
     {
       name: 'X',
-      icon: SiX, // qui usiamo l’icona di X
+      icon: SiX,
       url: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
     },
     {
@@ -50,8 +50,7 @@ const ShareLinks = ({ articleTitle }) => {
   };
 
   return (
-    // --- MODIFICA 1: Allineamento a sinistra ---
-    // Cambiato "justify-center" in "justify-start"
+
     <div className="flex justify-start items-center space-x-4">
       {shareOptions.map((option) => (
         <a
@@ -62,8 +61,8 @@ const ShareLinks = ({ articleTitle }) => {
           aria-label={`Condividi su ${option.name}`}
           className="text-gray-500 hover:text-gray-800 transition-colors"
         >
-          {/* --- MODIFICA 2: Icone più piccole --- */}
-          {/* Cambiato "w-6 h-6" in "w-5 h-5" */}
+          {}
+          {}
           <option.icon className="w-5 h-5" />
         </a>
       ))}

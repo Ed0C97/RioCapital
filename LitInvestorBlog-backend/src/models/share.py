@@ -1,10 +1,9 @@
-# RioCapitalBlog-backend/src/models/share.py
+# LitInvestorBlog-backend/src/models/share.py
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from src.extensions import db
-
 
 class Share(db.Model):
     __tablename__ = "shares"

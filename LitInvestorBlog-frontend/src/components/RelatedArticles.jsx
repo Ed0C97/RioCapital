@@ -1,4 +1,4 @@
-// src/components/RelatedArticles.jsx
+// LitInvestorBlog-frontend/src/components/RelatedArticles.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -61,7 +61,6 @@ const RelatedArticles = ({ title, fetchUrl, variant = 'grid' }) => {
 
   if (loading || articles.length === 0) return null;
 
-  // Dividiamo gli articoli in righe da 2 per il desktop
   const firstRow = articles.slice(0, 2);
   const secondRow = articles.slice(2);
 
@@ -73,17 +72,17 @@ const RelatedArticles = ({ title, fetchUrl, variant = 'grid' }) => {
         <h2 className="text-3xl font-bold mb-8">{title}</h2>
 
         <div className="related-articles-grid">
-          {/* PRIMA RIGA */}
+          {}
           {firstRow.map((article) => (
             <div className="article-list-item-wrapper" key={article.id}>
               <ArticleListItem article={article} />
             </div>
           ))}
 
-          {/* SEPARATORE tra le righe (desktop) o tra gli articoli (mobile) */}
+          {}
           {secondRow.length > 0 && <div className="row-separator"></div>}
 
-          {/* SECONDA RIGA */}
+          {}
           {secondRow.map((article) => (
             <div className="article-list-item-wrapper" key={article.id}>
               <ArticleListItem article={article} />

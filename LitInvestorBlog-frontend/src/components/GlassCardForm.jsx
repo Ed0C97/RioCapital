@@ -1,9 +1,8 @@
-// src/components/GlassCardForm.jsx
+// LitInvestorBlog-frontend/src/components/GlassCardForm.jsx
 
 import React from 'react';
 import { Landmark } from 'lucide-react';
 
-// --- Loghi SVG (rimangono invariati) ---
 const VisaLogo = () => (
   <svg
     width="60px"
@@ -51,8 +50,6 @@ const GlassCardForm = ({
     default: <DefaultCardLogo />,
   };
 
-  // Se il metodo selezionato è 'card', mostriamo il logo della carta (Visa/MC),
-  // altrimenti mostriamo l'icona del metodo di pagamento (PayPal, etc.)
   const displayLogo =
     selectedMethod === 'card' ? (
       logos[cardType]
@@ -116,10 +113,10 @@ const GlassCardForm = ({
               </div>
             </div>
 
-            {/* CAMPO 1: Messaggio (ex Numero Carta) */}
+            {}
             <div className="form-group card-number">
               <label>Messaggio (Opzionale)</label>
-              {/* Usiamo una textarea per messaggi più lunghi */}
+              {}
               <textarea
                 id="message"
                 name="message"
@@ -132,9 +129,9 @@ const GlassCardForm = ({
               <span className="underline"></span>
             </div>
 
-            {/* CAMPO 2 e 3: Nome e Email (ex Titolare, Scadenza, CCV) */}
+            {}
             <div className="group">
-              {/* Nome */}
+              {}
               <div
                 className="form-group"
                 style={{ width: '40%', marginRight: '4%' }}
@@ -146,14 +143,14 @@ const GlassCardForm = ({
                   placeholder="NOME E COGNOME"
                   type="text"
                   required
-                  value={donorInfo.anonymous ? 'Anonymous' : donorInfo.name} // Nome anonimo se selezionato
+                  value={donorInfo.anonymous ? 'Anonymous' : donorInfo.name}
                   onChange={onDonorInfoChange}
-                  disabled={donorInfo.anonymous || !!donorInfo.name} // Disabilita se anonimo o già preso dall'account
+                  disabled={donorInfo.anonymous || !!donorInfo.name}
                 />
                 <span className="underline"></span>
               </div>
 
-              {/* Email */}
+              {}
               <div className="form-group" style={{ width: '56%' }}>
                 <label>Email</label>
                 <input
@@ -164,12 +161,12 @@ const GlassCardForm = ({
                   required
                   value={donorInfo.email}
                   onChange={onDonorInfoChange}
-                  disabled={!!donorInfo.email} // Disabilita se presa dall'account
+                  disabled={!!donorInfo.email}
                 />
                 <span className="underline"></span>
               </div>
             </div>
-            {/* --- FINE MODIFICHE CAMPI FORM --- */}
+            {}
           </div>
         </div>
       </div>

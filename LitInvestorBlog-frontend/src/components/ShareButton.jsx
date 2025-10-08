@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ShareButton.jsx
+// LitInvestorBlog-frontend/src/components/ShareButton.jsx
 
 import React, { useState } from 'react';
 import { Button } from './ui/button';

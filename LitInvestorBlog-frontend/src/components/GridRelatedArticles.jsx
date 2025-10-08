@@ -1,4 +1,4 @@
-// src/components/GridRelatedArticles.jsx
+// LitInvestorBlog-frontend/src/components/GridRelatedArticles.jsx
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,7 @@ const GridArticleItem = ({ article }) => {
     <Link to={`/article/${article.slug}`} className="article-list-item">
       <div className="article-list-item-image aspect-square">
         {' '}
-        {/* Immagine sempre quadrata */}
+        {}
         <img src={article.image_url || placeholderImage} alt={article.title} />
       </div>
       <div className="article-list-item-content">
@@ -36,7 +36,6 @@ const GridArticleItem = ({ article }) => {
 
 const GridRelatedArticles = ({ title }) => {
   const [articles] = useState([]);
-  // ... (logica di fetch identica agli altri componenti)
 
   return (
     <section className="related-articles-section">

@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/input.jsx
+// LitInvestorBlog-frontend/src/components/ui/input.jsx
 
 import * as React from 'react';
 

@@ -1,4 +1,4 @@
-# RioCapitalBlog-backend/src/routes/favorites.py
+# LitInvestorBlog-backend/src/routes/favorites.py
 
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
@@ -9,7 +9,6 @@ from src.models.favorite import ArticleFavorite as Favorite
 from src.models.article import Article
 
 favorites_bp = Blueprint("favorites", __name__)
-
 
 @favorites_bp.route("/api/favorites", methods=["GET"])
 @login_required
@@ -43,7 +42,6 @@ def get_user_favorites():
     except Exception as e:
         logging.error(f"Errore nel caricamento preferiti: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
-
 
 @favorites_bp.route("/api/favorites/<int:article_id>", methods=["POST"])
 @login_required
@@ -84,7 +82,6 @@ def add_favorite(article_id):
         logging.error(f"Errore nell'aggiunta ai preferiti: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
 
-
 @favorites_bp.route("/api/favorites/<int:article_id>", methods=["DELETE"])
 @login_required
 def remove_favorite(article_id):
@@ -110,7 +107,6 @@ def remove_favorite(article_id):
         logging.error(f"Errore nella rimozione dai preferiti: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
 
-
 @favorites_bp.route("/api/favorites/<int:article_id>/check", methods=["GET"])
 @login_required
 def check_favorite(article_id):
@@ -125,7 +121,6 @@ def check_favorite(article_id):
     except Exception as e:
         logging.error(f"Errore nella verifica preferiti: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
-
 
 @favorites_bp.route("/api/favorites/toggle/<int:article_id>", methods=["POST"])
 @login_required

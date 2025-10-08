@@ -1,4 +1,4 @@
-// src/components/Footer.jsx
+// LitInvestorBlog-frontend/src/components/Footer.jsx
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -6,9 +6,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Mail } from 'lucide-react';
 
-// Import your logo (make sure the path is correct)
-// If you want a dark logo on a white background, create a logo.dark.svg
-import RioCapitalLogo from '../assets/litinvestor_logo.webp'; // <-- CHANGE THIS IF NECESSARY
+import RioCapitalLogo from '../assets/litinvestor_logo.webp';
 
 const Footer = () => {
   const [email, setEmail] = React.useState('');
@@ -40,7 +38,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-white">
-      {/* --- MODIFICATION 1: Container with correct max width --- */}
+      {}
       <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div className="space-y-4 md:col-span-2 lg:col-span-1">
@@ -51,7 +49,7 @@ const Footer = () => {
                 className="h-7 w-auto"
               />
             </Link>
-            {/* --- MODIFICATION 3: Added margin below the logo --- */}
+            {}
             <p className="font-semibold text-gray-800 pt-4">Lit Investor</p>
           </div>
 
@@ -108,7 +106,7 @@ const Footer = () => {
             <p className="text-sm text-gray-500">
               Stay updated with our weekly analyses.
             </p>
-            {/* --- MODIFICATION 2: New newsletter form --- */}
+            {}
             <form onSubmit={handleNewsletterSubmit} className="space-y-2">
               <div className="relative border-b border-gray-300">
                 <Mail className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -140,23 +138,8 @@ const Footer = () => {
             © {new Date().getFullYear()} Lit Investor. All rights reserved.
           </p>
 
-          {/* --- MODIFICATION 4: Social logos commented out --- */}
-          {/*
-          <div className="flex space-x-2">
-            <Button variant="ghost" size="icon" asChild>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><Facebook className="w-4 h-4" /></a>
-            </Button>
-            <Button variant="ghost" size="icon" asChild>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><Twitter className="w-4 h-4" /></a>
-            </Button>
-            <Button variant="ghost" size="icon" asChild>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><Instagram className="w-4 h-4" /></a>
-            </Button>
-            <Button variant="ghost" size="icon" asChild>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><Linkedin className="w-4 h-4" /></a>
-            </Button>
-          </div>
-          */}
+          {}
+          {}
         </div>
       </div>
     </footer>

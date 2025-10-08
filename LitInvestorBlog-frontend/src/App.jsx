@@ -1,3 +1,5 @@
+// LitInvestorBlog-frontend/src/App.jsx
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './hooks/AuthProvider.jsx';
@@ -11,7 +13,7 @@ import FavoritesPage from './pages/FavoritesPage';
 import DonatePage from './pages/DonatePage';
 import CommentModerationPage from './pages/CommentModerationPage';
 import ArticleEditorPage from './pages/ArticleEditorPage';
-// import CategoriesPage from './pages/CategoriesPage'; // <-- NON CI SERVE PIÙ
+
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -19,10 +21,10 @@ import { Toaster } from 'sonner';
 import './App.css';
 import ArticleDetailPage from './pages/ArticleDetailPage';
 import ArticlesByCategoryPage from './pages/ArticlesByCategoryPage';
-import ArchivePage from './pages/ArchivePage'; // <-- LA NUOVA PAGINA
+import ArchivePage from './pages/ArchivePage';
 import CompleteProfilePage from './pages/CompleteProfilePage';
 import AdminPage from './pages/AdminPage';
-import SuccessPage from './pages/SuccessPage'; // <-- AGGIUNGI
+import SuccessPage from './pages/SuccessPage';
 import CancelPage from './pages/CancelPage';
 
 function App() {
@@ -33,7 +35,7 @@ function App() {
           <Header />
           <main className="flex-grow">
             <Routes>
-              {/* --- Rotte Principali --- */}
+              {}
               <Route path="/" element={<HomePage />} />
               <Route path="/article/:slug" element={<ArticleDetailPage />} />
               <Route
@@ -42,25 +44,25 @@ function App() {
               />
               <Route path="/archive" element={<ArchivePage />} />
 
-              {/* --- Vecchie rotte per le categorie ora puntano all'archivio --- */}
+              {}
               <Route path="/categorie" element={<ArchivePage />} />
               <Route path="/categories" element={<ArchivePage />} />
 
-              {/* --- Altre Pagine --- */}
+              {}
               <Route path="/about-us" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/donate" element={<DonatePage />} />
 
-              {/* --- PAGINA DI RICERCA (DA AGGIUNGERE) --- */}
+              {}
               <Route path="/search" element={<ArchivePage />} />
 
-              {/* --- Autenticazione e Profilo --- */}
+              {}
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/favorites" element={<FavoritesPage />} />
 
-              {/* --- Area Admin/Collaboratore --- */}
+              {}
               <Route
                 path="/admin/articoli/nuovo"
                 element={<ArticleEditorPage />}
@@ -73,10 +75,10 @@ function App() {
                 path="/admin/moderazione"
                 element={<CommentModerationPage />}
               />
-              {/* --- Nuova rotta unificata per l'area admin --- */}
+              {}
               <Route path="/admin/dashboard" element={<AdminPage />} />
 
-              {/* --- Rotta 404 --- */}
+              {}
               <Route path="*" element={<NotFoundPage />} />
               <Route
                 path="/complete-profile"

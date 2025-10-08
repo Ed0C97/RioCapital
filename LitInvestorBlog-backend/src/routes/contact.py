@@ -1,10 +1,9 @@
-# RioCapitalBlog-backend/src/routes/contact.py
+# LitInvestorBlog-backend/src/routes/contact.py
 
 from flask import Blueprint, request, jsonify
 from datetime import datetime
 
 contact_bp = Blueprint("contact", __name__)
-
 
 @contact_bp.route("/contact", methods=["POST"])
 def submit_contact():

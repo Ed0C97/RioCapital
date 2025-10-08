@@ -1,3 +1,5 @@
+// LitInvestorBlog-frontend/src/pages/ArchivePage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { format } from 'date-fns';
@@ -8,13 +10,12 @@ import { twMerge } from 'tailwind-merge';
 import { clsx } from 'clsx';
 import FadeInOnScroll from '../components/FadeInOnScroll';
 
-// Componente per creare un singolo link di filtro (senza stile a "pillola")
 const FilterLink = ({ label, onClick, isActive }) => (
   <a
     href="#"
     onClick={(e) => {
-      e.preventDefault(); // Impedisce alla pagina di saltare in cima
-      onClick(); // Esegue la tua funzione di filtro
+      e.preventDefault();
+      onClick();
     }}
     className={clsx(
       'flex items-center gap-3 text-sm group w-full text-left py-1.5 transition-colors duration-150',
@@ -34,7 +35,6 @@ const FilterLink = ({ label, onClick, isActive }) => (
   </a>
 );
 
-// MODIFICA: Aggiunto 'isLast' per gestire la visibilità del separatore
 const ArchiveListItem = ({ article, isLast }) => {
   const placeholderImage =
     'https://images.unsplash.com/photo-1518186225043-963158e70a41?q=80&w=1974&auto=format&fit=crop';
@@ -47,7 +47,7 @@ const ArchiveListItem = ({ article, isLast }) => {
   };
 
   return (
-    // MODIFICA: Aggiunta classe 'no-divider' se 'isLast' è true
+
     <Link
       to={`/article/${article.slug}`}
       className={clsx('archive-item-link', { 'no-divider': isLast })}
@@ -332,7 +332,7 @@ const ArchivePage = () => {
                   )}
                 >
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4">
-                    {/* Colonne Filtri */}
+                    {}
                     <div>
                       <h3 className="text-xs font-semibold text-gray-500 mb-3 uppercase">
                         Categorie
@@ -448,7 +448,7 @@ const ArchivePage = () => {
                 </h2>
                 <div className="archive-list">
                   {groupedArticles[monthYear].map((article, articleIndex) => {
-                    // MODIFICA: Logica per determinare se è l'ultimo elemento
+
                     const isLastInGroup =
                       articleIndex === groupedArticles[monthYear].length - 1;
 
@@ -457,7 +457,7 @@ const ArchivePage = () => {
                         key={article.id}
                         delay={articleIndex * 80}
                       >
-                        {/* MODIFICA: Passa 'isLast' al componente. La riga viene rimossa se è l'ultimo della pagina O se è l'ultimo prima di un nuovo mese. */}
+                        {}
                         <ArchiveListItem
                           article={article}
                           isLast={isLastInGroup}

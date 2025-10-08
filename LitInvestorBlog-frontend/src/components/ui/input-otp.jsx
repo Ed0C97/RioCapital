@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/input-otp.jsx
+// LitInvestorBlog-frontend/src/components/ui/input-otp.jsx
 
 'use client';
 

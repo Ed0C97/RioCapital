@@ -1,10 +1,9 @@
-# RioCapitalBlog-backend/src/models/article.py
+# LitInvestorBlog-backend/src/models/article.py
 
 from datetime import datetime
 from src.extensions import db
 from flask import session
 from src.models.like import ArticleLike
-
 
 class Article(db.Model):
     __tablename__ = "article"
@@ -68,5 +67,5 @@ class Article(db.Model):
             "show_author_contacts": self.show_author_contacts,
             "author_email": self.author.email if self.author else None,
             "author_linkedin_url": self.author.linkedin_url if self.author else None,
-            "user_has_liked": user_has_liked,  # <-- CAMPO AGGIUNTO
+            "user_has_liked": user_has_liked,
         }

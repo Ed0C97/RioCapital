@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/radio-group.jsx
+// LitInvestorBlog-frontend/src/components/ui/radio-group.jsx
 
 'use client';
 

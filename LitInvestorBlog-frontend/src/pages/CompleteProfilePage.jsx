@@ -1,10 +1,10 @@
-// src/pages/CompleteProfilePage.jsx
+// LitInvestorBlog-frontend/src/pages/CompleteProfilePage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/AuthContext.js';
-import { Button } from '../components/ui/button'; // Potrebbe non servire, ma lo lascio per sicurezza
-import { Input } from '../components/ui/input'; // Potrebbe non servire
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
 import { toast } from 'sonner';
 import { User } from 'lucide-react';
 
@@ -29,7 +29,7 @@ const CompleteProfilePage = () => {
     setLoading(true);
 
     try {
-      // Invia solo lo username, il backend recupererà il resto dalla sessione
+
       const response = await fetch('/api/auth/complete-oauth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -44,7 +44,7 @@ const CompleteProfilePage = () => {
 
       await checkAuthStatus();
       toast.success('Profilo completato! Benvenuto!');
-      // L'useEffect [user, navigate] gestirà il redirect
+
     } catch (error) {
       toast.error(error.message);
       setLoading(false);

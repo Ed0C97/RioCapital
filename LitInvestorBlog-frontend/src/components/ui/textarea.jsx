@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/textarea.jsx
+// LitInvestorBlog-frontend/src/components/ui/textarea.jsx
 
 import * as React from 'react';
 

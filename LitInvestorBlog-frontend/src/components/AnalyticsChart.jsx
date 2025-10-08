@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/AnalyticsChart.jsx
+// LitInvestorBlog-frontend/src/components/AnalyticsChart.jsx
 
 import React from 'react';
 import {

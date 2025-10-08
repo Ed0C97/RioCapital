@@ -1,4 +1,4 @@
-// src/pages/ContactPage.jsx
+// LitInvestorBlog-frontend/src/pages/ContactPage.jsx
 
 import React, { useState } from 'react';
 import { Button } from '../components/ui/button';
@@ -9,7 +9,6 @@ import { Send, User, Mail, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 import RelatedArticles from '@/components/RelatedArticles.jsx';
 
-// 1. Importa il componente per l'animazione
 import FadeInOnScroll from '../components/FadeInOnScroll';
 
 const ContactPage = () => {
@@ -50,8 +49,8 @@ const ContactPage = () => {
 
   return (
     <div className="bg-[#0e549c]">
-      {/* --- BLOCCO HEADER DI PAGINA (Larghezza Limitata) --- */}
-      {/* 2. Avvolgi il blocco header con l'animazione */}
+      {}
+      {}
       <FadeInOnScroll>
         <div className="w-full mb-16">
           <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
@@ -61,10 +60,10 @@ const ContactPage = () => {
         </div>
       </FadeInOnScroll>
 
-      {/* --- Contenitore Principale (Larghezza Limitata) --- */}
+      {}
       <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16">
-        {/* Sezione Introduttiva */}
-        {/* 3. Avvolgi la sezione introduttiva con un leggero ritardo */}
+        {}
+        {}
         <FadeInOnScroll delay={100}>
           <div className="max-w-2xl mx-auto text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
@@ -78,8 +77,8 @@ const ContactPage = () => {
           </div>
         </FadeInOnScroll>
 
-        {/* Form di Contatto */}
-        {/* 4. Avvolgi il form con un ritardo maggiore per l'effetto a cascata */}
+        {}
+        {}
         <FadeInOnScroll delay={200}>
           <div className="max-w-2xl mx-auto">
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -163,8 +162,8 @@ const ContactPage = () => {
         </FadeInOnScroll>
       </div>
 
-      {/* Sezione "I più popolari" (larghezza piena, come in AboutPage) */}
-      {/* 5. Avvolgi anche la sezione finale */}
+      {}
+      {}
       <FadeInOnScroll>
         <div className="mt-1">
           <RelatedArticles

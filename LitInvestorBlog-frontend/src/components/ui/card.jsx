@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/card.jsx
+// LitInvestorBlog-frontend/src/components/ui/card.jsx
 
 import * as React from 'react';
 

@@ -1,4 +1,4 @@
-# RioCapitalBlog-backend/src/migrate.py
+# LitInvestorBlog-backend/src/migrate.py
 
 import sqlite3
 
@@ -77,7 +77,6 @@ ALTER_COMMANDS = [
     "ALTER TABLE article ADD COLUMN tags TEXT;",
 ]
 
-
 def migrate():
     conn = None
     try:
@@ -110,7 +109,6 @@ def migrate():
         if conn:
             conn.close()
             print("Connessione al database chiusa.")
-
 
 if __name__ == "__main__":
     migrate()

@@ -1,3 +1,5 @@
+// LitInvestorBlog-frontend/src/pages/SuccessPage.jsx
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 

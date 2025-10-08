@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/breadcrumb.jsx
+// LitInvestorBlog-frontend/src/components/ui/breadcrumb.jsx
 
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';

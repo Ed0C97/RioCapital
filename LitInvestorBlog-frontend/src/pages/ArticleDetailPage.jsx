@@ -1,4 +1,4 @@
-// src/pages/ArticleDetailPage.jsx
+// LitInvestorBlog-frontend/src/pages/ArticleDetailPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -56,10 +56,10 @@ const ArticleDetailPage = () => {
   return (
     <div className="bg-white">
       <div className="container mx-auto py-12 px-4">
-        {/* ================================================================== */}
-        {/* IL PARAMETRO DA REGOLARE È QUI: max-w-3xl                       */}
-        {/* Puoi cambiarlo in max-w-4xl (più largo) o max-w-2xl (più stretto) */}
-        {/* ================================================================== */}
+        {}
+        {}
+        {}
+        {}
         <article className="max-w-3xl mx-auto">
           <header className="mb-8">
             <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">
@@ -77,13 +77,13 @@ const ArticleDetailPage = () => {
             </div>
             <div className="border-b border-[#d2d2d7]"></div>
           </header>{' '}
-          {/* <-- LA CHIUSURA DELL'HEADER VA QUI */}
+          {}
           <div className="article-content">
             <ReactMarkdown
               remarkPlugins={[remarkMath]}
               rehypePlugins={[rehypeKatex]}
               components={{
-                // Questa funzione sovrascrive il rendering di default delle immagini
+
                 img: ({ ...props }) => (
                   <figure>
                     <img {...props} />
@@ -98,7 +98,7 @@ const ArticleDetailPage = () => {
           <footer className="mt-12">
             <h3 className="text-lg font-semibold text-left mb-4">
               {' '}
-              {/* Modificato per centrare il testo */}
+              {}
               Condividi articolo
             </h3>
             <div className="mb-8">

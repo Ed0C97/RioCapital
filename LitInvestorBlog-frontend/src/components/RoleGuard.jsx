@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/RoleGuard.jsx
+// LitInvestorBlog-frontend/src/components/RoleGuard.jsx
 
 import React from 'react';
 import { Navigate } from 'react-router-dom';

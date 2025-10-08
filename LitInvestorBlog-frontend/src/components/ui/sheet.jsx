@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/sheet.jsx
+// LitInvestorBlog-frontend/src/components/ui/sheet.jsx
 
 import * as React from 'react';
 import * as SheetPrimitive from '@radix-ui/react-dialog';

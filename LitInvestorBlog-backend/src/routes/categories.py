@@ -1,4 +1,4 @@
-# RioCapitalBlog-backend/src/routes/categories.py
+# LitInvestorBlog-backend/src/routes/categories.py
 
 from flask import Blueprint, request, jsonify, session
 from src.models.category import Category
@@ -8,15 +8,13 @@ import re
 
 categories_bp = Blueprint("categories", __name__)
 
-
 def create_slug(name):
     """Crea uno slug dal nome della categoria"""
     slug = re.sub(r"[^\w\s-]", "", name.lower())
     slug = re.sub(r"[-\s]+", "-", slug)
     return slug.strip("-")
 
-
-@categories_bp.route("/", methods=["GET"])  # URL: GET /api/categories/
+@categories_bp.route("/", methods=["GET"])
 def get_categories():
     try:
         categories = (
@@ -29,10 +27,9 @@ def get_categories():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 @categories_bp.route(
     "/<int:category_id>", methods=["GET"]
-)  # URL: GET /api/categories/1
+)
 def get_category(category_id):
     try:
         category = Category.query.get_or_404(category_id)
@@ -40,8 +37,7 @@ def get_category(category_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-@categories_bp.route("/", methods=["POST"])  # URL: POST /api/categories/
+@categories_bp.route("/", methods=["POST"])
 @author_required
 def create_category():
     try:
@@ -75,10 +71,9 @@ def create_category():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @categories_bp.route(
     "/<int:category_id>", methods=["PUT"]
-)  # URL: PUT /api/categories/1
+)
 @author_required
 def update_category(category_id):
     try:
@@ -113,10 +108,9 @@ def update_category(category_id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @categories_bp.route(
     "/<int:category_id>", methods=["DELETE"]
-)  # URL: DELETE /api/categories/1
+)
 @author_required
 def delete_category(category_id):
     try:
@@ -140,10 +134,9 @@ def delete_category(category_id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @categories_bp.route(
     "/<string:slug>", methods=["GET"]
-)  # URL: GET /api/categories/nome-slug
+)
 def get_category_by_slug(slug):
     try:
         category = Category.query.filter_by(slug=slug, is_active=True).first_or_404()

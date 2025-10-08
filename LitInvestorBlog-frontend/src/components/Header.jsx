@@ -1,3 +1,5 @@
+// LitInvestorBlog-frontend/src/components/Header.jsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/AuthContext.js';
@@ -23,24 +25,21 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 const Header = () => {
-  // Stati per la gestione UI
+
   const { user, logout, canWriteArticles, isAdmin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileNavOpen, setIsProfileNavOpen] = useState(false);
 
-  // Stati per l'animazione della ricerca
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [isContentVisible, setIsContentVisible] = useState(false);
 
-  // Hooks e Refs
   const { searchQuery, setSearchQuery, results } = useSearch();
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
 
-  // Funzioni per la ricerca
   const openSearch = () => {
-    if (isProfileNavOpen) setIsProfileNavOpen(false); // Chiude il menu profilo se aperto
+    if (isProfileNavOpen) setIsProfileNavOpen(false);
     setIsSearchVisible(true);
     requestAnimationFrame(() => {
       setIsSearchExpanded(true);
@@ -68,9 +67,8 @@ const Header = () => {
     }
   };
 
-  // Funzioni per il menu profilo
   const toggleProfileNav = () => {
-    if (isSearchVisible) closeSearch(); // Chiude la ricerca se aperta
+    if (isSearchVisible) closeSearch();
     setIsProfileNavOpen((prev) => !prev);
   };
 
@@ -79,7 +77,6 @@ const Header = () => {
     setIsProfileNavOpen(false);
   };
 
-  // Effetto per chiudere con il tasto 'Escape'
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
@@ -91,7 +88,6 @@ const Header = () => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isSearchVisible, isProfileNavOpen]);
 
-  // Gestori di eventi
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const query = searchQuery.trim().toLowerCase();
@@ -111,7 +107,6 @@ const Header = () => {
   };
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // Dati e stati derivati
   const showSearchResults =
     isSearchVisible && searchQuery.trim().length > 0 && results.length > 0;
   const quickLinks = [
@@ -132,7 +127,7 @@ const Header = () => {
       )}
 
       <header className="sticky top-0 z-40">
-        {/* Navbar Superiore (Nera) */}
+        {}
         <div className="bg-[#313132]">
           <div className="max-w-[1012px] mx-auto px-[16px] h-14 flex items-center justify-between">
             <div className="flex items-center gap-10">
@@ -213,7 +208,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Navbar Bianca e Pannello di Ricerca Espandibile */}
+        {}
         <div
           className={twMerge(
             'bg-white transition-all duration-300 ease-out relative',
@@ -231,11 +226,11 @@ const Header = () => {
                 Lit Investor Blog
               </h2>
 
-              {/* Contenitore per la navigazione standard (References, Services, Lente) */}
+              {}
               <div
                 className={twMerge(
                   'hidden md:flex items-center gap-8 absolute top-0 right-0 h-full transition-opacity duration-300',
-                  isProfileNavOpen && 'opacity-0 pointer-events-none', // Scompare quando il menu profilo è aperto
+                  isProfileNavOpen && 'opacity-0 pointer-events-none',
                 )}
               >
                 <nav
@@ -269,11 +264,11 @@ const Header = () => {
                 </div>
               </div>
 
-              {/* Contenitore per la navigazione del profilo (appare quando si clicca l'avatar) */}
+              {}
               <div
                 className={twMerge(
                   'hidden md:flex items-center gap-8 absolute top-0 right-0 h-full transition-opacity duration-300',
-                  !isProfileNavOpen && 'opacity-0 pointer-events-none', // È nascosto di default
+                  !isProfileNavOpen && 'opacity-0 pointer-events-none',
                 )}
               >
                 <nav className="flex items-center gap-8">
@@ -340,7 +335,7 @@ const Header = () => {
               </div>
             </div>
 
-            {/* Contenuto del Pannello di Ricerca (animato) */}
+            {}
             <div
               className={twMerge(
                 'transition-opacity duration-300 ease-out pt-4 pb-8',
@@ -348,7 +343,7 @@ const Header = () => {
                 !isSearchVisible && 'hidden',
               )}
             >
-              {/* ... (il resto del codice per la ricerca rimane invariato) ... */}
+              {}
               <form
                 onSubmit={handleFormSubmit}
                 className="relative flex items-center gap-4 mb-12"

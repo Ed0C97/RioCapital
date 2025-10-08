@@ -1,8 +1,7 @@
-# RioCapitalBlog-backend/src/models/favorite.py
+# LitInvestorBlog-backend/src/models/favorite.py
 
 from datetime import datetime
 from src.extensions import db
-
 
 class ArticleFavorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)

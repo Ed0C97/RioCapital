@@ -1,8 +1,7 @@
-# RioCapitalBlog-backend/src/models/comment.py
+# LitInvestorBlog-backend/src/models/comment.py
 
 from datetime import datetime
 from src.extensions import db
-
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/alert-dialog.jsx
+// LitInvestorBlog-frontend/src/components/ui/alert-dialog.jsx
 
 'use client';
 

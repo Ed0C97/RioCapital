@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/sidebar.jsx
+// LitInvestorBlog-frontend/src/components/ui/sidebar.jsx
 
 'use client';
 import * as React from 'react';

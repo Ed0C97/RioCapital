@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ImageUploader.jsx
+// LitInvestorBlog-frontend/src/components/ImageUploader.jsx
 
 import React, { useState, useRef } from 'react';
 import { Button } from './ui/button';

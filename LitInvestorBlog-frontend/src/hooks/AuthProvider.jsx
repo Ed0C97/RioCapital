@@ -1,7 +1,7 @@
-// FILE RINOMINATO E MODIFICATO: src/hooks/AuthProvider.jsx
+// LitInvestorBlog-frontend/src/hooks/AuthProvider.jsx
 
 import { useState, useEffect } from 'react';
-import { AuthContext } from './AuthContext'; // <-- IMPORTA IL CONTEXT
+import { AuthContext } from './AuthContext';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         setUser(null);
       }
-    } catch (error) { // CORRETTO
+    } catch (error) {
       console.error('Errore checkAuthStatus:', error);
       setUser(null);
     } finally {
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
         const errorData = await response.json();
         return { success: false, error: errorData.message };
       }
-    } catch (error) { // CORRETTO
+    } catch (error) {
       console.error('Errore login:', error);
       return { success: false, error: 'Errore di connessione' };
     }
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
         const errorData = await response.json();
         return { success: false, error: errorData.message };
       }
-    } catch (error) { // CORRETTO
+    } catch (error) {
       console.error('Errore register:', error);
       return { success: false, error: 'Errore di connessione' };
     }
@@ -105,7 +105,7 @@ export const AuthProvider = ({ children }) => {
         const errorData = await response.json();
         return { success: false, error: errorData.error || 'Errore sconosciuto' };
       }
-    } catch (error) { // CORRETTO
+    } catch (error) {
       console.error('Errore updateProfile:', error);
       return { success: false, error: 'Errore di connessione' };
     }

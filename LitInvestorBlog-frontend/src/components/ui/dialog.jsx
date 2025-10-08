@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/dialog.jsx
+// LitInvestorBlog-frontend/src/components/ui/dialog.jsx
 
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';

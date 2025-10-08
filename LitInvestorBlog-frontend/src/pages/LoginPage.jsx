@@ -1,11 +1,11 @@
-// src/pages/LoginPage.jsx
+// LitInvestorBlog-frontend/src/pages/LoginPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/AuthContext.js';
 import { Alert, AlertDescription } from '../components/ui/alert';
-import { User, Lock } from 'lucide-react'; // Importa le icone corrette
-import { useSearchParams } from 'react-router-dom'; // Importa questo hook
+import { User, Lock } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 
 const GoogleIcon = () => (
   <svg
@@ -68,22 +68,20 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login, user } = useAuth();
-  const [searchParams] = useSearchParams(); // Hook per leggere i parametri URL
+  const [searchParams] = useSearchParams();
 
-  // Effetto per il redirect dopo il login
   useEffect(() => {
     if (user) {
       navigate('/');
     }
   }, [user, navigate]);
 
-  // Effetto per mostrare gli errori dal redirect OAuth
   useEffect(() => {
     const oauthError = searchParams.get('error');
     if (oauthError === 'account_exists') {
       setError('Un account con questa email esiste già. Per favore, accedi.');
     }
-    // Aggiungi altri controlli di errore se necessario
+
   }, [searchParams]);
 
   const handleChange = (e) => {

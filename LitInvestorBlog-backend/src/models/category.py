@@ -1,10 +1,9 @@
-# RioCapitalBlog-backend/src/models/category.py
+# LitInvestorBlog-backend/src/models/category.py
 
 from datetime import datetime
 from sqlalchemy import func
 from src.extensions import db
 from src.models.article import Article
-
 
 class Category(db.Model):
     __tablename__ = "category"

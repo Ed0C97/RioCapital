@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/hover-card.jsx
+// LitInvestorBlog-frontend/src/components/ui/hover-card.jsx
 
 import * as React from 'react';
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';

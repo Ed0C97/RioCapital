@@ -1,9 +1,8 @@
-# RioCapitalBlog-backend/src/middleware/auth.py
+# LitInvestorBlog-backend/src/middleware/auth.py
 
 from functools import wraps
 from flask import jsonify
 from flask_login import current_user
-
 
 def admin_required(f):
     """Decorator per richiedere ruolo admin"""
@@ -23,7 +22,6 @@ def admin_required(f):
 
     return decorated_function
 
-
 def collaborator_required(f):
     """Decorator per richiedere ruolo collaborator o admin"""
 
@@ -41,7 +39,6 @@ def collaborator_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
-
 
 def role_required(required_roles):
     """Decorator generico per richiedere uno o più ruoli specifici"""

@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/dropdown-menu.jsx
+// LitInvestorBlog-frontend/src/components/ui/dropdown-menu.jsx
 
 'use client';
 

@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ArticleCarousel.jsx
+// LitInvestorBlog-frontend/src/components/ArticleCarousel.jsx
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';

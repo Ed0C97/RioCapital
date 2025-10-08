@@ -1,8 +1,9 @@
-// src/components/ui/button.jsx
+// LitInvestorBlog-frontend/src/components/ui/button.jsx
+
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@/lib/utils';
-import { buttonVariants } from './button.utils'; // Importa
+import { buttonVariants } from './button.utils';
 
 function Button({ className, variant, size, asChild = false, ...props }) {
   const Comp = asChild ? Slot : 'button';
@@ -16,4 +17,4 @@ function Button({ className, variant, size, asChild = false, ...props }) {
   );
 }
 
-export { Button }; // Esporta solo il componente
+export { Button };

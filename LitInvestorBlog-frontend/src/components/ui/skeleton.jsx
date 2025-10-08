@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/skeleton.jsx
+// LitInvestorBlog-frontend/src/components/ui/skeleton.jsx
 
 import { cn } from '@/lib/utils';
 

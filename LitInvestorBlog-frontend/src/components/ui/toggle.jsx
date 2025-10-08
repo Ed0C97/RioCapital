@@ -1,8 +1,9 @@
-// src/components/ui/toggle.jsx
+// LitInvestorBlog-frontend/src/components/ui/toggle.jsx
+
 import * as React from 'react';
 import * as TogglePrimitive from '@radix-ui/react-toggle';
 import { cn } from '@/lib/utils';
-import { toggleVariants } from './toggle.utils'; // Importa
+import { toggleVariants } from './toggle.utils';
 
 function Toggle({ className, variant, size, ...props }) {
   return (
@@ -14,4 +15,4 @@ function Toggle({ className, variant, size, ...props }) {
   );
 }
 
-export { Toggle }; // Esporta solo il componente
+export { Toggle };

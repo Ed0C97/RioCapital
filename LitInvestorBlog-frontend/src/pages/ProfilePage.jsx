@@ -1,4 +1,4 @@
-// src/pages/ProfilePage.jsx
+// LitInvestorBlog-frontend/src/pages/ProfilePage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/AuthContext.js';
@@ -90,7 +90,7 @@ const ProfilePage = () => {
 
   return (
     <div className="bg-[#f5f5f7]">
-      {/* Header di Pagina */}
+      {}
       <div className="w-full mb-12">
         <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
           <div className="border-b border-[#d2d2d7] my-4"></div>
@@ -101,19 +101,19 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Contenitore Principale */}
+      {}
       <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16">
         <div className="mx-auto">
           <form onSubmit={handleSubmit} className="space-y-8">
-            {/* --- SOSTITUISCI QUESTO BLOCCO --- */}
+            {}
             <div className="flex items-center justify-between">
-              {/* Parte Sinistra: Avatar e Nome/Email */}
+              {}
               <div className="flex items-center space-x-4">
                 <UserAvatar
                   username={user.username}
                   firstName={user.first_name}
-                  avatarUrl={user.avatar_url} // se vuoi usare l'immagine reale se presente
-                  size={80} // uguale a w-20 h-20
+                  avatarUrl={user.avatar_url}
+                  size={80}
                 />
                 <div>
                   <h3 className="text-xl font-bold">
@@ -123,14 +123,14 @@ const ProfilePage = () => {
                 </div>
               </div>
 
-              {/* Parte Destra: Ruolo e Data */}
-              {/* ======================================================= */}
-              {/* PARAMETRI DA REGOLARE:                                  */}
-              {/* gap-4: Spazio orizzontale tra Ruolo e Data              */}
-              {/* text-sm: Grandezza del testo                          */}
-              {/* ======================================================= */}
+              {}
+              {}
+              {}
+              {}
+              {}
+              {}
               <div className="hidden md:flex flex-col items-end text-sm text-muted-foreground space-y-1">
-                {/* Badge Ruolo */}
+                {}
                 <div
                   className={`inline-flex items-center px-3 py-1 rounded-full font-medium border ${getRoleBadgeColor(user.role)}`}
                 >
@@ -138,7 +138,7 @@ const ProfilePage = () => {
                   <span>{getRoleLabel(user.role)}</span>
                 </div>
 
-                {/* Data Registrazione */}
+                {}
                 {user.created_at && (
                   <div className="flex items-center space-x-2 text-xs text-gray-500">
                     <span>
@@ -150,7 +150,7 @@ const ProfilePage = () => {
               </div>
             </div>
 
-            {/* Sezione Informazioni Personali */}
+            {}
             <div className="space-y-6">
               <h3 className="text-xl font-semibold border-b pb-2">
                 Informazioni Personali
@@ -210,7 +210,7 @@ const ProfilePage = () => {
               </div>
             </div>
 
-            {/* Sezione Preferenze */}
+            {}
             <div className="space-y-6">
               <h3 className="text-xl font-semibold border-b pb-2">
                 Preferenze
@@ -232,13 +232,13 @@ const ProfilePage = () => {
               </div>
             </div>
 
-            {/* Pulsante Salva */}
+            {}
             <div className="flex justify-end">
               <a
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  if (!loading) handleSubmit(e); // <-- CORRETTO QUI
+                  if (!loading) handleSubmit(e);
                 }}
                 className={`flex items-center text-sm font-medium transition-colors ${
                   loading

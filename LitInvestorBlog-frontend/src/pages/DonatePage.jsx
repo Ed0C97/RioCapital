@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/pages/DonatePage.jsx
+// LitInvestorBlog-frontend/src/pages/DonatePage.jsx
 
 import {  } from '@/lib/utils';
 import SlidingTabsNav from '../components/SlidingTabsNav';
@@ -35,7 +35,6 @@ import { toast } from 'sonner';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
-// 1. Importa il componente per l'animazione
 import FadeInOnScroll from '../components/FadeInOnScroll';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -127,8 +126,6 @@ const DonatePage = () => {
   const { user } = useAuth();
   const [selectedAmount, setSelectedAmount] = useState('');
 
-  // *** BUG FIX ***
-  // Imposta il valore di default di customAmount a '8' per "Beer"
   const [customAmount, setCustomAmount] = useState('8');
   const [donorInfo, setDonorInfo] = useState({
     name: '',
@@ -136,9 +133,8 @@ const DonatePage = () => {
     message: '',
     anonymous: false,
   });
-  // Imposta il valore di default di activeSelection a '8' per sincronizzarlo
+
   const [activeSelection, setActiveSelection] = useState('8');
-  // ***************
 
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [termsAccepted, setTermsAccepted] = useState(false);

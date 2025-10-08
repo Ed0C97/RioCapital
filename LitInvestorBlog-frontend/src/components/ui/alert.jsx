@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/alert.jsx
+// LitInvestorBlog-frontend/src/components/ui/alert.jsx
 
 import * as React from 'react';
 import { cva } from 'class-variance-authority';

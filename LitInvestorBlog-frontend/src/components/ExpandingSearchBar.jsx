@@ -1,3 +1,5 @@
+// LitInvestorBlog-frontend/src/components/ExpandingSearchBar.jsx
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
@@ -91,7 +93,7 @@ const ExpandingSearchBar = () => {
       <div
         className={`transition-all duration-300 ${isExpanded ? 'w-64 opacity-100 ml-2' : 'w-0 opacity-0'}`}
       >
-        {/* --- CORREZIONE DEL REFUSO QUI --- */}
+        {}
         <form onSubmit={handleFormSubmit} className="relative">
           <input
             ref={inputRef}

@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/pages/ArticlesByCategoryPage.jsx
+// LitInvestorBlog-frontend/src/pages/ArticlesByCategoryPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';

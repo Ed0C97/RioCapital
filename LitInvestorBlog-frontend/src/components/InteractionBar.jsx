@@ -1,4 +1,4 @@
-// src/components/InteractionBar.jsx
+// LitInvestorBlog-frontend/src/components/InteractionBar.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -10,21 +10,17 @@ import clsx from 'clsx';
 const InteractionBar = ({ article }) => {
   const { user } = useAuth();
 
-  // Stati locali per l'aggiornamento ottimistico
   const [isLiked, setIsLiked] = useState(article.user_has_liked || false);
   const [likeCount, setLikeCount] = useState(article.likes_count || 0);
   const [isFavorited, setIsFavorited] = useState(
     article.user_has_favorited || false,
   );
 
-  // Sincronizza lo stato se l'articolo di input cambia
   useEffect(() => {
     setIsLiked(article.user_has_liked || false);
     setLikeCount(article.likes_count || 0);
     setIsFavorited(article.user_has_favorited || false);
   }, [article]);
-
-  // src/components/InteractionBar.jsx
 
   const handleInteraction = async (type) => {
     if (!user) {
@@ -32,13 +28,11 @@ const InteractionBar = ({ article }) => {
       return;
     }
 
-    // --- LOGICA DI AGGIORNAMENTO OTTIMISTICO CORRETTA ---
     if (type === 'like') {
-      // Salviamo lo stato attuale PRIMA di qualsiasi modifica
+
       const originalLikedState = isLiked;
       const originalLikeCount = likeCount;
 
-      // Calcoliamo il nuovo stato e lo applichiamo subito all'UI
       const newLikedState = !originalLikedState;
       const newLikeCount = newLikedState
         ? originalLikeCount + 1
@@ -55,17 +49,17 @@ const InteractionBar = ({ article }) => {
         if (!response.ok) throw new Error('Errore dal server');
 
         const data = await response.json();
-        // Sincronizza con la risposta reale del server (che ora è sempre corretta)
+
         setLikeCount(data.likes_count);
         setIsLiked(data.liked);
       } catch {
         toast.error('Si è verificato un errore. Riprova.');
-        // In caso di errore, RIPRISTINA i valori originali
+
         setIsLiked(originalLikedState);
         setLikeCount(originalLikeCount);
       }
     } else if (type === 'favorite') {
-      // La logica per i preferiti è simile
+
       const originalFavoritedState = isFavorited;
       setIsFavorited(!originalFavoritedState);
 
@@ -82,11 +76,11 @@ const InteractionBar = ({ article }) => {
         if (!response.ok) throw new Error('Errore dal server');
 
         const data = await response.json();
-        // Sincronizza con la risposta reale del server
+
         setIsFavorited(data.favorited);
       } catch {
         toast.error('Si è verificato un errore. Riprova.');
-        // Ripristina in caso di errore
+
         setIsFavorited(originalFavoritedState);
       }
     }
@@ -94,7 +88,7 @@ const InteractionBar = ({ article }) => {
 
   return (
     <div className="flex items-center space-x-6 text-sm text-gray-500">
-      {/* --- Pulsante Like --- */}
+      {}
       <button
         onClick={() => handleInteraction('like')}
         className={clsx(
@@ -114,7 +108,7 @@ const InteractionBar = ({ article }) => {
         <span className="font-medium">{likeCount}</span>
       </button>
 
-      {/* --- Link Commenti --- */}
+      {}
       <Link
         to={`/article/${article.slug}#commenti`}
         className="flex items-center space-x-1.5 hover:text-blue-500 transition-colors duration-200 group"
@@ -126,7 +120,7 @@ const InteractionBar = ({ article }) => {
         <span className="font-medium">{article.comments_count || 0}</span>
       </Link>
 
-      {/* --- Pulsante Preferiti --- */}
+      {}
       <button
         onClick={() => handleInteraction('favorite')}
         className={clsx(

@@ -1,4 +1,4 @@
-# RioCapitalBlog-backend/src/routes/analytics.py
+# LitInvestorBlog-backend/src/routes/analytics.py
 
 from flask import Blueprint, request, jsonify, make_response
 from sqlalchemy import desc, func, and_
@@ -19,7 +19,6 @@ from src.models.article import Article
 from src.models.user import User
 
 analytics_bp = Blueprint("analytics", __name__)
-
 
 @analytics_bp.route("/api/analytics/dashboard", methods=["GET"])
 @admin_required
@@ -282,7 +281,6 @@ def get_dashboard_analytics():
         logging.error(f"Errore nel caricamento analytics dashboard: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
 
-
 @analytics_bp.route("/api/analytics/article/<int:article_id>", methods=["GET"])
 @admin_required
 def get_article_analytics(article_id):
@@ -358,7 +356,6 @@ def get_article_analytics(article_id):
     except Exception as e:
         logging.error(f"Errore nel caricamento analytics articolo: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
-
 
 @analytics_bp.route("/api/analytics/export", methods=["GET"])
 @admin_required

@@ -1,4 +1,4 @@
-// src/components/ArticleActions.jsx
+// LitInvestorBlog-frontend/src/components/ArticleActions.jsx
 
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/AuthContext.js';
@@ -65,7 +65,7 @@ const ArticleActions = ({ article, onUpdate, size = 'default' }) => {
         isSmall ? 'text-xs' : 'text-sm',
       )}
     >
-      {/* Pulsante Mi Piace */}
+      {}
       <div
         onClick={handleLike}
         role="button"
@@ -92,7 +92,7 @@ const ArticleActions = ({ article, onUpdate, size = 'default' }) => {
         </span>
       </div>
 
-      {/* Icona Commenti (visiva) */}
+      {}
       <div className="flex items-center space-x-1.5 group text-gray-500 hover:text-[#0e549c] transition-colors duration-200">
         <MessageCircle
           className={clsx(

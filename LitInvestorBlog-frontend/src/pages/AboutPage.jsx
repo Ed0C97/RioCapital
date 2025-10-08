@@ -1,7 +1,7 @@
-// src/pages/AboutPage.jsx
+// LitInvestorBlog-frontend/src/pages/AboutPage.jsx
 
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../hooks/AuthContext.js'; // Assicurati che il percorso sia corretto dopo la riorganizzazione
+import { useAuth } from '../hooks/AuthContext.js';
 import { Textarea } from '../components/ui/textarea';
 import { Edit, Save, X } from 'lucide-react';
 import { toast } from 'sonner';
@@ -22,7 +22,6 @@ const AboutPage = () => {
     mainText: '',
   });
   const [editContent, setEditContent] = useState('');
-  // RIMOSSA: const [] = useState(true); non era necessaria.
 
   const fetchAboutContent = async () => {
     try {
@@ -33,7 +32,7 @@ const AboutPage = () => {
       } else {
         setContent((prev) => ({ ...prev, mainText: '' }));
       }
-    } catch (error) { // CORRETTO: Aggiunto (error)
+    } catch (error) {
       console.error('Errore nel caricamento del contenuto:', error);
       setContent((prev) => ({ ...prev, mainText: '' }));
     }
@@ -67,8 +66,8 @@ const AboutPage = () => {
       setContent((prev) => ({ ...prev, mainText: data.content.body }));
       setIsEditing(false);
       toast.success('Contenuto aggiornato!');
-    } catch (error) { // CORRETTO: Aggiunto (error)
-      console.error('Errore durante il salvataggio:', error); // Aggiunto un log per il debug
+    } catch (error) {
+      console.error('Errore durante il salvataggio:', error);
       toast.error(error.message || 'Si è verificato un errore durante il salvataggio.');
     } finally {
       setLoading(false);
@@ -77,7 +76,7 @@ const AboutPage = () => {
 
   return (
     <div className="bg-white">
-      {/* --- BLOCCO HEADER DI PAGINA (Larghezza Limitata) --- */}
+      {}
       <FadeInOnScroll>
         <div className="w-full mb-16">
           <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
@@ -87,7 +86,7 @@ const AboutPage = () => {
         </div>
       </FadeInOnScroll>
 
-      {/* --- BLOCCO FONDATORE (Larghezza Limitata) --- */}
+      {}
       <FadeInOnScroll delay={100}>
         <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
@@ -110,11 +109,11 @@ const AboutPage = () => {
         </div>
       </FadeInOnScroll>
 
-      {/* --- SEZIONE A LARGHEZZA PIENA PER IL TESTO --- */}
+      {}
       <FadeInOnScroll delay={200}>
         <div className="bg-gray-50">
           <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] py-20 my-0">
-            {/* Contenuto Testo Principale */}
+            {}
             <div>
               {isEditing ? (
                 <RichTextEditor
@@ -131,7 +130,7 @@ const AboutPage = () => {
                 </div>
               )}
 
-              {/* Link di Azione per Admin */}
+              {}
               {isAdmin() && (
                 <div className="flex justify-end items-center space-x-6 mt-6">
                   {!isEditing ? (
@@ -177,7 +176,7 @@ const AboutPage = () => {
         </div>
       </FadeInOnScroll>
 
-      {/* Sezione "I più popolari" */}
+      {}
       <FadeInOnScroll>
         <div className="mt-1">
           <RelatedArticles

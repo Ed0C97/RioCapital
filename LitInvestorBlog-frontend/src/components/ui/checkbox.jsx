@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/checkbox.jsx
+// LitInvestorBlog-frontend/src/components/ui/checkbox.jsx
 
 'use client';
 

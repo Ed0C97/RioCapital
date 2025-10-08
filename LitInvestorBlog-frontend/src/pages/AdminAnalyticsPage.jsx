@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/pages/AdminAnalyticsPage.jsx
+// LitInvestorBlog-frontend/src/pages/AdminAnalyticsPage.jsx
 
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/AuthContext.js';

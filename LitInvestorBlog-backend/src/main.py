@@ -1,4 +1,4 @@
-# src/main.py
+# LitInvestorBlog-backend/src/main.py
 
 import os
 import click
@@ -7,12 +7,10 @@ from flask.cli import with_appcontext
 from flask_cors import CORS
 from flask_migrate import Migrate
 
-# Importa i modelli e le estensioni
 from src.extensions import db, oauth
 from src.models.user import User
 from src.models.category import Category
 
-# Importa i blueprint delle rotte
 from src.routes.user import user_bp
 from src.routes.auth import auth_bp
 from src.routes.articles import articles_bp
@@ -29,17 +27,16 @@ from src.routes.content import content_bp
 from src.routes.stripe import stripe_bp
 from src.routes.search import search_bp
 
-
 def create_app():
     """Application Factory Function"""
     app = Flask(__name__)
 
-    # --- Configurazione dell'Applicazione ---
     app.config["SECRET_KEY"] = "asdf#FGSgvasgf$5$WGT"
     app.config["MAX_CONTENT_LENGTH"] = 26 * 1024 * 1024
     app.config["SQLALCHEMY_DATABASE_URI"] = (
-        f"sqlite:///{os.path.join(os.path.dirname(__file__), 'LitInvestorBlog.db')}"
+        f"sqlite:///{os.path.join(os.path.dirname(__file__), 'database', 'LitInvestorBlog.db')}"
     )
+
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["GOOGLE_CLIENT_ID"] = (
         "157706702557-furil8otnbp3r5841j9lhjgk3vk7837j.apps.googleusercontent.com"
@@ -47,22 +44,19 @@ def create_app():
     app.config["GOOGLE_CLIENT_SECRET"] = "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"
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
     app.config["SESSION_COOKIE_SECURE"] = False
-    app.config["SESSION_COOKIE_HTTPONLY"] = True  # impedisce l'accesso al cookie da JS
+    app.config["SESSION_COOKIE_HTTPONLY"] = True
 
-    # --- Inizializzazione delle Estensioni ---
     db.init_app(app)
     oauth.init_app(app)
     Migrate(app, db)
     CORS(app, origins="http://localhost:5173", supports_credentials=True)
 
-    # --- Registrazione Provider OAuth ---
     oauth.register(
         name="google",
         server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
         client_kwargs={"scope": "openid email profile"},
     )
 
-    # --- Definizione e Registrazione Blueprint del Frontend ---
     frontend_bp = Blueprint(
         "frontend",
         __name__,
@@ -85,7 +79,6 @@ def create_app():
 
     app.register_blueprint(frontend_bp)
 
-    # --- Registrazione Blueprint delle API ---
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(user_bp, url_prefix="/api/users")
     app.register_blueprint(articles_bp, url_prefix="/api/articles")
@@ -102,12 +95,10 @@ def create_app():
     app.register_blueprint(stripe_bp, url_prefix="/api/stripe")
     app.register_blueprint(search_bp, url_prefix="/api")
 
-    # --- Registrazione Comandi CLI ---
     app.cli.add_command(create_admin)
     app.cli.add_command(seed_db)
 
     return app
-
 
 @click.command(name="create-admin")
 @click.argument("username")
@@ -128,7 +119,6 @@ def create_admin(username, email, password):
     db.session.add(admin_user)
     db.session.commit()
     print(f'Utente admin "{username}" creato con successo.')
-
 
 @click.command(name="seed-db")
 @with_appcontext
@@ -173,7 +163,6 @@ def seed_db():
             print("Crea prima un utente admin con 'flask create-admin'.")
     else:
         print("Le categorie esistono già.")
-
 
 app = create_app()
 

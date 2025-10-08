@@ -1,4 +1,4 @@
-// src/components/StockTicker.jsx
+// LitInvestorBlog-frontend/src/components/StockTicker.jsx
 
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
@@ -39,7 +39,6 @@ const StockTicker = () => {
           );
         }
 
-        // --- NUOVA CHIAMATA API PER YAHOO FINANCE ---
         const url = `https://yahoo-finance15.p.rapidapi.com/api/v1/markets/stock/quotes?ticker=${symbols.join(',')}`;
         const options = {
           method: 'GET',
@@ -56,7 +55,6 @@ const StockTicker = () => {
 
         const data = await response.json();
 
-        // La struttura della risposta è diversa, dobbiamo adattarla
         const formattedData = data.body.map((item) => ({
           symbol: item.symbol,
           price: item.regularMarketPrice,

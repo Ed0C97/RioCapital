@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/resizable.jsx
+// LitInvestorBlog-frontend/src/components/ui/resizable.jsx
 
 import * as React from 'react';
 import { GripVerticalIcon } from 'lucide-react';

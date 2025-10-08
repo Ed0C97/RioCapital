@@ -1,4 +1,4 @@
-// src/components/Disclaimer.jsx
+// LitInvestorBlog-frontend/src/components/Disclaimer.jsx
 
 import React from 'react';
 import {
@@ -9,14 +9,14 @@ import {
 import { ChevronDown, ChevronsRight } from 'lucide-react';
 
 const Disclaimer = ({ variant = 'gray' }) => {
-  // --- MODIFICA 1: Scegliamo il codice esadecimale del colore ---
+
   const backgroundColorValue = {
     gray: '#f5f5f7',
     white: '#ffffff',
   }[variant];
 
   return (
-    // --- MODIFICA 2: Usiamo lo stile in linea per applicare il colore ---
+
     <div
       className="border-gray-200 text-gray-600 text-sm rounded-xl"
       style={{ backgroundColor: backgroundColorValue }}

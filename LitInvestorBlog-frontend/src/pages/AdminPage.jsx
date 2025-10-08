@@ -1,3 +1,5 @@
+// LitInvestorBlog-frontend/src/pages/AdminPage.jsx
+
 import { DropdownMenuSeparator } from '../components/ui/dropdown-menu';
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -62,13 +64,12 @@ import {
   MoreVertical,
   ArrowLeft,
   Shield,
-  LayoutDashboard, // <-- Aggiungi questa
+  LayoutDashboard,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
 
-// --- Helper per la formattazione ---
 const formatNumber = (num) => {
   if (num === null || num === undefined) return '0';
   if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
@@ -83,7 +84,6 @@ const formatCurrency = (amount) => {
   }).format(amount || 0);
 };
 
-// Modificato per coerenza con la nuova visualizzazione
 const formatDate = (dateString) => {
   if (!dateString) return 'Data non disponibile';
   try {
@@ -92,8 +92,6 @@ const formatDate = (dateString) => {
     return 'Data non valida';
   }
 };
-
-// --- Componenti interni riutilizzabili ---
 
 const OverviewStatCard = ({
   title,
@@ -133,14 +131,10 @@ const OverviewStatCard = ({
   </Card>
 );
 
-// --- NUOVO COMPONENTE PER LA LISTA ARTICOLI ---
-// DOPO (Nuovi componenti per la lista articoli)
-
-// --- NUOVO STILE PER IL SINGOLO ARTICOLO ---
 const ArticleListItem = ({ article, onTogglePublish, onDelete }) => (
   <div className="group border-b last:border-b-0 transition-colors py-8">
     <div className="flex items-center justify-between">
-      {/* Contenuto Principale */}
+      {}
       <div className="flex-1 min-w-0">
         <div className="flex items-center space-x-4 mb-2.5 flex-wrap">
           <span
@@ -170,7 +164,7 @@ const ArticleListItem = ({ article, onTogglePublish, onDelete }) => (
         </div>
       </div>
 
-      {/* Azioni */}
+      {}
       <div className="flex items-center space-x-2 ml-4">
         <Link
           to={`/admin/articoli/modifica/${article.id}`}
@@ -231,7 +225,6 @@ const ArticleListItem = ({ article, onTogglePublish, onDelete }) => (
   </div>
 );
 
-// --- NUOVA STRUTTURA PER LA LISTA ARTICOLI ---
 const ArticleList = ({
   articles,
   categories,
@@ -409,13 +402,12 @@ const ArticleList = ({
   );
 };
 
-// --- Componente personalizzato per la barra di navigazione con capsula scorrevole ---
 const SlidingTabsNav = ({ activeTab, onTabChange, tabs }) => {
   const getActiveIndex = () => tabs.findIndex((tab) => tab.value === activeTab);
 
   return (
     <div className="relative border bg-[#ffffff] p-1 rounded-full h-12 grid grid-cols-5">
-      {/* Capsula scorrevole */}
+      {}
       <div
         className="absolute top-1 bottom-1 bg-[#0071e3] rounded-full shadow-none border-none transition-all duration-300 ease-in-out"
         style={{
@@ -424,9 +416,9 @@ const SlidingTabsNav = ({ activeTab, onTabChange, tabs }) => {
         }}
       />
 
-      {/* Pulsanti delle schede */}
+      {}
       {tabs.map((tab) => {
-        const Icon = tab.icon; // Assegna l'icona a una variabile con la maiuscola
+        const Icon = tab.icon;
         return (
           <span
             key={tab.value}
@@ -446,12 +438,10 @@ const SlidingTabsNav = ({ activeTab, onTabChange, tabs }) => {
   );
 };
 
-// --- Pagina Principale Unificata ---
 const AdminPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Hook per i dati di analytics
   const {
     analytics,
     loading: analyticsLoading,
@@ -460,12 +450,10 @@ const AdminPage = () => {
     exportAnalytics,
   } = useAnalytics(user);
 
-  // Stati per articoli e categorie
   const [articles, setArticles] = useState([]);
   const [categories, setCategories] = useState([]);
   const [articlesLoading, setArticlesLoading] = useState(true);
 
-  // Stato per la UI
   const [timeRange, setTimeRange] = useState('30d');
   const [refreshing, setRefreshing] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
@@ -474,7 +462,6 @@ const AdminPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [pageInput, setPageInput] = useState('1');
 
-  // Definizione delle schede
   const tabs = [
     { value: 'overview', label: 'Overview', icon: LayoutDashboard },
     { value: 'articles', label: 'Articols', icon: FileText },
@@ -484,18 +471,17 @@ const AdminPage = () => {
   ];
 
   const goToPage = (num) => {
-    // Si assicura che il numero della pagina sia valido (tra 1 e totalPages)
+
     const newPage = Math.max(1, Math.min(num, totalPages));
     setPage(newPage);
     setPageInput(String(newPage));
   };
 
-  // Fetch combinato per articoli e categorie all'avvio
   useEffect(() => {
     const fetchData = async () => {
       setArticlesLoading(true);
       try {
-        // Chiediamo una pagina specifica alla volta (es. page=1, page=2, etc.)
+
         const articlesRes = await fetch(
           `/api/articles/my-articles?page=${page}`,
           { credentials: 'include' },
@@ -505,7 +491,6 @@ const AdminPage = () => {
           const data = await articlesRes.json();
           setArticles(data.articles || []);
 
-          // Il backend ci dice quante pagine ci sono in totale
           setTotalPages(data.pages || 1);
         } else {
           console.error(
@@ -518,7 +503,6 @@ const AdminPage = () => {
           );
         }
 
-        // Il fetch delle categorie rimane uguale
         const categoriesRes = await fetch('/api/categories');
         if (categoriesRes.ok) {
           const data = await categoriesRes.json();
@@ -538,10 +522,8 @@ const AdminPage = () => {
     } else {
       setArticlesLoading(false);
     }
-    // Aggiungi 'page' qui, così il fetch viene rieseguito quando cambi pagina
-  }, [user, page]);
 
-  // --- Funzioni di interazione con l'API ---
+  }, [user, page]);
 
   const handleTogglePublish = async (articleId, currentStatus) => {
     try {
@@ -565,8 +547,8 @@ const AdminPage = () => {
         toast.error("Errore nell'aggiornamento dello stato di pubblicazione.");
       }
     } catch (error) {
-      console.error("Toggle publish failed:", error); // Aggiungi un log
-      toast.error('Errore di connessione.'); // CORRETTO: usa toast.error
+      console.error("Toggle publish failed:", error);
+      toast.error('Errore di connessione.');
     }
   };
 
@@ -589,8 +571,8 @@ const AdminPage = () => {
         toast.error("Errore durante l'eliminazione dell'articolo.");
       }
     } catch (error) {
-      console.error("Delete article failed:", error); // Aggiungi un log
-      toast.error('Errore di connessione.'); // CORRETTO: usa toast.error
+      console.error("Delete article failed:", error);
+      toast.error('Errore di connessione.');
     }
   };
 
@@ -606,12 +588,11 @@ const AdminPage = () => {
       await exportAnalytics(type, 'csv', timeRange);
       toast.success(`Export ${type} avviato.`);
     } catch (error) {
-      console.error(`Export ${type} failed:`, error); // Aggiungi un log
-      toast.error(`Errore durante l'export ${type}.`); // CORRETTO: usa toast.error
+      console.error(`Export ${type} failed:`, error);
+      toast.error(`Errore durante l'export ${type}.`);
     }
   };
 
-  // Calcolo delle percentuali di crescita per le card
   const getGrowthPercentage = (current, previous) => {
     if (previous === null || previous === undefined || previous === 0) return 0;
     if (current === null || current === undefined) return 0;
@@ -668,7 +649,6 @@ const AdminPage = () => {
     [analytics.overview],
   );
 
-  // Stato di caricamento generale
   if (analyticsLoading || articlesLoading) {
     return (
       <div className="bg-[#ffffff] min-h-screen">
@@ -677,7 +657,6 @@ const AdminPage = () => {
     );
   }
 
-  // NUOVO BLOCCO: Gestione dell'errore di analytics
   if (analyticsError) {
     return (
       <div className="bg-[#ffffff] min-h-screen">
@@ -695,10 +674,10 @@ const AdminPage = () => {
   return (
     <RoleGuard user={user} requiredRoles={['collaborator', 'admin']}>
       <div className="bg-[#ffffff] min-h-screen">
-        {/* Header Section */}
+        {}
         <div className="w-full mb-12">
           <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
-            {/* Titolo e Linea */}
+            {}
             <div className="mb-8">
               <div className="border-b border-[#d2d2d7] my-2"></div>
               <h2 className="text-2xl font-regular text-gray-500">
@@ -706,7 +685,7 @@ const AdminPage = () => {
               </h2>
             </div>
 
-            {/* Controlli Header */}
+            {}
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <h1 className="text-3xl font-bold mb-2">
@@ -715,7 +694,7 @@ const AdminPage = () => {
                     ? `${user?.first_name || ''} ${user?.last_name || ''}`.trim()
                     : user?.username}
                 </h1>
-                {/* Questo testo ora cambia in base alla tab attiva */}
+                {}
                 <p className="text-muted-foreground">
                   {tabs.find((tab) => tab.value === activeTab)?.label ||
                     'Panoramica e gestione del blog.'}
@@ -734,17 +713,17 @@ const AdminPage = () => {
           </div>
         </div>
 
-        {/* Main Content */}
+        {}
         <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16">
           <div className="space-y-8">
-            {/* Barra di navigazione personalizzata con capsula scorrevole */}
+            {}
             <SlidingTabsNav
               activeTab={activeTab}
               onTabChange={setActiveTab}
               tabs={tabs}
             />
 
-            {/* Tab Panoramica */}
+            {}
             {activeTab === 'overview' && (
               <div className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -779,14 +758,14 @@ const AdminPage = () => {
               </div>
             )}
 
-            {/* Tab Articoli */}
+            {}
             {activeTab === 'articles' && (
               <ArticleList
                 articles={articles}
                 categories={categories}
                 onTogglePublish={handleTogglePublish}
                 onDelete={handleDeleteArticle}
-                // Aggiungi queste props per la paginazione
+
                 page={page}
                 totalPages={totalPages}
                 goToPage={goToPage}
@@ -795,7 +774,7 @@ const AdminPage = () => {
               />
             )}
 
-            {/* Tab Analytics */}
+            {}
             {activeTab === 'analytics' && (
               <div className="space-y-8">
                 <Card className="shadow-none border-none">
@@ -921,7 +900,7 @@ const AdminPage = () => {
               </div>
             )}
 
-            {/* Tab Donazioni (Placeholder) */}
+            {}
             {activeTab === 'donations' && (
               <div className="text-center py-20 bg-white border rounded-lg">
                 <DollarSign className="w-12 h-12 text-muted-foreground mx-auto mb-4" />

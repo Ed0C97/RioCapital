@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/select.jsx
+// LitInvestorBlog-frontend/src/components/ui/select.jsx
 
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';

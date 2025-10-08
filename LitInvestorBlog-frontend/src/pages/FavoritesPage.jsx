@@ -1,4 +1,4 @@
-// src/pages/FavoritesPage.jsx
+// LitInvestorBlog-frontend/src/pages/FavoritesPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,9 +7,8 @@ import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
 import { Heart, Search } from 'lucide-react';
 import { toast } from 'sonner';
-import { Input } from '../components/ui/input'; // <-- Aggiungi questo
+import { Input } from '../components/ui/input';
 
-// Componente riutilizzato dalla pagina Archivio
 const LikedArticleListItem = ({ article }) => {
   const placeholderImage =
     'https://images.unsplash.com/photo-1518186225043-963158e70a41?q=80&w=1974&auto=format&fit=crop';
@@ -87,11 +86,9 @@ const FavoritesPage = () => {
     );
   }
 
-  // --- AGGIUNGI QUESTA LOGICA DI FILTRAGGIO ---
   const filteredArticles = likedArticles.filter((article) =>
     article.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
-  // -------------------------------------------
 
   return (
     <div className="bg-white">
@@ -105,10 +102,9 @@ const FavoritesPage = () => {
       </div>
 
       <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pb-16">
-        {/* --- AGGIUNGI LA BARRA DI RICERCA QUI --- */}
+        {}
         {likedArticles.length > 0 && (
-          // --- MODIFICA QUI ---
-          // Aggiungi una classe max-w-* per controllare la larghezza
+
           <div className="relative mb-8 max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
@@ -120,11 +116,11 @@ const FavoritesPage = () => {
             />
           </div>
         )}
-        {/* ----------------------------------------- */}
+        {}
 
-        {/* --- MODIFICA LA LOGICA DI VISUALIZZAZIONE --- */}
+        {}
         {likedArticles.length > 0 ? (
-          // Usa la lista filtrata invece di quella originale
+
           filteredArticles.length > 0 ? (
             <div className="archive-list">
               {filteredArticles.map((article) => (
@@ -149,7 +145,7 @@ const FavoritesPage = () => {
             </p>
           </div>
         )}
-        {/* ------------------------------------------- */}
+        {}
       </div>
     </div>
   );

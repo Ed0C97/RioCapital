@@ -1,8 +1,7 @@
-# RioCapitalBlog-backend/src/models/like.py
+# LitInvestorBlog-backend/src/models/like.py
 
 from datetime import datetime
 from src.extensions import db
-
 
 class ArticleLike(db.Model):
     id = db.Column(db.Integer, primary_key=True)

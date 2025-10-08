@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/pages/HomePage.jsx
+// LitInvestorBlog-frontend/src/pages/HomePage.jsx
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,6 @@ import RelatedArticles from '../components/RelatedArticles';
 import ArticleActions from '../components/ArticleActions';
 import Disclaimer from '../components/Disclaimer';
 
-// 1. === IMPORTA IL COMPONENTE PER L'ANIMAZIONE ===
 import FadeInOnScroll from '../components/FadeInOnScroll';
 
 const HomePage = () => {
@@ -77,9 +76,9 @@ const HomePage = () => {
 
   return (
     <>
-      {/* === Blocco 1: Ultime Notizie (con larghezza limitata) === */}
+      {}
       <div className="mx-auto px-4 py-12" style={{ maxWidth: '1012px' }}>
-        {/* 2. === AVVOLGI IL TITOLO === */}
+        {}
         <FadeInOnScroll>
           <div className="mb-8">
             <h1 className="text-4xl font-bold">Ultimi Articoli</h1>
@@ -88,8 +87,8 @@ const HomePage = () => {
 
         {articles.length > 0 ? (
           <div className="news-grid">
-            {/* Articolo HERO (Riga 1) */}
-            {/* 3. === AVVOLGI OGNI CARD CON UN RITARDO CRESCENTE === */}
+            {}
+            {}
             <FadeInOnScroll className="article-item--1" delay={0}>
               <Link
                 to={`/article/${articles[0].slug}`}
@@ -124,7 +123,7 @@ const HomePage = () => {
               </Link>
             </FadeInOnScroll>
 
-            {/* Articoli MEDI (Riga 2) */}
+            {}
             {articles[1] && (
               <FadeInOnScroll className="article-item--2" delay={100}>
                 <Link
@@ -204,7 +203,7 @@ const HomePage = () => {
               </FadeInOnScroll>
             )}
 
-            {/* Articoli PICCOLI (Riga 3) */}
+            {}
             {articles.slice(3, 6).map((article, index) => (
               <FadeInOnScroll
                 className={`article-item--${index + 4}`}
@@ -253,7 +252,7 @@ const HomePage = () => {
           </div>
         )}
 
-        {/* 4. === AVVOLGI ANCHE GLI ELEMENTI FINALI DELLA PAGINA === */}
+        {}
         <FadeInOnScroll>
           <div className="mt-24 mb-4">
             <Disclaimer variant="white" />
@@ -261,7 +260,7 @@ const HomePage = () => {
         </FadeInOnScroll>
       </div>
 
-      {/* === Blocco 2: I Più Popolari (con sfondo a larghezza piena) === */}
+      {}
       <FadeInOnScroll>
         <div className="mt-16">
           <RelatedArticles

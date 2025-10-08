@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/toggle-group.jsx
+// LitInvestorBlog-frontend/src/components/ui/toggle-group.jsx
 
 'use client';
 import * as React from 'react';

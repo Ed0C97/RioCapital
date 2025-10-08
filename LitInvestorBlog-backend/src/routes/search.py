@@ -1,8 +1,9 @@
+# LitInvestorBlog-backend/src/routes/search.py
+
 from flask import Blueprint, jsonify
 from src.models.article import Article
 
 search_bp = Blueprint("search_bp", __name__)
-
 
 @search_bp.route("/search-data", methods=["GET"])
 def get_search_data():
@@ -11,7 +12,7 @@ def get_search_data():
     in un formato ottimizzato per la ricerca fuzzy nel frontend.
     """
     try:
-        # --- CORREZIONE DEFINITIVA: Usa l'operatore 'is_' per un confronto booleano robusto ---
+
         articles = Article.query.filter(Article.published.is_(True)).all()
 
         searchable_items = []

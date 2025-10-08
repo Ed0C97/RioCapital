@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/RichTextEditor.jsx
+// LitInvestorBlog-frontend/src/components/RichTextEditor.jsx
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from './ui/button';
@@ -273,9 +273,9 @@ const RichTextEditor = ({
           </TabsList>
 
           <TabsContent value="edit" className="space-y-4">
-            {/* Toolbar + Template LaTeX senza box */}
+            {}
             <div>
-              {/* Toolbar */}
+              {}
               <div className="flex flex-wrap gap-6 mb-3">
                 {toolbarButtons.map((button, index) => (
                   <Button
@@ -291,7 +291,7 @@ const RichTextEditor = ({
                 ))}
               </div>
 
-              {/* Template LaTeX */}
+              {}
               <div className="pt-2">
                 <div className="flex items-center space-x-2 mb-2">
                   <Calculator className="w-4 h-4" />
@@ -322,7 +322,7 @@ const RichTextEditor = ({
               </div>
             </div>
 
-            {/* Textarea */}
+            {}
             <Textarea
               ref={textareaRef}
               value={content}

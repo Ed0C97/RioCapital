@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/aspect-ratio.jsx
+// LitInvestorBlog-frontend/src/components/ui/aspect-ratio.jsx
 
 import * as AspectRatioPrimitive from '@radix-ui/react-aspect-ratio';
 

@@ -1,8 +1,7 @@
-# RioCapitalBlog-backend/src/models/newsletter.py
+# LitInvestorBlog-backend/src/models/newsletter.py
 
 from datetime import datetime
 from src.extensions import db
-
 
 class NewsletterSubscriber(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -24,7 +23,6 @@ class NewsletterSubscriber(db.Model):
             "is_active": self.is_active,
             "preferences": self.preferences,
         }
-
 
 class Donation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -55,7 +53,6 @@ class Donation(db.Model):
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "is_anonymous": self.is_anonymous,
         }
-
 
 class NotificationPreference(db.Model):
     id = db.Column(db.Integer, primary_key=True)

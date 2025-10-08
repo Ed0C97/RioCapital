@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/menubar.jsx
+// LitInvestorBlog-frontend/src/components/ui/menubar.jsx
 
 import * as React from 'react';
 import * as MenubarPrimitive from '@radix-ui/react-menubar';

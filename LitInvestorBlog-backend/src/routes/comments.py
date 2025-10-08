@@ -1,4 +1,4 @@
-# RioCapitalBlog-backend/src/routes/comments.py
+# LitInvestorBlog-backend/src/routes/comments.py
 
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
@@ -11,7 +11,6 @@ from src.middleware.auth import admin_required
 import logging
 
 comments_bp = Blueprint("comments", __name__)
-
 
 @comments_bp.route("/api/comments/article/<int:article_id>", methods=["GET"])
 def get_article_comments(article_id):
@@ -45,7 +44,6 @@ def get_article_comments(article_id):
     except Exception as e:
         logging.error(f"Errore nel caricamento commenti: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
-
 
 @comments_bp.route("/api/comments", methods=["POST"])
 @login_required
@@ -97,7 +95,6 @@ def create_comment():
         logging.error(f"Errore nella creazione commento: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
 
-
 @comments_bp.route("/api/comments/<int:comment_id>", methods=["PUT"])
 @login_required
 def update_comment(comment_id):
@@ -130,7 +127,6 @@ def update_comment(comment_id):
         logging.error(f"Errore nell'aggiornamento commento: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
 
-
 @comments_bp.route("/api/comments/<int:comment_id>", methods=["DELETE"])
 @login_required
 def delete_comment(comment_id):
@@ -151,7 +147,6 @@ def delete_comment(comment_id):
         logging.error(f"Errore nell'eliminazione commento: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
 
-
 @comments_bp.route("/api/comments/<int:comment_id>/report", methods=["POST"])
 @login_required
 def report_comment(comment_id):
@@ -168,7 +163,6 @@ def report_comment(comment_id):
         db.session.rollback()
         logging.error(f"Errore nella segnalazione commento: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
-
 
 @comments_bp.route("/api/comments/moderate", methods=["GET"])
 @admin_required
@@ -205,7 +199,6 @@ def get_comments_for_moderation():
         logging.error(f"Errore nel caricamento commenti per moderazione: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
 
-
 @comments_bp.route("/api/comments/<int:comment_id>/moderate", methods=["PATCH"])
 @admin_required
 def moderate_comment(comment_id):
@@ -241,7 +234,6 @@ def moderate_comment(comment_id):
         db.session.rollback()
         logging.error(f"Errore nella moderazione commento: {e}")
         return jsonify({"success": False, "message": "Errore interno del server"}), 500
-
 
 @comments_bp.route("/api/comments/moderate-bulk", methods=["PATCH"])
 @admin_required

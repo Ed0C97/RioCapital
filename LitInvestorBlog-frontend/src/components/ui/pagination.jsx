@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/pagination.jsx
+// LitInvestorBlog-frontend/src/components/ui/pagination.jsx
 
 import * as React from 'react';
 import {

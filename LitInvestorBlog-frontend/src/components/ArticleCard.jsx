@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ArticleCard.jsx
+// LitInvestorBlog-frontend/src/components/ArticleCard.jsx
 
 import React from 'react';
 import { Link } from 'react-router-dom';

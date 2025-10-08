@@ -1,7 +1,7 @@
-# RioCapitalBlog-backend/src/extensions.py
+# LitInvestorBlog-backend/src/extensions.py
 
 from flask_sqlalchemy import SQLAlchemy
-from authlib.integrations.flask_client import OAuth  # <-- 1. AGGIUNGI IMPORT
+from authlib.integrations.flask_client import OAuth
 
 db = SQLAlchemy()
-oauth = OAuth()  # <-- 2. CREA L'OGGETTO OAUTH QUI
+oauth = OAuth()

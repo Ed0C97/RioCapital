@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/FavoriteButton.jsx
+// LitInvestorBlog-frontend/src/components/FavoriteButton.jsx
 
 import React, { useState } from 'react';
 import { Button } from './ui/button';

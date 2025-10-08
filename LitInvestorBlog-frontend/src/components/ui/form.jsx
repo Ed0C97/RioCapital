@@ -1,10 +1,11 @@
-// src/components/ui/form.jsx
+// LitInvestorBlog-frontend/src/components/ui/form.jsx
+
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { Controller, FormProvider } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
-import { FormFieldContext, FormItemContext, useFormField } from './form.hooks'; // Importa
+import { FormFieldContext, FormItemContext, useFormField } from './form.hooks';
 
 const Form = FormProvider;
 

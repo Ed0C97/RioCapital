@@ -1,14 +1,13 @@
-# RioCapitalBlog-backend/src/routes/auth.py
+# LitInvestorBlog-backend/src/routes/auth.py
 
-import os  # <-- 1. AGGIUNGI QUESTO IMPORT
+import os
 from flask import Blueprint, request, jsonify, session, url_for, redirect
 from src.models.user import User
 from src.extensions import db
 from functools import wraps
-from src.extensions import oauth  # <-- IMPORTA DA EXTENSIONS
+from src.extensions import oauth
 
 auth_bp = Blueprint("auth", __name__)
-
 
 def login_required(f):
     @wraps(f)
@@ -18,7 +17,6 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
-
 
 def admin_required(f):
     @wraps(f)
@@ -38,7 +36,6 @@ def admin_required(f):
 
     return decorated_function
 
-
 def author_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -54,7 +51,6 @@ def author_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
-
 
 @auth_bp.route("/register", methods=["POST"])
 def register():
@@ -103,7 +99,6 @@ def register():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @auth_bp.route("/login", methods=["POST"])
 def login():
     try:
@@ -128,14 +123,12 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 @auth_bp.route("/logout", methods=["POST"])
 def logout():
     session.pop("user_id", None)
     return jsonify({"message": "Logout effettuato con successo"}), 200
 
-
-@auth_bp.route("/me", methods=["GET"])  # URL finale: /api/auth/me
+@auth_bp.route("/me", methods=["GET"])
 @login_required
 def get_current_user():
     try:
@@ -143,11 +136,10 @@ def get_current_user():
         if user:
             return jsonify({"user": user.to_dict()}), 200
         else:
-            # Questo caso non dovrebbe accadere se @login_required funziona
+
             return jsonify({"error": "Utente non trovato"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @auth_bp.route("/change-password", methods=["POST"])
 @login_required
@@ -177,20 +169,17 @@ def change_password():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @auth_bp.route("/google/login")
 def google_login():
-    # Chiediamo a Flask di generare l'URL
+
     redirect_uri = url_for("auth.google_callback", _external=True)
 
-    # QUESTO PRINT CI DARÀ LA PROVA DEFINITIVA
     print("---------------------------------------------------------------")
     print(f"!!! URL GENERATO DA FLASK: {redirect_uri}")
     print("!!! QUESTO URL DEVE ESSERE IDENTICO A QUELLO IN GOOGLE CONSOLE")
     print("---------------------------------------------------------------")
 
     return oauth.google.authorize_redirect(redirect_uri)
-
 
 @auth_bp.route("/google/callback")
 def google_callback():
@@ -199,7 +188,7 @@ def google_callback():
         user_info = token.get("userinfo")
 
         if not user_info:
-            # USA SEMPRE localhost
+
             return redirect("http://localhost:5173/login?error=oauth_failed")
 
         email = user_info.get("email")
@@ -208,7 +197,7 @@ def google_callback():
         if user:
             session["user_id"] = user.id
             session.modified = True
-            # USA SEMPRE localhost
+
             return redirect("http://localhost:5173/")
         else:
             session["oauth_profile"] = {
@@ -217,12 +206,12 @@ def google_callback():
                 "last_name": user_info.get("family_name", ""),
             }
             session.modified = True
-            # USA SEMPRE localhost
+
             return redirect("http://localhost:5173/complete-profile")
 
     except Exception as e:
         print(f"Errore nel callback di Google: {e}")
-        # USA SEMPRE localhost
+
         return redirect("http://localhost:5173/login?error=oauth_generic_error")
 
     except Exception as e:
@@ -236,7 +225,6 @@ def google_callback():
     except Exception as e:
         print(f"Errore nel callback di Google: {e}")
         return redirect("http://localhost:5173/login?error=oauth_generic_error")
-
 
 @auth_bp.route("/complete-oauth", methods=["POST"])
 def complete_oauth_registration():
@@ -262,7 +250,6 @@ def complete_oauth_registration():
         oauth_profile = session["oauth_profile"]
         email = oauth_profile.get("email")
 
-        # Controlli di sicurezza
         if User.query.filter_by(email=email).first():
             print(f"ERRORE: Email '{email}' già registrata.")
             return jsonify({"error": "Email già registrata"}), 409
@@ -272,7 +259,6 @@ def complete_oauth_registration():
 
         print("Step 3 OK: Controlli di unicità superati.")
 
-        # Creazione del nuovo utente
         new_user = User(
             username=username,
             email=email,
@@ -287,7 +273,6 @@ def complete_oauth_registration():
         db.session.commit()
         print("Step 4 OK: Utente salvato nel database con successo.")
 
-        # Pulizia e login
         session.pop("oauth_profile", None)
         session["user_id"] = new_user.id
         print(

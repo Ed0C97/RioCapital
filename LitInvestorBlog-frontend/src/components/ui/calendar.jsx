@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/calendar.jsx
+// LitInvestorBlog-frontend/src/components/ui/calendar.jsx
 
 import * as React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';

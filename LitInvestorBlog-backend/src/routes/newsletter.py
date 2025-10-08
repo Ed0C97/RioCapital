@@ -1,4 +1,4 @@
-# RioCapitalBlog-backend/src/routes/newsletter.py
+# LitInvestorBlog-backend/src/routes/newsletter.py
 
 from flask import Blueprint, request, jsonify, session
 from src.models.newsletter import NewsletterSubscriber, Donation, NotificationPreference
@@ -8,12 +8,10 @@ import re
 
 newsletter_bp = Blueprint("newsletter", __name__)
 
-
 def is_valid_email(email):
     """Valida il formato dell'email"""
     pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     return re.match(pattern, email) is not None
-
 
 @newsletter_bp.route("/newsletter/subscribe", methods=["POST"])
 def subscribe_newsletter():
@@ -57,7 +55,6 @@ def subscribe_newsletter():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @newsletter_bp.route("/newsletter/unsubscribe", methods=["POST"])
 def unsubscribe_newsletter():
     try:
@@ -81,7 +78,6 @@ def unsubscribe_newsletter():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
-
 
 @newsletter_bp.route("/newsletter/subscribers", methods=["GET"])
 @admin_required
@@ -117,7 +113,6 @@ def get_subscribers():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @newsletter_bp.route("/donations", methods=["POST"])
 def create_donation():
@@ -167,7 +162,6 @@ def create_donation():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-
 @newsletter_bp.route("/donations", methods=["GET"])
 @admin_required
 def get_donations():
@@ -201,7 +195,6 @@ def get_donations():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 @newsletter_bp.route("/notifications/preferences", methods=["GET"])
 @login_required
 def get_notification_preferences():
@@ -214,7 +207,6 @@ def get_notification_preferences():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @newsletter_bp.route("/notifications/preferences", methods=["POST"])
 @login_required

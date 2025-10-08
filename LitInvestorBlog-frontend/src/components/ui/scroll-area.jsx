@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/scroll-area.jsx
+// LitInvestorBlog-frontend/src/components/ui/scroll-area.jsx
 
 'use client';
 

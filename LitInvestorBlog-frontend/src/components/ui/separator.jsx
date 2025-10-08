@@ -1,4 +1,4 @@
-// RioCapitalBlog-frontend/src/components/ui/separator.jsx
+// LitInvestorBlog-frontend/src/components/ui/separator.jsx
 
 'use client';
 

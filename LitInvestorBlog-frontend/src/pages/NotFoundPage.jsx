@@ -1,10 +1,10 @@
-// RioCapitalBlog-frontend/src/pages/NotFoundPage.jsx
+// LitInvestorBlog-frontend/src/pages/NotFoundPage.jsx
 
 import React from 'react';
-// --- 1. IMPORTA useNavigate E I LINK DIRETTI ---
+
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import directLinks from '../data/directLinks.json';
-// ---------------------------------------------
+
 import { Card, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -22,23 +22,21 @@ import {
 const NotFoundPage = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const location = useLocation();
-  const navigate = useNavigate(); // --- 2. INIZIALIZZA useNavigate ---
+  const navigate = useNavigate();
 
-  // --- 3. SOSTITUISCI CON LA FUNZIONE DI RICERCA "INTELLIGENTE" ---
   const handleSearch = (e) => {
     e.preventDefault();
     const query = searchQuery.trim().toLowerCase();
 
     if (query) {
       if (directLinks[query]) {
-        navigate(directLinks[query]); // Navigazione diretta
+        navigate(directLinks[query]);
       } else {
-        navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`); // Ricerca generica
+        navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       }
       setSearchQuery('');
     }
   };
-  // ----------------------------------------------------------------
 
   const popularPages = [
     {
@@ -69,7 +67,7 @@ const NotFoundPage = () => {
 
   return (
     <div className="bg-white">
-      {/* --- HEADER CON SEARCHBAR --- */}
+      {}
       <div className="w-full mb-16">
         <div className="max-w-[1012px] mx-auto px-[16px] sm:px-[16px] lg:px-[16px] pt-12">
           <div className="border-b border-[#d2d2d7] my-2"></div>
@@ -78,7 +76,7 @@ const NotFoundPage = () => {
               Page Not Found
             </h2>
 
-            {/* Searchbar */}
+            {}
             <form onSubmit={handleSearch} className="w-full max-w-xs relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
               <Input
@@ -93,7 +91,7 @@ const NotFoundPage = () => {
         </div>
       </div>
 
-      {/* --- BLOCCO 404 --- */}
+      {}
       <div className="max-w-[1012px] mx-auto px-[16px] text-center mb-16">
         <FileQuestion className="h-16 w-16 text-gray-300 mx-auto mb-6" />
         <h1 className="text-5xl font-semibold text-gray-800 mb-4">Error 404</h1>

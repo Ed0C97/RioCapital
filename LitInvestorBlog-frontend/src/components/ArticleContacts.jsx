@@ -1,4 +1,4 @@
-// src/components/ArticleContacts.jsx
+// LitInvestorBlog-frontend/src/components/ArticleContacts.jsx
 
 import React from 'react';
 import { Linkedin } from 'lucide-react';
@@ -9,9 +9,7 @@ const ArticleContacts = ({ name, email, linkedinUrl }) => {
   }
 
   return (
-    // --- MODIFICA CHIAVE: Stile della linea unificato ---
-    // border-y: linea sopra e sotto, spessore 1px di default
-    // border-[#d2d2d7]: colore personalizzato
+
     <div className="my-12 py-14 border-y border-[#d2d2d7]">
       <h3 className="text-2xl font-bold mb-7">Contatti autore</h3>
 

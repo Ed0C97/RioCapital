@@ -1,8 +1,8 @@
-// --- POLYFILL PER L'ERRORE "global is not defined" ---
+// LitInvestorBlog-frontend/src/main.jsx
+
 if (typeof window !== 'undefined') {
   window.global = window;
 }
-// -------------------------------------------------
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
