@@ -78,7 +78,6 @@ COMMENT_HANDLERS: Dict[str, Tuple[Optional[Callable[[str], str]], str]] = {
     '.jsx': (remove_c_style_comments, '//'),
     '.ts': (remove_c_style_comments, '//'),
     '.tsx': (remove_c_style_comments, '//'),
-    '.css': (remove_c_style_comments, '/*'),
     '.scss': (remove_c_style_comments, '//'),
     '.less': (remove_c_style_comments, '//'),
     '.html': (remove_html_comments, '<!--'),

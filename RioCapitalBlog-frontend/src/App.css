@@ -26,7 +26,7 @@ Contenuti:
 html {
   /* Imposta la dimensione di base al 110% dello standard del browser (che di solito è 16px) */
   /* Questo equivale a circa 17.6px, ottenendo lo stesso effetto di zoom */
-  font-size: 120%;
+  font-size: 110%;
 }
 
 :root {
